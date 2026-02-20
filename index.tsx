@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { createRoot } from 'react-dom/client';
-import { AlertTriangle, Clock, Zap, RefreshCcw, Heart, Sun, CloudRain, Flame, Scroll, Moon } from 'lucide-react';
+import { AlertTriangle, Clock, Zap, RefreshCcw, Heart, Sun, CloudRain, Flame, Scroll, Moon, ShieldAlert, GitCommit, Database } from 'lucide-react';
 
 /**
  * UTILITIES
@@ -63,20 +63,27 @@ const THEMES = {
     }
 };
 
-const TREE_COLORS = {
-    wood: '#795548',
-    woodDark: '#4e342e',
-    woodLight: '#a1887f',
-    leaf: '#4caf50',
-    leafDark: '#2e7d32',
-    leafLight: '#81c784',
-    magic: '#00e5ff',
-    rune: '#ffd700',
-    
-    // Dead/Damaged
-    deadWood: '#616161',
-    deadLeaf: '#757575',
-    damage: '#3e2723' // Dark scars
+const TREE_PALETTES = {
+    lush: {
+        wood: '#795548', woodDark: '#4e342e', woodLight: '#a1887f',
+        leaf: '#4caf50', leafDark: '#2e7d32', leafLight: '#81c784',
+        magic: '#00e5ff', rune: '#ffd700'
+    },
+    withered: {
+        wood: '#6d4c41', woodDark: '#3e2723', woodLight: '#8d6e63',
+        leaf: '#fbc02d', leafDark: '#f57f17', leafLight: '#fff176', // Autumn/Sick Yellow
+        magic: '#ffab91', rune: '#ffeb3b'
+    },
+    skeleton: {
+        wood: '#9e9e9e', woodDark: '#616161', woodLight: '#bdbdbd', // Grey/Ash
+        leaf: 'transparent', leafDark: 'transparent', leafLight: 'transparent', // No leaves
+        magic: '#b0bec5', rune: '#cfd8dc'
+    },
+    dead: {
+        wood: '#212121', woodDark: '#000000', woodLight: '#424242',
+        leaf: '#212121', leafDark: '#000000', leafLight: '#424242',
+        magic: '#ff3d00', rune: '#ff3d00'
+    }
 };
 
 // Pixel Art Assets (SVG based)
@@ -85,8 +92,16 @@ const PixelArt = ({ stage, isDead, bounceTrigger, health, maxHealth }: { stage: 
   
   // Calculate damage ratio for visual cracks (0 to 1, where 1 is full health)
   const hpRatio = health / maxHealth;
-  const showMinorCracks = !isDead && hpRatio < 0.7;
-  const showMajorCracks = !isDead && hpRatio < 0.4;
+  const hpPercent = (health / maxHealth) * 100;
+  
+  // Determine Visual State based on HP rules
+  let palette = TREE_PALETTES.lush;
+  if (isDead) palette = TREE_PALETTES.dead;
+  else if (hpPercent < 20) palette = TREE_PALETTES.skeleton;
+  else if (hpPercent <= 80) palette = TREE_PALETTES.withered;
+
+  const showMinorCracks = !isDead && hpPercent < 80;
+  const showMajorCracks = !isDead && hpPercent < 40;
 
   useEffect(() => {
     if (bounceTrigger && bounceTrigger > 0) {
@@ -103,27 +118,27 @@ const PixelArt = ({ stage, isDead, bounceTrigger, health, maxHealth }: { stage: 
         : stage === 0 ? "animate-bounce-slow" : "animate-sway";
 
   // Palette Switching
-  const cStem = isDead ? TREE_COLORS.deadWood : TREE_COLORS.wood;
-  const cStemD = isDead ? TREE_COLORS.deadWood : TREE_COLORS.woodDark;
-  const cStemL = isDead ? TREE_COLORS.deadWood : TREE_COLORS.woodLight;
+  const cStem = palette.wood;
+  const cStemD = palette.woodDark;
+  const cStemL = palette.woodLight;
   
-  const cLeaf = isDead ? TREE_COLORS.deadLeaf : TREE_COLORS.leaf;
-  const cLeafL = isDead ? TREE_COLORS.deadLeaf : TREE_COLORS.leafLight;
-  const cLeafD = isDead ? TREE_COLORS.deadLeaf : TREE_COLORS.leafDark;
+  const cLeaf = palette.leaf;
+  const cLeafL = palette.leafLight;
+  const cLeafD = palette.leafDark;
   
-  const cMagic = isDead ? TREE_COLORS.deadLeaf : TREE_COLORS.magic;
+  const cMagic = palette.magic;
 
   // Cracks Overlay Component
   const DamageOverlay = () => (
       <g className="opacity-80">
           {showMinorCracks && (
-              <path d="M30 50 L32 54 L30 58" stroke={TREE_COLORS.damage} strokeWidth="1" fill="none" />
+              <path d="M30 50 L32 54 L30 58" stroke="#3e2723" strokeWidth="1" fill="none" />
           )}
           {showMajorCracks && (
               <>
-                <path d="M34 45 L32 48 L35 50" stroke={TREE_COLORS.damage} strokeWidth="1" fill="none" />
-                <path d="M28 42 L30 46" stroke={TREE_COLORS.damage} strokeWidth="1" fill="none" />
-                <rect x="25" y="35" width="2" height="2" fill={TREE_COLORS.damage} />
+                <path d="M34 45 L32 48 L35 50" stroke="#3e2723" strokeWidth="1" fill="none" />
+                <path d="M28 42 L30 46" stroke="#3e2723" strokeWidth="1" fill="none" />
+                <rect x="25" y="35" width="2" height="2" fill="#3e2723" />
               </>
           )}
       </g>
@@ -148,9 +163,9 @@ const PixelArt = ({ stage, isDead, bounceTrigger, health, maxHealth }: { stage: 
     case 0: // Seed of Origin
       return (
         <svg viewBox="0 0 64 64" className={`w-64 h-64 pixel-art ${animationClass}`}>
-          <rect x="28" y="52" width="8" height="8" rx="1" fill={TREE_COLORS.woodDark} />
-          <rect x="30" y="54" width="4" height="4" fill={TREE_COLORS.rune} className="animate-pulse" />
-          <path d="M32 52 v-4" stroke={TREE_COLORS.magic} strokeWidth="2" strokeDasharray="2 1" />
+          <rect x="28" y="52" width="8" height="8" rx="1" fill={cStemD} />
+          <rect x="30" y="54" width="4" height="4" fill={palette.rune} className="animate-pulse" />
+          <path d="M32 52 v-4" stroke={cMagic} strokeWidth="2" strokeDasharray="2 1" />
         </svg>
       );
     case 1: // Sprout of Realms
@@ -189,8 +204,8 @@ const PixelArt = ({ stage, isDead, bounceTrigger, health, maxHealth }: { stage: 
           <circle cx="48" cy="34" r="8" fill={cLeaf} />
           <circle cx="32" cy="24" r="14" fill={cLeafD} />
           <circle cx="32" cy="22" r="10" fill={cLeaf} />
-          <rect x="14" y="32" width="4" height="4" fill={TREE_COLORS.rune} />
-          <rect x="46" y="32" width="4" height="4" fill={TREE_COLORS.magic} />
+          <rect x="14" y="32" width="4" height="4" fill={palette.rune} />
+          <rect x="46" y="32" width="4" height="4" fill={cMagic} />
         </svg>
       );
     case 5: // Guardian of Worlds
@@ -211,8 +226,8 @@ const PixelArt = ({ stage, isDead, bounceTrigger, health, maxHealth }: { stage: 
           <rect x="46" y="10" width="12" height="4" fill={cLeaf} />
           <rect x="20" y="0" width="24" height="16" fill={cLeaf} />
           <rect x="24" y="-4" width="16" height="4" fill={cLeafL} />
-          <circle cx="12" cy="20" r="2" fill={TREE_COLORS.magic} className="animate-pulse" />
-          <circle cx="52" cy="20" r="2" fill={TREE_COLORS.rune} className="animate-pulse" style={{animationDelay: '1s'}} />
+          <circle cx="12" cy="20" r="2" fill={cMagic} className="animate-pulse" />
+          <circle cx="52" cy="20" r="2" fill={palette.rune} className="animate-pulse" style={{animationDelay: '1s'}} />
           <circle cx="32" cy="8" r="3" fill="#e1bee7" className="animate-pulse" style={{animationDelay: '0.5s'}} />
           <path d="M24 60 L20 64 M40 60 L44 64" stroke={cStemD} strokeWidth="2" />
         </svg>
@@ -407,6 +422,38 @@ function App() {
     return () => clearInterval(interval);
   }, []);
 
+  // Poll for external state (Simulation of GitHub Action / Backend update)
+  useEffect(() => {
+      if (isDemoMode) return;
+
+      const fetchData = async () => {
+          try {
+              const res = await fetch('./data/state.json');
+              if (res.ok) {
+                  const data = await res.json();
+                  // In a real environment, these would map to the "backend" state
+                  if (data.current_hp !== undefined) setHealth(data.current_hp);
+                  if (data.last_incident_timestamp) setLastIncident(data.last_incident_timestamp);
+                  if (data.status === 'dead') setIsDead(true);
+                  if (data.status === 'healthy') setIsDead(false);
+                  
+                  // If we see a message we haven't shown, we could show it (simplification)
+                  if (data.last_update_message && Math.random() > 0.95) {
+                      setIncidentMessage(data.last_update_message);
+                      setTimeout(() => setIncidentMessage(null), 4000);
+                  }
+              }
+          } catch (e) {
+              console.log("Could not fetch state.json (Live mode active but file not found or CORS)");
+          }
+      };
+
+      // Poll every 60s
+      fetchData();
+      const poll = setInterval(fetchData, 60000);
+      return () => clearInterval(poll);
+  }, [isDemoMode]);
+
   const diff = currentTime - lastIncident;
   const timeUnit = isDemoMode ? TIME_UNITS.SECOND : TIME_UNITS.DAY; 
   const unitsPassed = Math.floor(diff / timeUnit);
@@ -418,13 +465,12 @@ function App() {
   const currentStage = STAGES[currentStageIndex];
   const maxHealth = (currentStageIndex + 1) * 50 + 50; // HP grows with level
 
-  // Healing Logic
+  // Healing Logic (Only in Demo Mode - Live mode expects backend to update HP)
   useEffect(() => {
-      if (isDead) return;
+      if (isDead || !isDemoMode) return;
       
-      // Heal faster in demo mode
-      const healInterval = isDemoMode ? 1000 : 60000;
-      const healAmount = isDemoMode ? 5 : 10;
+      const healInterval = 1000;
+      const healAmount = 5;
 
       const i = setInterval(() => {
           setHealth(prev => Math.min(prev + healAmount, maxHealth));
@@ -437,20 +483,31 @@ function App() {
       setHealth(prev => Math.min(prev, maxHealth));
   }, [maxHealth]);
 
-  const handleIncident = () => {
-    setIncidentMessage("Incident Detected! Structure integrity compromised.");
-    const damage = 30; // Fixed damage per incident
+  const handleDamage = (amount: number, reason: string) => {
+    setIncidentMessage(reason);
     
     setHealth(prev => {
-        const newHealth = prev - damage;
+        const newHealth = prev - amount;
         if (newHealth <= 0) {
             triggerRagnarok();
             return 0;
         }
         return newHealth;
     });
-
     setTimeout(() => setIncidentMessage(null), 4000);
+  };
+
+  const handleHeal = (amount: number, reason: string) => {
+      if (isDead) {
+          // Resurrection commit!
+          setIsDead(false);
+          setHealth(50);
+          setIncidentMessage("RESURRECTION: Core Systems Online");
+      } else {
+          setHealth(prev => Math.min(prev + amount, maxHealth));
+          setIncidentMessage(reason);
+      }
+      setTimeout(() => setIncidentMessage(null), 4000);
   };
 
   const triggerRagnarok = () => {
@@ -459,8 +516,12 @@ function App() {
       localStorage.setItem('last_incident_timestamp', now.toString());
       setIsDead(true);
       setIncidentMessage("CRITICAL FAILURE: RAGNARÖK INITIATED");
-      setTimeout(() => setIsDead(false), 8000); // 8s reset time
-      setTimeout(() => setHealth(100), 8000); // Reset health after death
+      setTimeout(() => setIncidentMessage(null), 8000);
+      // In demo mode, we reset automatically. In Real mode, it stays dead until fixed.
+      if (isDemoMode) {
+        setTimeout(() => setIsDead(false), 8000);
+        setTimeout(() => setHealth(100), 8000);
+      }
   };
 
   const resetToCleanSlate = () => {
@@ -599,7 +660,13 @@ function App() {
             <h1 className="font-mythic text-xl md:text-2xl tracking-[0.2em] text-center text-purple-100 drop-shadow-[0_0_10px_rgba(168,85,247,0.5)]">
                 YggdraLizy
             </h1>
-            <div className="text-[10px] uppercase tracking-widest text-purple-400/60 font-pixel mt-1">SDLC Monitor</div>
+            <div className="flex gap-2 text-[10px] uppercase tracking-widest text-purple-400/60 font-pixel mt-1">
+                <span>SDLC Monitor</span>
+                <span>•</span>
+                <span className={isDemoMode ? "text-cyan-400" : "text-green-400"}>
+                    {isDemoMode ? "DEMO MODE" : "LIVE MODE"}
+                </span>
+            </div>
         </div>
 
         {/* Game Scene Container */}
@@ -674,7 +741,7 @@ function App() {
              <div className="absolute top-2 left-2 text-slate-700 font-pixel text-xs opacity-50">ᚠ</div>
              <div className="absolute bottom-2 right-2 text-slate-700 font-pixel text-xs opacity-50">ᛟ</div>
             
-            <div className="flex flex-col items-center md:items-start z-10">
+            <div className="flex flex-col items-center md:items-start z-10 min-w-[150px]">
                 <div className="text-xs font-bold text-purple-400 uppercase tracking-widest mb-1 font-pixel">Cycle Duration</div>
                 <div className="font-rpg text-5xl text-purple-100 leading-none drop-shadow-md">
                     {isDemoMode ? (
@@ -685,37 +752,65 @@ function App() {
                 </div>
             </div>
 
-            <div className="flex items-center gap-4 z-10 flex-wrap justify-center">
-                 <button 
-                  onClick={resetToCleanSlate}
-                  className="btn-mythic bg-amber-600 hover:bg-amber-500 text-white border-b-4 border-amber-800 rounded p-3 shadow-lg"
-                  title="New Cycle"
-                >
-                    <RefreshCcw size={20} />
-                </button>
-
+            <div className="flex items-center gap-2 z-10 flex-wrap justify-center">
+                
+                {/* Mode Toggle */}
                 <button 
-                  onClick={handleIncident}
-                  className="btn-mythic bg-red-600 hover:bg-red-500 text-white border-b-4 border-red-900 rounded px-6 py-4 mx-2 shadow-red-900/50 shadow-lg group"
-                  title="Simulate Incident (Damage)"
+                  onClick={() => setIsDemoMode(!isDemoMode)}
+                  className={`btn-mythic border-b-4 rounded p-3 flex items-center gap-2 font-pixel text-[10px] mr-2 ${isDemoMode ? 'bg-purple-600 border-purple-800 text-white' : 'bg-green-700 border-green-900 text-green-100'}`}
+                  title="Toggle Simulation vs Real Data"
                 >
-                    <AlertTriangle size={24} className="group-hover:animate-pulse" />
+                    {isDemoMode ? <Zap size={16} /> : <Database size={16} />}
+                    <span className="hidden md:inline">{isDemoMode ? 'DEMO MODE' : 'LIVE DATA'}</span>
                 </button>
 
+                {/* Simulation Controls (Only visible in Demo Mode) */}
+                {isDemoMode && (
+                    <>
+                        <button 
+                          onClick={() => handleDamage(10, "CI Pipeline Failure (-10 HP)")}
+                          className="btn-mythic bg-red-600 hover:bg-red-500 text-white border-b-4 border-red-900 rounded p-3 shadow-lg flex items-center gap-1"
+                          title="Simulate CI Failure"
+                        >
+                            <AlertTriangle size={16} />
+                            <span className="font-pixel text-[8px]">-10</span>
+                        </button>
+                        
+                        <button 
+                          onClick={() => handleDamage(5, "Dependabot Alert (-5 HP)")}
+                          className="btn-mythic bg-orange-600 hover:bg-orange-500 text-white border-b-4 border-orange-900 rounded p-3 shadow-lg flex items-center gap-1"
+                          title="Simulate Security Alert"
+                        >
+                            <ShieldAlert size={16} />
+                            <span className="font-pixel text-[8px]">-5</span>
+                        </button>
+
+                        <button 
+                          onClick={() => handleHeal(15, "Hotfix Merged (+15 HP)")}
+                          className="btn-mythic bg-emerald-600 hover:bg-emerald-500 text-white border-b-4 border-emerald-900 rounded p-3 shadow-lg flex items-center gap-1"
+                          title="Simulate Fix"
+                        >
+                            <GitCommit size={16} />
+                            <span className="font-pixel text-[8px]">+15</span>
+                        </button>
+
+                        <button 
+                          onClick={resetToCleanSlate}
+                          className="btn-mythic bg-amber-600 hover:bg-amber-500 text-white border-b-4 border-amber-800 rounded p-3 shadow-lg"
+                          title="Hard Reset"
+                        >
+                            <RefreshCcw size={16} />
+                        </button>
+                    </>
+                )}
+                
+                {/* Shared Utils */}
                 <button 
                   onClick={() => setWeather(w => w === 'sunny' ? 'rainy' : 'sunny')}
                   className={`btn-mythic border-b-4 rounded p-3 flex items-center gap-2 font-pixel text-[10px] ${weather === 'sunny' ? 'bg-cyan-700 border-cyan-900 text-cyan-100' : 'bg-slate-600 border-slate-800 text-slate-300'}`}
                   title="Alter Weather"
                 >
                     {weather === 'sunny' ? <Sun size={16} /> : <CloudRain size={16} />}
-                </button>
-
-                <button 
-                  onClick={() => setIsDemoMode(!isDemoMode)}
-                  className={`btn-mythic border-b-4 rounded p-3 flex items-center gap-2 font-pixel text-[10px] ${isDemoMode ? 'bg-purple-600 border-purple-800 text-white' : 'bg-slate-700 border-slate-900 text-slate-400'}`}
-                >
-                    {isDemoMode ? <Zap size={16} /> : <Clock size={16} />}
-                    <span className="hidden md:inline">{isDemoMode ? 'SPEED' : 'REAL'}</span>
                 </button>
             </div>
         </div>
