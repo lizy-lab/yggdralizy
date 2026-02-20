@@ -15,12 +15,13 @@ const TIME_UNITS = {
 // Stages for Yggdrasil growth
 const STAGES = [
   { id: 0, name: 'Seed of Origin', threshold: 0 },
-  { id: 1, name: 'Sprout of Realms', threshold: 10 },
-  { id: 2, name: 'Roots of Wisdom', threshold: 25 },
-  { id: 3, name: 'Trunk of Strength', threshold: 45 },
-  { id: 4, name: 'Branches of Fate', threshold: 70 },
-  { id: 5, name: 'Guardian of Worlds', threshold: 100 },
-  { id: 6, name: 'Yggdrasil Ascendant', threshold: 140 },
+  { id: 1, name: 'Awakening Seed', threshold: 5 },
+  { id: 2, name: 'Sprout of Realms', threshold: 10 },
+  { id: 3, name: 'Roots of Wisdom', threshold: 25 },
+  { id: 4, name: 'Trunk of Strength', threshold: 45 },
+  { id: 5, name: 'Branches of Fate', threshold: 70 },
+  { id: 6, name: 'Guardian of Worlds', threshold: 100 },
+  { id: 7, name: 'Yggdrasil Ascendant', threshold: 140 },
 ];
 
 // DYNAMIC PALETTES
@@ -115,7 +116,7 @@ const PixelArt = ({ stage, isDead, bounceTrigger, health, maxHealth }: { stage: 
     ? "animate-pulse grayscale opacity-90" 
     : isJumping 
         ? "animate-bounce-quick" 
-        : stage === 0 ? "animate-bounce-slow" : "animate-sway";
+        : stage === 0 || stage === 1 ? "animate-bounce-slow" : "animate-sway";
 
   // Palette Switching
   const cStem = palette.wood;
@@ -159,26 +160,62 @@ const PixelArt = ({ stage, isDead, bounceTrigger, health, maxHealth }: { stage: 
     );
   }
 
+  // Animation helper classes
+  const leafAnim = !isDead ? "animate-rustle-1" : "";
+  const leafAnimDelayed = !isDead ? "animate-rustle-2" : "";
+  const magicAnim = !isDead ? "animate-magic" : "";
+
   switch (stage) {
     case 0: // Seed of Origin
       return (
         <svg viewBox="0 0 64 64" className={`w-64 h-64 pixel-art ${animationClass}`}>
-          <rect x="28" y="52" width="8" height="8" rx="1" fill={cStemD} />
-          <rect x="30" y="54" width="4" height="4" fill={palette.rune} className="animate-pulse" />
-          <path d="M32 52 v-4" stroke={cMagic} strokeWidth="2" strokeDasharray="2 1" />
+          {/* Soil Mound - Grounded look */}
+          <path d="M22 64 L26 60 L38 60 L42 64 Z" fill={cStemD} />
+          
+          {/* Natural Seed (Acorn) */}
+          <rect x="29" y="53" width="6" height="7" rx="2" fill={cStem} />
+          <rect x="28" y="52" width="8" height="3" rx="1" fill={cStemD} />
+          <rect x="31" y="50" width="2" height="2" fill={cStemD} />
+
+          {/* Subtle Highlight */}
+          <rect x="30" y="55" width="2" height="2" fill={cStemL} opacity="0.6" />
         </svg>
       );
-    case 1: // Sprout of Realms
+    case 1: // Awakening Seed
+      return (
+        <svg viewBox="0 0 64 64" className={`w-64 h-64 pixel-art ${animationClass}`}>
+          {/* Soil Mound */}
+          <path d="M22 64 L26 60 L38 60 L42 64 Z" fill={cStemD} />
+          
+          {/* Acorn Base */}
+          <rect x="29" y="53" width="6" height="7" rx="2" fill={cStem} />
+          <rect x="28" y="52" width="8" height="3" rx="1" fill={cStemD} />
+          <rect x="31" y="50" width="2" height="2" fill={cStemD} />
+          
+          {/* Sprout Stem */}
+          <rect x="31" y="46" width="2" height="4" fill={cLeaf} />
+          
+          {/* Leaves */}
+          <g className={leafAnim}>
+            <rect x="29" y="44" width="2" height="2" fill={cLeaf} />
+            <rect x="33" y="44" width="2" height="2" fill={cLeaf} />
+          </g>
+
+          {/* Sparkle */}
+          <rect x="36" y="42" width="1" height="1" fill={cMagic} className={magicAnim} opacity="0.6" />
+        </svg>
+      );
+    case 2: // Sprout of Realms
       return (
         <svg viewBox="0 0 64 64" className={`w-64 h-64 pixel-art ${animationClass}`}>
           <rect x="30" y="48" width="4" height="12" fill={cStem} />
           <DamageOverlay />
-          <path d="M30 48 h-6 v-4 h2 v-2 h4 v2 h4 v4 h-4 z" fill={cLeaf} />
-          <rect x="28" y="44" width="2" height="2" fill={cMagic} opacity="0.7" />
-          <rect x="34" y="44" width="2" height="2" fill={cMagic} opacity="0.7" />
+          <path d="M30 48 h-6 v-4 h2 v-2 h4 v2 h4 v4 h-4 z" fill={cLeaf} className={leafAnim} />
+          <rect x="28" y="44" width="2" height="2" fill={cMagic} opacity="0.7" className={magicAnim} />
+          <rect x="34" y="44" width="2" height="2" fill={cMagic} opacity="0.7" className={magicAnim} />
         </svg>
       );
-    case 2: // Roots of Wisdom
+    case 3: // Roots of Wisdom
       return (
         <svg viewBox="0 0 64 64" className={`w-64 h-64 pixel-art ${animationClass}`}>
           <rect x="28" y="40" width="8" height="20" fill={cStem} />
@@ -186,13 +223,17 @@ const PixelArt = ({ stage, isDead, bounceTrigger, health, maxHealth }: { stage: 
           <DamageOverlay />
           <path d="M28 60 L24 64 H28 L30 60 Z" fill={cStemD} />
           <path d="M36 60 L40 64 H36 L34 60 Z" fill={cStemD} />
-          <rect x="20" y="32" width="24" height="12" fill={cLeaf} />
-          <rect x="24" y="28" width="16" height="4" fill={cLeafL} />
-          <rect x="30" y="34" width="4" height="4" fill={cMagic} className="animate-pulse" />
+          
+          <g className={leafAnim}>
+            <rect x="20" y="32" width="24" height="12" fill={cLeaf} />
+            <rect x="24" y="28" width="16" height="4" fill={cLeafL} />
+          </g>
+          
+          <rect x="30" y="34" width="4" height="4" fill={cMagic} className={magicAnim} />
         </svg>
       );
-    case 3: // Trunk of Strength
-    case 4: // Branches of Fate
+    case 4: // Trunk of Strength
+    case 5: // Branches of Fate
       return (
         <svg viewBox="0 0 64 64" className={`w-64 h-64 pixel-art ${animationClass}`}>
           <path d="M26 64 L28 40 L36 40 L38 64 Z" fill={cStem} />
@@ -200,16 +241,24 @@ const PixelArt = ({ stage, isDead, bounceTrigger, health, maxHealth }: { stage: 
           <DamageOverlay />
           <path d="M28 44 L16 36 L18 34 L28 42 Z" fill={cStem} />
           <path d="M36 44 L48 36 L46 34 L36 42 Z" fill={cStem} />
-          <circle cx="16" cy="34" r="8" fill={cLeaf} />
-          <circle cx="48" cy="34" r="8" fill={cLeaf} />
-          <circle cx="32" cy="24" r="14" fill={cLeafD} />
-          <circle cx="32" cy="22" r="10" fill={cLeaf} />
-          <rect x="14" y="32" width="4" height="4" fill={palette.rune} />
-          <rect x="46" y="32" width="4" height="4" fill={cMagic} />
+          
+          <g className={leafAnim}>
+            <circle cx="16" cy="34" r="8" fill={cLeaf} />
+          </g>
+          <g className={leafAnimDelayed}>
+             <circle cx="48" cy="34" r="8" fill={cLeaf} />
+          </g>
+          <g className={leafAnim}>
+            <circle cx="32" cy="24" r="14" fill={cLeafD} />
+            <circle cx="32" cy="22" r="10" fill={cLeaf} />
+          </g>
+          
+          <rect x="14" y="32" width="4" height="4" fill={palette.rune} className={magicAnim} />
+          <rect x="46" y="32" width="4" height="4" fill={cMagic} className={magicAnim} />
         </svg>
       );
-    case 5: // Guardian of Worlds
-    case 6: // Yggdrasil Ascendant
+    case 6: // Guardian of Worlds
+    case 7: // Yggdrasil Ascendant
     default:
       return (
         <svg viewBox="0 0 64 64" className={`w-64 h-64 pixel-art ${animationClass}`}>
@@ -220,15 +269,25 @@ const PixelArt = ({ stage, isDead, bounceTrigger, health, maxHealth }: { stage: 
           <path d="M26 36 L10 20 L14 18 L28 32 Z" fill={cStem} />
           <path d="M38 36 L54 20 L50 18 L36 32 Z" fill={cStem} />
           <rect x="30" y="10" width="4" height="20" fill={cStem} />
-          <rect x="4" y="14" width="16" height="12" fill={cLeafD} />
-          <rect x="6" y="10" width="12" height="4" fill={cLeaf} />
-          <rect x="44" y="14" width="16" height="12" fill={cLeafD} />
-          <rect x="46" y="10" width="12" height="4" fill={cLeaf} />
-          <rect x="20" y="0" width="24" height="16" fill={cLeaf} />
-          <rect x="24" y="-4" width="16" height="4" fill={cLeafL} />
-          <circle cx="12" cy="20" r="2" fill={cMagic} className="animate-pulse" />
-          <circle cx="52" cy="20" r="2" fill={palette.rune} className="animate-pulse" style={{animationDelay: '1s'}} />
-          <circle cx="32" cy="8" r="3" fill="#e1bee7" className="animate-pulse" style={{animationDelay: '0.5s'}} />
+          
+          <g className={leafAnim}>
+            <rect x="4" y="14" width="16" height="12" fill={cLeafD} />
+            <rect x="6" y="10" width="12" height="4" fill={cLeaf} />
+          </g>
+          
+          <g className={leafAnimDelayed}>
+            <rect x="44" y="14" width="16" height="12" fill={cLeafD} />
+            <rect x="46" y="10" width="12" height="4" fill={cLeaf} />
+          </g>
+
+          <g className={leafAnim} style={{ animationDuration: '6s' }}>
+             <rect x="20" y="0" width="24" height="16" fill={cLeaf} />
+             <rect x="24" y="-4" width="16" height="4" fill={cLeafL} />
+          </g>
+
+          <circle cx="12" cy="20" r="2" fill={cMagic} className={magicAnim} />
+          <circle cx="52" cy="20" r="2" fill={palette.rune} className={magicAnim} style={{animationDelay: '1s'}} />
+          <circle cx="32" cy="8" r="3" fill="#e1bee7" className={magicAnim} style={{animationDelay: '0.5s'}} />
           <path d="M24 60 L20 64 M40 60 L44 64" stroke={cStemD} strokeWidth="2" />
         </svg>
       );
@@ -604,6 +663,25 @@ function App() {
         .animate-sway { animation: sway 5s ease-in-out infinite; }
         .animate-float-up { animation: float-up 2s ease-out forwards; }
         
+        /* New Natural Animations */
+        @keyframes rustle-1 {
+            0%, 100% { transform: rotate(0deg) translateY(0); }
+            25% { transform: rotate(1deg) translateY(0.5px); }
+            75% { transform: rotate(-1deg) translateY(-0.5px); }
+        }
+        @keyframes rustle-2 {
+            0%, 100% { transform: rotate(0deg) scale(1); }
+            33% { transform: rotate(-1deg) scale(1.02); }
+            66% { transform: rotate(1deg) scale(0.98); }
+        }
+        @keyframes magic-pulse {
+            0%, 100% { opacity: 0.6; filter: drop-shadow(0 0 2px currentColor); }
+            50% { opacity: 1; filter: drop-shadow(0 0 5px currentColor); }
+        }
+        .animate-rustle-1 { animation: rustle-1 3s ease-in-out infinite; transform-box: fill-box; transform-origin: bottom center; }
+        .animate-rustle-2 { animation: rustle-2 4s ease-in-out infinite reverse; transform-box: fill-box; transform-origin: center; }
+        .animate-magic { animation: magic-pulse 2s ease-in-out infinite; }
+
         @keyframes rain-fall {
             0% { transform: translateY(0) skewX(-5deg); }
             100% { transform: translateY(50%) skewX(-5deg); }
@@ -700,7 +778,7 @@ function App() {
                 {/* Right: Progress */}
                 <div className="bg-slate-900/80 backdrop-blur-sm border border-slate-600 p-2 rounded shadow-lg text-right justify-self-end">
                     <div className="font-pixel text-[10px] text-purple-200 mb-1 tracking-wider">
-                        REALM {currentStageIndex + 1}
+                        LEVEL {currentStageIndex + 1}
                     </div>
                     <div className="w-24 md:w-32 h-2 bg-slate-800 border border-slate-600 rounded-full overflow-hidden relative">
                         <div className="absolute inset-0 bg-purple-900/50"></div>
