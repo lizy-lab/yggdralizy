@@ -27,63 +27,63 @@ const STAGES = [
 // DYNAMIC PALETTES
 const THEMES = {
     day: {
-        sky: '#4fc3f7',
-        skyGradient: '#e1f5fe',
-        mountain: '#7986cb',
-        mountainHighlight: '#9fa8da',
-        hillFar: '#66bb6a',
-        hillNear: '#43a047',
-        ground: '#2e7d32',
-        sunColor: '#fdd835',
-        sunBorder: '#fbc02d',
+        sky: '#7dd3fc', // Sky 300 - Brighter
+        skyGradient: '#e0f2fe', // Sky 100 - Very light
+        mountain: '#64748b', // Slate 500 - Blueish Grey
+        mountainHighlight: '#94a3b8', // Slate 400
+        hillFar: '#4ade80', // Green 400 - Vibrant Green
+        hillNear: '#16a34a', // Green 600 - Rich Green
+        ground: '#15803d', // Green 700
+        sunColor: '#facc15', // Yellow 400
+        sunBorder: '#eab308', // Yellow 500
         starOpacity: 0
     },
     night: {
-        sky: '#1a1b4b',
-        skyGradient: '#000000',
-        mountain: '#4527a0',
-        mountainHighlight: '#5e35b1',
-        hillFar: '#311b92',
-        hillNear: '#004d40',
-        ground: '#1b5e20',
-        sunColor: '#fff9c4', // Moon color
-        sunBorder: '#fff59d',
-        starOpacity: 0.6
+        sky: '#0f172a', // Slate 900
+        skyGradient: '#1e1b4b', // Indigo 950
+        mountain: '#312e81', // Indigo 900
+        mountainHighlight: '#4338ca', // Indigo 700
+        hillFar: '#1e3a8a', // Blue 900
+        hillNear: '#064e3b', // Emerald 900
+        ground: '#022c22', // Emerald 950
+        sunColor: '#fef3c7', // Amber 100 (Moon)
+        sunBorder: '#fde68a', // Amber 200
+        starOpacity: 0.9
     },
     ragnarok: {
-        sky: '#370617',
+        sky: '#450a0a', // Red 950
         skyGradient: '#000000',
-        mountain: '#212121',
-        mountainHighlight: '#424242',
-        hillFar: '#3e2723',
-        hillNear: '#4e342e',
-        ground: '#3e2723',
+        mountain: '#1c1917', // Stone 900
+        mountainHighlight: '#292524', // Stone 800
+        hillFar: '#3f3f46', // Zinc 700
+        hillNear: '#27272a', // Zinc 800
+        ground: '#18181b', // Zinc 900
         sunColor: '#000000',
-        sunBorder: '#b71c1c',
+        sunBorder: '#7f1d1d', // Red 900
         starOpacity: 0
     }
 };
 
 const TREE_PALETTES = {
     lush: {
-        wood: '#795548', woodDark: '#4e342e', woodLight: '#a1887f',
-        leaf: '#4caf50', leafDark: '#2e7d32', leafLight: '#81c784',
-        magic: '#00e5ff', rune: '#ffd700'
+        wood: '#78350f', woodDark: '#451a03', woodLight: '#92400e', // Amber 900/950/800
+        leaf: '#22c55e', leafDark: '#15803d', leafLight: '#4ade80', // Green 500/700/400
+        magic: '#22d3ee', rune: '#fcd34d' // Cyan 400, Amber 300
     },
     withered: {
-        wood: '#6d4c41', woodDark: '#3e2723', woodLight: '#8d6e63',
-        leaf: '#fbc02d', leafDark: '#f57f17', leafLight: '#fff176', // Autumn/Sick Yellow
-        magic: '#ffab91', rune: '#ffeb3b'
+        wood: '#57534e', woodDark: '#292524', woodLight: '#78716c', // Stone colors
+        leaf: '#eab308', leafDark: '#a16207', leafLight: '#fde047', // Yellow/Gold
+        magic: '#fb923c', rune: '#fca5a5'
     },
     skeleton: {
-        wood: '#9e9e9e', woodDark: '#616161', woodLight: '#bdbdbd', // Grey/Ash
-        leaf: 'transparent', leafDark: 'transparent', leafLight: 'transparent', // No leaves
-        magic: '#b0bec5', rune: '#cfd8dc'
+        wood: '#a8a29e', woodDark: '#57534e', woodLight: '#d6d3d1', // Stone greys
+        leaf: 'transparent', leafDark: 'transparent', leafLight: 'transparent',
+        magic: '#94a3b8', rune: '#cbd5e1'
     },
     dead: {
-        wood: '#212121', woodDark: '#000000', woodLight: '#424242',
-        leaf: '#212121', leafDark: '#000000', leafLight: '#424242',
-        magic: '#ff3d00', rune: '#ff3d00'
+        wood: '#171717', woodDark: '#000000', woodLight: '#262626', // Neutral 900
+        leaf: '#171717', leafDark: '#000000', leafLight: '#262626',
+        magic: '#ef4444', rune: '#dc2626'
     }
 };
 
@@ -103,6 +103,7 @@ const PixelArt = ({ stage, isDead, bounceTrigger, health, maxHealth }: { stage: 
 
   const showMinorCracks = !isDead && hpPercent < 80;
   const showMajorCracks = !isDead && hpPercent < 40;
+  const showFallenLeaves = !isDead && hpPercent < 40 && stage >= 2;
 
   useEffect(() => {
     if (bounceTrigger && bounceTrigger > 0) {
@@ -144,6 +145,31 @@ const PixelArt = ({ stage, isDead, bounceTrigger, health, maxHealth }: { stage: 
           )}
       </g>
   );
+
+  const FallenLeaves = () => {
+    const c1 = '#fbc02d'; // Yellow
+    const c2 = '#f57f17'; // Orange
+    const c3 = '#8d6e63'; // Brown
+    
+    return (
+      <g className="animate-pulse">
+          <rect x="18" y="60" width="2" height="1" fill={c3} />
+          <rect x="22" y="62" width="3" height="2" fill={c1} />
+          <rect x="28" y="61" width="2" height="2" fill={c2} />
+          <rect x="36" y="62" width="3" height="2" fill={c1} />
+          <rect x="42" y="60" width="2" height="1" fill={c2} />
+          <rect x="46" y="62" width="2" height="2" fill={c3} />
+          {hpPercent < 20 && (
+             <>
+               <rect x="15" y="63" width="2" height="1" fill={c1} />
+               <rect x="32" y="63" width="2" height="1" fill={c2} />
+               <rect x="50" y="61" width="2" height="1" fill={c3} />
+               <rect x="25" y="64" width="2" height="1" fill={c3} />
+             </>
+          )}
+      </g>
+    );
+  };
 
   if (isDead) {
     return (
@@ -199,6 +225,7 @@ const PixelArt = ({ stage, isDead, bounceTrigger, health, maxHealth }: { stage: 
           <g className={leafAnim}>
             <rect x="29" y="44" width="2" height="2" fill={cLeaf} />
             <rect x="33" y="44" width="2" height="2" fill={cLeaf} />
+            <rect x="31" y="42" width="2" height="2" fill={cLeafL} />
           </g>
 
           {/* Sparkle */}
@@ -209,8 +236,18 @@ const PixelArt = ({ stage, isDead, bounceTrigger, health, maxHealth }: { stage: 
       return (
         <svg viewBox="0 0 64 64" className={`w-64 h-64 pixel-art ${animationClass}`}>
           <rect x="30" y="48" width="4" height="12" fill={cStem} />
+          <rect x="30" y="48" width="1" height="12" fill={cStemL} opacity="0.3" />
+          <rect x="32" y="52" width="1" height="2" fill={cStemD} opacity="0.3" />
           <DamageOverlay />
-          <path d="M30 48 h-6 v-4 h2 v-2 h4 v2 h4 v4 h-4 z" fill={cLeaf} className={leafAnim} />
+          {showFallenLeaves && <FallenLeaves />}
+          
+          <g className={leafAnim}>
+            <path d="M30 48 h-6 v-4 h2 v-2 h4 v2 h4 v4 h-4 z" fill={cLeaf} />
+            <rect x="26" y="44" width="2" height="2" fill={cLeafL} />
+            <rect x="36" y="44" width="2" height="2" fill={cLeafD} />
+            <rect x="30" y="42" width="4" height="2" fill={cLeafL} opacity="0.5" />
+          </g>
+          
           <rect x="28" y="44" width="2" height="2" fill={cMagic} opacity="0.7" className={magicAnim} />
           <rect x="34" y="44" width="2" height="2" fill={cMagic} opacity="0.7" className={magicAnim} />
         </svg>
@@ -219,14 +256,26 @@ const PixelArt = ({ stage, isDead, bounceTrigger, health, maxHealth }: { stage: 
       return (
         <svg viewBox="0 0 64 64" className={`w-64 h-64 pixel-art ${animationClass}`}>
           <rect x="28" y="40" width="8" height="20" fill={cStem} />
-          <rect x="30" y="40" width="4" height="20" fill={cStemL} opacity="0.2" />
+          {/* Shading */}
+          <rect x="34" y="40" width="2" height="20" fill={cStemD} opacity="0.3" />
+          <rect x="28" y="40" width="2" height="20" fill={cStemL} opacity="0.2" />
+          <rect x="30" y="44" width="2" height="2" fill={cStemD} opacity="0.3" />
+          <rect x="32" y="50" width="2" height="2" fill={cStemD} opacity="0.3" />
+          
           <DamageOverlay />
+          {showFallenLeaves && <FallenLeaves />}
           <path d="M28 60 L24 64 H28 L30 60 Z" fill={cStemD} />
           <path d="M36 60 L40 64 H36 L34 60 Z" fill={cStemD} />
           
           <g className={leafAnim}>
             <rect x="20" y="32" width="24" height="12" fill={cLeaf} />
             <rect x="24" y="28" width="16" height="4" fill={cLeafL} />
+            {/* Leaf Detail */}
+            <rect x="22" y="34" width="2" height="2" fill={cLeafD} opacity="0.5" />
+            <rect x="38" y="38" width="2" height="2" fill={cLeafD} opacity="0.5" />
+            <rect x="26" y="30" width="2" height="2" fill={cLeaf} opacity="0.5" />
+            <rect x="36" y="30" width="2" height="2" fill={cLeaf} opacity="0.5" />
+            <rect x="30" y="36" width="4" height="2" fill={cLeafD} opacity="0.3" />
           </g>
           
           <rect x="30" y="34" width="4" height="4" fill={cMagic} className={magicAnim} />
@@ -237,20 +286,43 @@ const PixelArt = ({ stage, isDead, bounceTrigger, health, maxHealth }: { stage: 
       return (
         <svg viewBox="0 0 64 64" className={`w-64 h-64 pixel-art ${animationClass}`}>
           <path d="M26 64 L28 40 L36 40 L38 64 Z" fill={cStem} />
-          <rect x="30" y="40" width="4" height="24" fill={cStemL} opacity="0.2" />
+          {/* Trunk Texture */}
+          <rect x="34" y="40" width="2" height="24" fill={cStemD} opacity="0.3" />
+          <rect x="28" y="40" width="2" height="24" fill={cStemL} opacity="0.2" />
+          <rect x="30" y="44" width="2" height="2" fill={cStemD} opacity="0.4" />
+          <rect x="32" y="52" width="2" height="2" fill={cStemD} opacity="0.4" />
+          <rect x="30" y="58" width="2" height="2" fill={cStemD} opacity="0.4" />
+          
           <DamageOverlay />
+          {showFallenLeaves && <FallenLeaves />}
           <path d="M28 44 L16 36 L18 34 L28 42 Z" fill={cStem} />
           <path d="M36 44 L48 36 L46 34 L36 42 Z" fill={cStem} />
           
           <g className={leafAnim}>
             <circle cx="16" cy="34" r="8" fill={cLeaf} />
+            <circle cx="14" cy="32" r="2" fill={cLeafL} />
+            <circle cx="18" cy="36" r="2" fill={cLeafD} />
+            {/* Extra Leaf Detail */}
+            <circle cx="12" cy="36" r="1" fill={cLeafD} opacity="0.5" />
+            <circle cx="20" cy="32" r="1" fill={cLeafL} opacity="0.5" />
           </g>
           <g className={leafAnimDelayed}>
              <circle cx="48" cy="34" r="8" fill={cLeaf} />
+             <circle cx="50" cy="36" r="2" fill={cLeafD} />
+             <circle cx="46" cy="32" r="2" fill={cLeafL} />
+             {/* Extra Leaf Detail */}
+             <circle cx="52" cy="32" r="1" fill={cLeafL} opacity="0.5" />
+             <circle cx="44" cy="36" r="1" fill={cLeafD} opacity="0.5" />
           </g>
           <g className={leafAnim}>
             <circle cx="32" cy="24" r="14" fill={cLeafD} />
             <circle cx="32" cy="22" r="10" fill={cLeaf} />
+            <circle cx="36" cy="18" r="3" fill={cLeafL} />
+            <circle cx="28" cy="26" r="3" fill={cLeafD} opacity="0.5" />
+            {/* Extra Leaf Detail */}
+            <circle cx="38" cy="24" r="2" fill={cLeafD} opacity="0.3" />
+            <circle cx="26" cy="20" r="2" fill={cLeafL} opacity="0.3" />
+            <circle cx="32" cy="16" r="2" fill={cLeafL} opacity="0.5" />
           </g>
           
           <rect x="14" y="32" width="4" height="4" fill={palette.rune} className={magicAnim} />
@@ -265,7 +337,17 @@ const PixelArt = ({ stage, isDead, bounceTrigger, health, maxHealth }: { stage: 
           <path d="M22 64 L26 30 L38 30 L42 64 Z" fill={cStem} />
           <path d="M22 64 L16 64 L24 50 Z" fill={cStemD} />
           <path d="M42 64 L48 64 L40 50 Z" fill={cStemD} />
+          
+          {/* Trunk Shading & Texture */}
+          <rect x="36" y="30" width="4" height="34" fill={cStemD} opacity="0.3" />
+          <rect x="26" y="30" width="2" height="34" fill={cStemL} opacity="0.2" />
+          <rect x="30" y="34" width="2" height="4" fill={cStemD} opacity="0.4" />
+          <rect x="32" y="44" width="2" height="4" fill={cStemD} opacity="0.4" />
+          <rect x="28" y="54" width="2" height="4" fill={cStemD} opacity="0.4" />
+          <rect x="34" y="58" width="2" height="2" fill={cStemD} opacity="0.4" />
+          
           <DamageOverlay />
+          {showFallenLeaves && <FallenLeaves />}
           <path d="M26 36 L10 20 L14 18 L28 32 Z" fill={cStem} />
           <path d="M38 36 L54 20 L50 18 L36 32 Z" fill={cStem} />
           <rect x="30" y="10" width="4" height="20" fill={cStem} />
@@ -273,16 +355,33 @@ const PixelArt = ({ stage, isDead, bounceTrigger, health, maxHealth }: { stage: 
           <g className={leafAnim}>
             <rect x="4" y="14" width="16" height="12" fill={cLeafD} />
             <rect x="6" y="10" width="12" height="4" fill={cLeaf} />
+            <rect x="8" y="16" width="4" height="4" fill={cLeaf} opacity="0.5" />
+            <rect x="14" y="12" width="2" height="2" fill={cLeafL} />
+            {/* Extra Detail */}
+            <rect x="2" y="18" width="2" height="2" fill={cLeafD} opacity="0.6" />
+            <rect x="18" y="12" width="2" height="2" fill={cLeafL} opacity="0.6" />
           </g>
           
           <g className={leafAnimDelayed}>
             <rect x="44" y="14" width="16" height="12" fill={cLeafD} />
             <rect x="46" y="10" width="12" height="4" fill={cLeaf} />
+            <rect x="52" y="18" width="4" height="4" fill={cLeaf} opacity="0.5" />
+            <rect x="48" y="12" width="2" height="2" fill={cLeafL} />
+            {/* Extra Detail */}
+            <rect x="60" y="18" width="2" height="2" fill={cLeafD} opacity="0.6" />
+            <rect x="44" y="12" width="2" height="2" fill={cLeafL} opacity="0.6" />
           </g>
 
           <g className={leafAnim} style={{ animationDuration: '6s' }}>
              <rect x="20" y="0" width="24" height="16" fill={cLeaf} />
              <rect x="24" y="-4" width="16" height="4" fill={cLeafL} />
+             <rect x="22" y="4" width="4" height="4" fill={cLeafD} opacity="0.3" />
+             <rect x="38" y="2" width="4" height="4" fill={cLeafL} opacity="0.3" />
+             <rect x="30" y="-2" width="4" height="4" fill={cLeafL} />
+             {/* Extra Detail */}
+             <rect x="18" y="4" width="2" height="4" fill={cLeafD} opacity="0.4" />
+             <rect x="44" y="4" width="2" height="4" fill={cLeafD} opacity="0.4" />
+             <rect x="32" y="12" width="4" height="2" fill={cLeafD} opacity="0.4" />
           </g>
 
           <circle cx="12" cy="20" r="2" fill={cMagic} className={magicAnim} />
@@ -294,28 +393,50 @@ const PixelArt = ({ stage, isDead, bounceTrigger, health, maxHealth }: { stage: 
   }
 };
 
-const PixelRain = ({ isFire, color }: { isFire?: boolean, color?: string }) => (
-    <div className="absolute inset-0 pointer-events-none z-20 overflow-hidden opacity-90">
-        <svg className="absolute inset-0 w-full h-[200%] -top-full animate-rain-slow opacity-40">
-            <defs>
-                <pattern id={`rain-back-${isFire}`} width="50" height="50" patternUnits="userSpaceOnUse">
-                    <rect x="10" y="0" width="2" height="4" fill={isFire ? "#ff3d00" : (color || "#B3E5FC")} />
-                    <rect x="35" y="25" width="2" height="4" fill={isFire ? "#ff3d00" : (color || "#B3E5FC")} />
-                </pattern>
-            </defs>
-            <rect width="100%" height="100%" fill={`url(#rain-back-${isFire})`} />
-        </svg>
-        <svg className="absolute inset-0 w-full h-[200%] -top-full animate-rain-medium opacity-60">
-            <defs>
-                <pattern id={`rain-mid-${isFire}`} width="40" height="40" patternUnits="userSpaceOnUse">
-                    <rect x="5" y="0" width="2" height="8" fill={isFire ? "#ff3d00" : (color || "#81D4FA")} />
-                    <rect x="25" y="20" width="2" height="8" fill={isFire ? "#ff3d00" : (color || "#81D4FA")} />
-                </pattern>
-            </defs>
-            <rect width="100%" height="100%" fill={`url(#rain-mid-${isFire})`} />
-        </svg>
-    </div>
-);
+const PixelRain = ({ isFire, color }: { isFire?: boolean, color?: string }) => {
+    const fillColor = isFire ? "%23ff3d00" : (color ? color.replace('#', '%23') : "%23B3E5FC");
+    const fillColorMid = isFire ? "%23ff3d00" : (color ? color.replace('#', '%23') : "%2381D4FA");
+
+    const bgBack = `data:image/svg+xml,%3Csvg width='50' height='50' xmlns='http://www.w3.org/2000/svg'%3E%3Crect x='10' y='0' width='2' height='4' fill='${fillColor}' /%3E%3Crect x='35' y='25' width='2' height='4' fill='${fillColor}' /%3E%3C/svg%3E`;
+    const bgMid = `data:image/svg+xml,%3Csvg width='40' height='40' xmlns='http://www.w3.org/2000/svg'%3E%3Crect x='5' y='0' width='2' height='8' fill='${fillColorMid}' /%3E%3Crect x='25' y='20' width='2' height='8' fill='${fillColorMid}' /%3E%3C/svg%3E`;
+
+    return (
+        <div className="absolute inset-0 pointer-events-none z-20 overflow-hidden opacity-90">
+            <div className="absolute -inset-full w-[300%] h-[300%] animate-rain-slow opacity-40" 
+                 style={{ backgroundImage: `url("${bgBack}")`, transform: 'skewX(-5deg)' }}></div>
+            <div className="absolute -inset-full w-[300%] h-[300%] animate-rain-medium opacity-60" 
+                 style={{ backgroundImage: `url("${bgMid}")`, transform: 'skewX(-5deg)' }}></div>
+        </div>
+    );
+};
+
+const Clouds = ({ themeMode }: { themeMode: 'day' | 'night' }) => {
+    if (themeMode === 'night') return null;
+    
+    // Helper for a single granular cloud
+    const GranularCloud = ({ x, y, scale = 1, speed = 20 }: { x: number, y: number, scale?: number, speed?: number }) => (
+        <g transform={`translate(${x}, ${y}) scale(${scale})`} className="animate-cloud-drift" style={{ animationDuration: `${speed}s` }}>
+            {/* Main Body (White) */}
+            <rect x="4" y="2" width="10" height="2" fill="#ffffff" />
+            <rect x="2" y="4" width="14" height="2" fill="#ffffff" />
+            <rect x="0" y="6" width="18" height="2" fill="#ffffff" />
+            
+            {/* Shadow/Shading (Light Blue) */}
+            <rect x="2" y="8" width="14" height="1" fill="#e1f5fe" />
+            <rect x="4" y="6" width="2" height="2" fill="#e1f5fe" opacity="0.5" />
+            <rect x="12" y="6" width="2" height="2" fill="#e1f5fe" opacity="0.5" />
+        </g>
+    );
+
+    return (
+        <g className="opacity-90">
+            <GranularCloud x={10} y={15} scale={1.2} speed={25} />
+            <GranularCloud x={60} y={8} scale={0.8} speed={35} />
+            <GranularCloud x={110} y={20} scale={1} speed={20} />
+            <GranularCloud x={140} y={12} scale={0.6} speed={40} />
+        </g>
+    );
+};
 
 // Ratatoskr (Squirrel) - Now silent
 const Ratatoskr = ({ isDead, onInteract }: { isDead: boolean, onInteract: (x: number, y: number) => void }) => {
@@ -341,15 +462,96 @@ const Ratatoskr = ({ isDead, onInteract }: { isDead: boolean, onInteract: (x: nu
             }}
         >
              <svg viewBox="0 0 16 16" className="w-full h-full drop-shadow-lg">
-                <path d="M2 10 Q 0 4 4 2 L 6 4 L 4 10 Z" fill="#795548" />
-                <rect x="5" y="6" width="6" height="6" fill="#A1887F" />
-                <rect x="10" y="4" width="4" height="4" fill="#A1887F" />
-                <rect x="10" y="2" width="1" height="2" fill="#5D4037" />
-                <rect x="13" y="2" width="1" height="2" fill="#5D4037" />
-                <rect x="12" y="5" width="1" height="1" fill="#000" />
-                <rect x="5" y="12" width="2" height="1" fill="#5D4037" />
-                <rect x="9" y="12" width="2" height="1" fill="#5D4037" />
+                {/* Tail */}
+                <rect x="1" y="4" width="3" height="3" fill="#5d4037" />
+                <rect x="2" y="7" width="3" height="3" fill="#5d4037" />
+                <rect x="3" y="2" width="2" height="2" fill="#795548" />
+                
+                {/* Body */}
+                <rect x="5" y="6" width="5" height="5" fill="#8d6e63" />
+                <rect x="6" y="11" width="1" height="1" fill="#5d4037" /> {/* Leg */}
+                <rect x="9" y="11" width="1" height="1" fill="#5d4037" /> {/* Leg */}
+
+                {/* Head */}
+                <rect x="9" y="3" width="4" height="4" fill="#8d6e63" />
+                <rect x="9" y="2" width="1" height="1" fill="#5d4037" /> {/* Ear */}
+                <rect x="12" y="2" width="1" height="1" fill="#5d4037" /> {/* Ear */}
+                
+                {/* Face */}
+                <rect x="11" y="4" width="1" height="1" fill="#000" /> {/* Eye */}
+                <rect x="12" y="5" width="1" height="1" fill="#3e2723" /> {/* Nose */}
              </svg>
+        </div>
+    );
+};
+
+const Fireflies = () => {
+    // Generate random positions and delays
+    const fireflies = Array.from({ length: 15 }).map((_, i) => ({
+      id: i,
+      left: Math.random() * 100,
+      top: Math.random() * 60 + 20, // Keep them somewhat centered vertically
+      delay: Math.random() * 5,
+      duration: 6 + Math.random() * 6 // Slower duration (6-12s)
+    }));
+  
+    return (
+      <div className="absolute inset-0 pointer-events-none z-20">
+        {fireflies.map(f => (
+          <div
+            key={f.id}
+            className="absolute w-1 h-1 bg-yellow-200 rounded-full animate-firefly opacity-0 shadow-[0_0_4px_rgba(253,224,71,0.8)]"
+            style={{
+              left: `${f.left}%`,
+              top: `${f.top}%`,
+              animationDelay: `${f.delay}s`,
+              animationDuration: `${f.duration}s`
+            }}
+          />
+        ))}
+      </div>
+    );
+  };
+
+const Bird = ({ themeMode }: { themeMode: 'day' | 'night' }) => {
+    if (themeMode === 'night') return null;
+    return (
+        <div className="absolute top-10 -left-10 animate-fly-across z-10 w-4 h-3 opacity-80">
+             <svg viewBox="0 0 8 6" className="w-full h-full">
+                 <rect x="0" y="2" width="2" height="1" fill="#000" />
+                 <rect x="2" y="3" width="2" height="1" fill="#000" />
+                 <rect x="4" y="2" width="2" height="1" fill="#000" />
+                 <rect x="2" y="1" width="1" height="1" fill="#000" className="animate-wing-flap" />
+                 <rect x="5" y="1" width="1" height="1" fill="#000" className="animate-wing-flap" />
+             </svg>
+        </div>
+    );
+}
+
+const FallingLeaves = ({ themeMode }: { themeMode: 'day' | 'night' }) => {
+    const leaves = Array.from({ length: 6 }).map((_, i) => ({
+        id: i,
+        left: Math.random() * 100,
+        delay: Math.random() * 10,
+        duration: 5 + Math.random() * 5
+    }));
+
+    const color = themeMode === 'day' ? 'bg-green-400' : 'bg-emerald-700';
+
+    return (
+        <div className="absolute inset-0 pointer-events-none z-20">
+            {leaves.map(l => (
+                <div
+                    key={l.id}
+                    className={`absolute w-1 h-1 ${color} rounded-sm animate-leaf-fall opacity-0`}
+                    style={{
+                        left: `${l.left}%`,
+                        top: '-5%',
+                        animationDelay: `${l.delay}s`,
+                        animationDuration: `${l.duration}s`
+                    }}
+                />
+            ))}
         </div>
     );
 };
@@ -400,17 +602,127 @@ const PixelLandscape = ({ isDead, weather, onInteract, themeMode }: { isDead: bo
 
              <Ratatoskr isDead={isDead} onInteract={(x, y) => onInteract(x, y)} />
              
+             {/* Ambient Creatures */}
+             {!isDead && !isRainy && <Bird themeMode={themeMode} />}
+             {!isDead && themeMode === 'night' && <Fireflies />}
+             {!isDead && !isRainy && <FallingLeaves themeMode={themeMode} />}
+
              {showRain && <PixelRain color={themeMode === 'day' ? '#29b6f6' : undefined} />}
              {showEmbers && <PixelRain isFire={true} />}
 
              <svg className="absolute inset-0 w-full h-full" preserveAspectRatio="none" viewBox="0 0 160 100" shapeRendering="crispEdges">
-                 <path d="M0 100 V 50 L 30 20 L 60 55 L 90 25 L 120 60 L 160 30 V 100 Z" 
+                 {/* Clouds */}
+                 {!isDead && !isRainy && <Clouds themeMode={themeMode} />}
+
+                 {/* Mountain (High Granularity) */}
+                 <path d="M0 100 V 60 H 4 V 56 H 8 V 52 H 12 V 48 H 16 V 44 H 20 V 40 H 24 V 36 H 28 V 32 H 32 V 28 H 36 V 24 H 40 V 28 H 44 V 32 H 48 V 36 H 52 V 40 H 56 V 44 H 60 V 48 H 64 V 44 H 68 V 40 H 72 V 36 H 76 V 32 H 80 V 28 H 84 V 24 H 88 V 20 H 92 V 24 H 96 V 28 H 100 V 32 H 104 V 36 H 108 V 40 H 112 V 44 H 116 V 48 H 120 V 52 H 124 V 56 H 128 V 60 H 132 V 64 H 136 V 68 H 140 V 72 H 144 V 76 H 148 V 80 H 152 V 84 H 156 V 88 H 160 V 100 Z" 
                        fill={currentTheme.mountain} className="transition-colors duration-1000" />
-                 <path d="M0 100 V 70 Q 40 60 80 75 T 160 65 V 100 Z" 
+                 
+                 {/* Mountain Shading/Texture */}
+                 {!isDead && (
+                    <g fill={currentTheme.mountainHighlight} opacity="0.3">
+                        <rect x="20" y="44" width="2" height="2" />
+                        <rect x="24" y="40" width="2" height="4" />
+                        <rect x="40" y="32" width="2" height="2" />
+                        <rect x="44" y="36" width="2" height="2" />
+                        <rect x="60" y="52" width="2" height="2" />
+                        <rect x="80" y="32" width="2" height="2" />
+                        <rect x="88" y="24" width="2" height="4" />
+                        <rect x="96" y="32" width="2" height="2" />
+                        <rect x="120" y="56" width="2" height="2" />
+                        <rect x="140" y="76" width="2" height="2" />
+                        {/* Darker spots */}
+                        <rect x="16" y="48" width="2" height="2" fill="#000" opacity="0.2" />
+                        <rect x="56" y="48" width="2" height="2" fill="#000" opacity="0.2" />
+                        <rect x="92" y="28" width="2" height="2" fill="#000" opacity="0.2" />
+                        <rect x="128" y="64" width="2" height="2" fill="#000" opacity="0.2" />
+                    </g>
+                 )}
+
+                 {/* Snow Caps (Detail) */}
+                 {!isDead && (
+                    <g fill="#ffffff" opacity="0.9">
+                        <rect x="34" y="24" width="4" height="2" />
+                        <rect x="32" y="26" width="8" height="2" />
+                        <rect x="36" y="28" width="2" height="2" />
+                        
+                        <rect x="86" y="20" width="4" height="2" />
+                        <rect x="84" y="22" width="8" height="2" />
+                        <rect x="82" y="24" width="12" height="2" />
+                        <rect x="88" y="26" width="4" height="2" opacity="0.5" />
+                    </g>
+                 )}
+
+                 {/* Hill Far (Granular) */}
+                 <path d="M0 100 V 80 H 4 V 78 H 8 V 76 H 12 V 74 H 16 V 72 H 20 V 70 H 24 V 68 H 28 V 66 H 32 V 64 H 36 V 62 H 40 V 64 H 44 V 66 H 48 V 68 H 52 V 70 H 56 V 72 H 60 V 74 H 64 V 72 H 68 V 70 H 72 V 68 H 76 V 66 H 80 V 64 H 84 V 62 H 88 V 60 H 92 V 62 H 96 V 64 H 100 V 66 H 104 V 68 H 108 V 70 H 112 V 72 H 116 V 74 H 120 V 76 H 124 V 78 H 128 V 80 H 132 V 78 H 136 V 76 H 140 V 74 H 144 V 72 H 148 V 74 H 152 V 76 H 156 V 78 H 160 V 100 Z" 
                        fill={currentTheme.hillFar} className="transition-colors duration-1000" />
-                 <path d="M0 100 V 85 Q 30 80 60 88 T 120 82 T 160 90 V 100 Z" 
+                 
+                 {/* Hill Near (Granular) */}
+                 <path d="M0 100 V 92 H 4 V 90 H 8 V 88 H 12 V 86 H 16 V 84 H 20 V 82 H 24 V 80 H 28 V 82 H 32 V 84 H 36 V 86 H 40 V 88 H 44 V 90 H 48 V 88 H 52 V 86 H 56 V 84 H 60 V 82 H 64 V 80 H 68 V 78 H 72 V 80 H 76 V 82 H 80 V 84 H 84 V 86 H 88 V 88 H 92 V 90 H 96 V 88 H 100 V 86 H 104 V 84 H 108 V 82 H 112 V 80 H 116 V 82 H 120 V 84 H 124 V 86 H 128 V 88 H 132 V 90 H 136 V 92 H 140 V 90 H 144 V 88 H 148 V 86 H 152 V 88 H 156 V 90 H 160 V 100 Z" 
                        fill={currentTheme.hillNear} className="transition-colors duration-1000" />
-                 <rect x="0" y="94" width="160" height="6" fill={currentTheme.ground} className="transition-colors duration-1000" />
+                 
+                 {/* Texture / Detail Pixels */}
+                 {!isDead && (
+                    <g opacity="0.4">
+                        {/* Far Hill Texture */}
+                        <rect x="20" y="74" width="2" height="2" fill="#14532d" />
+                        <rect x="45" y="70" width="2" height="2" fill="#14532d" />
+                        <rect x="90" y="66" width="2" height="2" fill="#14532d" />
+                        <rect x="130" y="76" width="2" height="2" fill="#14532d" />
+                        <rect x="70" y="68" width="2" height="2" fill="#14532d" />
+                        <rect x="110" y="72" width="2" height="2" fill="#14532d" />
+                        {/* Highlights */}
+                        <rect x="22" y="72" width="2" height="2" fill="#86efac" opacity="0.3" />
+                        <rect x="92" y="64" width="2" height="2" fill="#86efac" opacity="0.3" />
+
+                        {/* Near Hill Texture */}
+                        <rect x="10" y="94" width="2" height="2" fill="#064e3b" />
+                        <rect x="60" y="86" width="2" height="2" fill="#064e3b" />
+                        <rect x="110" y="84" width="2" height="2" fill="#064e3b" />
+                        <rect x="150" y="92" width="2" height="2" fill="#064e3b" />
+                        <rect x="30" y="88" width="2" height="2" fill="#064e3b" />
+                        <rect x="80" y="90" width="2" height="2" fill="#064e3b" />
+                        <rect x="130" y="88" width="2" height="2" fill="#064e3b" />
+                        {/* Highlights */}
+                        <rect x="62" y="84" width="2" height="2" fill="#4ade80" opacity="0.2" />
+                        <rect x="112" y="82" width="2" height="2" fill="#4ade80" opacity="0.2" />
+                    </g>
+                 )}
+
+                 {/* Ground */}
+                 <rect x="0" y="96" width="160" height="4" fill={currentTheme.ground} className="transition-colors duration-1000" />
+                 
+                 {/* Ground Detail (Grass/Stones) */}
+                 {!isDead && (
+                    <g>
+                        {/* Grass Tufts */}
+                        <g className="animate-sway origin-bottom" style={{ animationDuration: '3s' }}>
+                            <rect x="10" y="95" width="1" height="2" fill="#4caf50" />
+                            <rect x="12" y="94" width="1" height="3" fill="#4caf50" />
+                            <rect x="14" y="95" width="1" height="2" fill="#4caf50" />
+                        </g>
+
+                        <g className="animate-sway origin-bottom" style={{ animationDuration: '4s', animationDelay: '1s' }}>
+                            <rect x="50" y="95" width="1" height="2" fill="#4caf50" />
+                            <rect x="52" y="94" width="1" height="3" fill="#4caf50" />
+                        </g>
+                        
+                        <g className="animate-sway origin-bottom" style={{ animationDuration: '3.5s', animationDelay: '0.5s' }}>
+                            <rect x="120" y="95" width="1" height="2" fill="#4caf50" />
+                            <rect x="122" y="94" width="1" height="3" fill="#4caf50" />
+                            <rect x="124" y="95" width="1" height="2" fill="#4caf50" />
+                        </g>
+
+                        {/* Stones */}
+                        <rect x="30" y="97" width="3" height="2" fill="#78909c" />
+                        <rect x="31" y="96" width="1" height="1" fill="#cfd8dc" />
+                        
+                        <rect x="90" y="97" width="2" height="2" fill="#78909c" />
+                        
+                        <rect x="140" y="97" width="4" height="2" fill="#78909c" />
+                        <rect x="141" y="96" width="2" height="1" fill="#cfd8dc" />
+                    </g>
+                 )}
              </svg>
              
              <div className="absolute inset-0 opacity-10 pointer-events-none" style={{ backgroundImage: 'radial-gradient(black 1px, transparent 0)', backgroundSize: '4px 4px' }} />
@@ -475,11 +787,13 @@ function App() {
         setCurrentTime(now.getTime());
         
         // Day/Night Cycle (6am to 6pm is Day)
-        const hour = now.getHours();
-        setThemeMode(hour >= 6 && hour < 18 ? 'day' : 'night');
+        if (!isDemoMode) {
+            const hour = now.getHours();
+            setThemeMode(hour >= 6 && hour < 18 ? 'day' : 'night');
+        }
     }, 1000);
     return () => clearInterval(interval);
-  }, []);
+  }, [isDemoMode]);
 
   // Poll for external state (Simulation of GitHub Action / Backend update)
   useEffect(() => {
@@ -683,11 +997,11 @@ function App() {
         .animate-magic { animation: magic-pulse 2s ease-in-out infinite; }
 
         @keyframes rain-fall {
-            0% { transform: translateY(0) skewX(-5deg); }
-            100% { transform: translateY(50%) skewX(-5deg); }
+            0% { background-position: 0 0; }
+            100% { background-position: 0 400px; }
         }
-        .animate-rain-slow { animation: rain-fall 3s linear infinite; }
-        .animate-rain-medium { animation: rain-fall 2s linear infinite; }
+        .animate-rain-slow { animation: rain-fall 1s linear infinite; }
+        .animate-rain-medium { animation: rain-fall 0.5s linear infinite; }
 
         @keyframes bounce {
           0%, 100% { transform: translateY(0); }
@@ -697,6 +1011,12 @@ function App() {
           0%, 100% { transform: rotate(-1deg); }
           50% { transform: rotate(1deg); }
         }
+        @keyframes cloud-drift {
+            0% { transform: translateX(0); }
+            50% { transform: translateX(5px); }
+            100% { transform: translateX(0); }
+        }
+        .animate-cloud-drift { animation: cloud-drift 20s ease-in-out infinite; }
         @keyframes slide-in-right {
           from { transform: translateX(100%); opacity: 0; }
           to { transform: translateX(0); opacity: 1; }
@@ -706,6 +1026,37 @@ function App() {
             20% { transform: translateY(-20px) scale(1.2); opacity: 1; }
             100% { transform: translateY(-60px) scale(1); opacity: 0; }
         }
+
+        @keyframes firefly {
+          0% { opacity: 0; transform: translate(0, 0); }
+          20% { opacity: 1; }
+          50% { transform: translate(10px, -10px); }
+          80% { opacity: 1; }
+          100% { opacity: 0; transform: translate(-5px, -20px); }
+        }
+        .animate-firefly { animation: firefly linear infinite; }
+
+        @keyframes fly-across {
+            0% { transform: translateX(-20px) translateY(0); }
+            25% { transform: translateX(25vw) translateY(10px); }
+            50% { transform: translateX(50vw) translateY(-5px); }
+            75% { transform: translateX(75vw) translateY(5px); }
+            100% { transform: translateX(110vw) translateY(0); }
+        }
+        .animate-fly-across { animation: fly-across 20s linear infinite; }
+
+        @keyframes wing-flap {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0; }
+        }
+        .animate-wing-flap { animation: wing-flap 0.2s steps(1) infinite; }
+
+        @keyframes leaf-fall {
+            0% { transform: translateY(0) rotate(0deg) translateX(0); opacity: 0; }
+            10% { opacity: 1; }
+            100% { transform: translateY(110vh) rotate(360deg) translateX(20px); opacity: 0; }
+        }
+        .animate-leaf-fall { animation: leaf-fall linear infinite; }
         
         ::-webkit-scrollbar { width: 8px; }
         ::-webkit-scrollbar-track { background: #1e1b4b; }
@@ -845,6 +1196,14 @@ function App() {
                 {/* Simulation Controls (Only visible in Demo Mode) */}
                 {isDemoMode && (
                     <>
+                        <button 
+                          onClick={() => setThemeMode(m => m === 'day' ? 'night' : 'day')}
+                          className="btn-mythic bg-indigo-600 hover:bg-indigo-500 text-white border-b-4 border-indigo-900 rounded p-3 shadow-lg flex items-center gap-1"
+                          title="Toggle Day/Night"
+                        >
+                            {themeMode === 'day' ? <Moon size={16} /> : <Sun size={16} />}
+                        </button>
+
                         <button 
                           onClick={() => handleDamage(10, "CI Pipeline Failure (-10 HP)")}
                           className="btn-mythic bg-red-600 hover:bg-red-500 text-white border-b-4 border-red-900 rounded p-3 shadow-lg flex items-center gap-1"
