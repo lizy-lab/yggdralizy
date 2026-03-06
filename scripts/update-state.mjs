@@ -21,19 +21,15 @@ const HEADERS = {
   'X-GitHub-Api-Version': '2022-11-28',
 };
 
-const FIX_PATTERN = /\b(fix|hotfix|patch|resolve|closes?|closed|bug)\b/i;
-const BOT_COMMIT_TAG = '[state-update]';
-
 // HP rules
 const HP_FAILED_RUN = -10;
 const HP_OPEN_ALERT = -5;
-const HP_FIX_COMMIT = 15;
 const HP_LUMIGO_CRITICAL = -15;
 const HP_LUMIGO_WARNING = -10;
 const HP_LUMIGO_INFO = -5;
+const HP_REGEN_PER_HOUR = 10;
 const MAX_HP = 100;
-const RESURRECTION_HP = 15;
-const MAX_LOOKBACK_MS = 24 * 60 * 60 * 1000; // 24 hours
+const MAX_LOOKBACK_MS = 24 * 60 * 60 * 1000;
 
 function parseLumigoPayload() {
   const raw = process.env.DISPATCH_PAYLOAD;
@@ -82,11 +78,11 @@ function loadState() {
       current_hp: MAX_HP,
       max_hp: MAX_HP,
       status: 'healthy',
-      last_activity_timestamp: new Date().toISOString(),
       last_update_timestamp: new Date().toISOString(),
       last_update_message: 'Initial state',
       cycles_since_incident: 0,
-      metrics: { failed_runs: 0, open_alerts: 0, fix_commits: 0, lumigo_alert: null },
+      metrics: { failed_runs: 0, open_alerts: 0, lumigo_alert: null },
+      event_log: [],
     };
   }
 }
@@ -111,23 +107,6 @@ async function getOpenAlerts() {
   return Array.isArray(data) ? data.length : 0;
 }
 
-async function getFixCommits(since) {
-  const sinceStr = since.toISOString();
-  const data = await githubFetch(
-    `/repos/${OWNER}/${REPO}/commits?since=${sinceStr}&per_page=100`
-  );
-  if (!data || !Array.isArray(data)) return { fixCount: 0, totalCount: 0 };
-
-  const nonBotCommits = data.filter(
-    (c) => !c.commit?.message?.includes(BOT_COMMIT_TAG)
-  );
-  const fixCommits = nonBotCommits.filter((c) =>
-    FIX_PATTERN.test(c.commit?.message ?? '')
-  );
-
-  return { fixCount: fixCommits.length, totalCount: nonBotCommits.length };
-}
-
 function clamp(value, min, max) {
   return Math.max(min, Math.min(max, value));
 }
@@ -146,14 +125,13 @@ async function main() {
 
   console.log(`Fetching metrics since ${since.toISOString()}...`);
 
-  // Fetch all metrics in parallel
-  const [failedRuns, openAlerts, { fixCount, totalCount }] = await Promise.all([
+  // Fetch GitHub metrics in parallel
+  const [failedRuns, openAlerts] = await Promise.all([
     getFailedRuns(since),
     getOpenAlerts(),
-    getFixCommits(since),
   ]);
 
-  console.log(`Metrics: failed_runs=${failedRuns}, open_alerts=${openAlerts}, fix_commits=${fixCount}, total_commits=${totalCount}`);
+  console.log(`Metrics: failed_runs=${failedRuns}, open_alerts=${openAlerts}`);
 
   // Check for Lumigo webhook payload
   const lumigoEvent = parseLumigoPayload();
@@ -161,14 +139,23 @@ async function main() {
     console.log(`Lumigo alert: [${lumigoEvent.level}] ${lumigoEvent.name} on ${lumigoEvent.resource} (${lumigoEvent.hpDelta} HP)`);
   }
 
+  // Calculate passive regeneration based on time since last update
+  const hoursSinceUpdate = (now.getTime() - lastUpdate.getTime()) / (1000 * 60 * 60);
+  const regenAmount = Math.floor(hoursSinceUpdate * HP_REGEN_PER_HOUR);
+
   // Calculate HP delta
   let delta = 0;
   delta += failedRuns * HP_FAILED_RUN;
   delta += openAlerts * HP_OPEN_ALERT;
-  delta += fixCount * HP_FIX_COMMIT;
   if (lumigoEvent) delta += lumigoEvent.hpDelta;
 
-  console.log(`HP delta: ${delta}`);
+  // Apply regen only if tree is alive and not already at max
+  const damageOnly = delta;
+  if (state.status !== 'dead' && state.current_hp < MAX_HP && regenAmount > 0) {
+    delta += regenAmount;
+  }
+
+  console.log(`HP delta: ${delta} (damage=${damageOnly}, regen=+${regenAmount})`);
 
   // Build update message parts
   const messageParts = [];
@@ -176,25 +163,25 @@ async function main() {
 
   // Apply HP changes
   if (state.status === 'dead') {
-    if (fixCount > 0) {
-      // Resurrection
-      state.current_hp = RESURRECTION_HP;
+    // Passive regen revives the tree over time
+    if (regenAmount > 0) {
+      state.current_hp = clamp(regenAmount, 0, MAX_HP);
       state.status = 'healthy';
       state.cycles_since_incident = 0;
-      messageParts.push(`RESURRECTION: Tree revived by fix commit (+${RESURRECTION_HP} HP)`);
-      console.log('Tree resurrected!');
+      messageParts.push(`RESURRECTION: Tree revived by natural regeneration (+${state.current_hp} HP)`);
+      console.log('Tree resurrected via passive regen!');
     } else {
       state.current_hp = 0;
-      messageParts.push('Tree remains dead. Push a fix commit to resurrect.');
-      console.log('Tree still dead, no fix commits found.');
+      console.log('Tree still dead.');
     }
   } else {
     const newHp = clamp(state.current_hp + delta, 0, MAX_HP);
 
-    if (failedRuns > 0) messageParts.push(`${failedRuns} failed run(s) (${failedRuns * Math.abs(HP_FAILED_RUN)} HP lost)`);
-    if (openAlerts > 0) messageParts.push(`${openAlerts} open alert(s) (${openAlerts * Math.abs(HP_OPEN_ALERT)} HP lost)`);
-    if (fixCount > 0) messageParts.push(`${fixCount} fix commit(s) (+${fixCount * HP_FIX_COMMIT} HP)`);
-    if (lumigoEvent) messageParts.push(`Lumigo [${lumigoEvent.level}]: ${lumigoEvent.name} (${Math.abs(lumigoEvent.hpDelta)} HP lost)`);
+    if (failedRuns > 0) messageParts.push(`${failedRuns} failed run(s) (-${failedRuns * Math.abs(HP_FAILED_RUN)} HP)`);
+    if (openAlerts > 0) messageParts.push(`${openAlerts} open alert(s) (-${openAlerts * Math.abs(HP_OPEN_ALERT)} HP)`);
+    if (lumigoEvent) messageParts.push(`Lumigo [${lumigoEvent.level}]: ${lumigoEvent.name} (-${Math.abs(lumigoEvent.hpDelta)} HP)`);
+    if (regenAmount > 0 && state.current_hp < MAX_HP) messageParts.push(`Passive regen (+${Math.min(regenAmount, MAX_HP - state.current_hp)} HP)`);
+
     if (newHp <= 0) {
       state.current_hp = 0;
       state.status = 'dead';
@@ -205,18 +192,12 @@ async function main() {
       state.current_hp = newHp;
       state.status = 'healthy';
 
-      // Update cycles: increment if no problems, else reset
-      if (failedRuns === 0 && openAlerts === 0) {
+      if (failedRuns === 0 && openAlerts === 0 && !lumigoEvent) {
         state.cycles_since_incident = (state.cycles_since_incident ?? 0) + 1;
       } else {
         state.cycles_since_incident = 0;
       }
     }
-  }
-
-  // Update activity timestamp if there was any activity
-  if (totalCount > 0) {
-    state.last_activity_timestamp = now.toISOString();
   }
 
   // Update metadata
@@ -228,7 +209,6 @@ async function main() {
   state.metrics = {
     failed_runs: failedRuns,
     open_alerts: openAlerts,
-    fix_commits: fixCount,
     lumigo_alert: lumigoEvent ? `${lumigoEvent.level}: ${lumigoEvent.name}` : null,
   };
 
