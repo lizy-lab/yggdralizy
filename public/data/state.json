@@ -2,13 +2,14 @@
   "current_hp": 100,
   "max_hp": 100,
   "status": "healthy",
-  "last_activity_timestamp": "2026-03-06T06:36:22.062Z",
-  "last_update_timestamp": "2026-03-06T13:57:41.976Z",
+  "last_activity_timestamp": "2026-03-06T14:00:44.511Z",
+  "last_update_timestamp": "2026-03-06T14:00:44.511Z",
   "last_update_message": "No changes detected",
-  "cycles_since_incident": 8,
+  "cycles_since_incident": 9,
   "metrics": {
     "failed_runs": 0,
     "open_alerts": 0,
-    "fix_commits": 0
+    "fix_commits": 0,
+    "lumigo_alert": null
   }
 }
