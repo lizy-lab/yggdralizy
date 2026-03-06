@@ -913,10 +913,13 @@ function App() {
   };
 
   let progress = 0;
-  if (currentStageIndex < STAGES.length - 1) {
+  let cyclesRemaining = 0;
+  const isMaxLevel = currentStageIndex >= STAGES.length - 1;
+  if (!isMaxLevel) {
       const currentThreshold = currentStage.threshold;
       const nextThreshold = STAGES[currentStageIndex + 1].threshold;
-      progress = ((unitsPassed - currentThreshold) / (nextThreshold - currentThreshold)) * 100;
+      progress = ((effectiveUnits - currentThreshold) / (nextThreshold - currentThreshold)) * 100;
+      cyclesRemaining = nextThreshold - effectiveUnits;
   } else {
       progress = 100;
   }
@@ -1133,14 +1136,24 @@ function App() {
                 </div>
                 
                 {/* Right: Progress */}
-                <div className="bg-slate-900/80 backdrop-blur-sm border border-slate-600 p-2 rounded shadow-lg text-right justify-self-end">
-                    <div className="font-pixel text-[10px] text-purple-200 mb-1 tracking-wider">
-                        LEVEL {currentStageIndex + 1}
+                <div className="bg-slate-900/80 backdrop-blur-sm border border-slate-600 p-2 rounded shadow-lg text-right justify-self-end min-w-[120px]">
+                    <div className="flex items-center justify-between gap-2 mb-1">
+                        <span className="font-pixel text-[10px] text-purple-200 tracking-wider">
+                            LVL {currentStageIndex + 1}
+                        </span>
+                        <span className="font-pixel text-[10px] text-cyan-300">
+                            {isMaxLevel ? 'MAX' : `${Math.floor(progress)}%`}
+                        </span>
                     </div>
-                    <div className="w-24 md:w-32 h-2 bg-slate-800 border border-slate-600 rounded-full overflow-hidden relative">
+                    <div className="w-full h-2 bg-slate-800 border border-slate-600 rounded-full overflow-hidden relative">
                         <div className="absolute inset-0 bg-purple-900/50"></div>
                         <div className="h-full bg-gradient-to-r from-purple-500 to-cyan-400 transition-all duration-1000 shadow-[0_0_10px_rgba(168,85,247,0.8)]" style={{ width: `${progress}%` }} />
                     </div>
+                    {!isMaxLevel && (
+                        <div className="text-[9px] text-slate-400 mt-1 font-mono">
+                            {isDemoMode ? `${cyclesRemaining} cycles left` : `~${cyclesRemaining}d to next`}
+                        </div>
+                    )}
                 </div>
             </div>
 
