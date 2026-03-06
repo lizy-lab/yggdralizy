@@ -762,7 +762,8 @@ const PixelSparkle = () => (
 function App() {
   const [lastIncident, setLastIncident] = useState<number>(Date.now());
   const [currentTime, setCurrentTime] = useState<number>(Date.now());
-  const [isDemoMode, setIsDemoMode] = useState<boolean>(true);
+  const isLocalDev = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1';
+  const [isDemoMode, setIsDemoMode] = useState<boolean>(isLocalDev);
   const [incidentMessage, setIncidentMessage] = useState<string | null>(null);
   const [isDead, setIsDead] = useState(false);
   const [weather, setWeather] = useState<'sunny' | 'rainy'>('sunny');
@@ -1188,15 +1189,17 @@ function App() {
 
             <div className="flex items-center gap-2 z-10 flex-wrap justify-center">
                 
-                {/* Mode Toggle */}
-                <button 
-                  onClick={() => setIsDemoMode(!isDemoMode)}
-                  className={`btn-mythic border-b-4 rounded p-3 flex items-center gap-2 font-pixel text-[10px] mr-2 ${isDemoMode ? 'bg-purple-600 border-purple-800 text-white' : 'bg-green-700 border-green-900 text-green-100'}`}
-                  title="Toggle Simulation vs Real Data"
-                >
-                    {isDemoMode ? <Zap size={16} /> : <Database size={16} />}
-                    <span className="hidden md:inline">{isDemoMode ? 'DEMO MODE' : 'LIVE DATA'}</span>
-                </button>
+                {/* Mode Toggle (local dev only) */}
+                {isLocalDev && (
+                  <button
+                    onClick={() => setIsDemoMode(!isDemoMode)}
+                    className={`btn-mythic border-b-4 rounded p-3 flex items-center gap-2 font-pixel text-[10px] mr-2 ${isDemoMode ? 'bg-purple-600 border-purple-800 text-white' : 'bg-green-700 border-green-900 text-green-100'}`}
+                    title="Toggle Simulation vs Real Data"
+                  >
+                      {isDemoMode ? <Zap size={16} /> : <Database size={16} />}
+                      <span className="hidden md:inline">{isDemoMode ? 'DEMO MODE' : 'LIVE DATA'}</span>
+                  </button>
+                )}
 
                 {/* Simulation Controls (Only visible in Demo Mode) */}
                 {isDemoMode && (
