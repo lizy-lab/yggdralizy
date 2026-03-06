@@ -28,9 +28,40 @@ const BOT_COMMIT_TAG = '[state-update]';
 const HP_FAILED_RUN = -10;
 const HP_OPEN_ALERT = -5;
 const HP_FIX_COMMIT = 15;
+const HP_LUMIGO_CRITICAL = -15;
+const HP_LUMIGO_WARNING = -10;
+const HP_LUMIGO_INFO = -5;
 const MAX_HP = 100;
 const RESURRECTION_HP = 15;
 const MAX_LOOKBACK_MS = 24 * 60 * 60 * 1000; // 24 hours
+
+function parseLumigoPayload() {
+  const raw = process.env.DISPATCH_PAYLOAD;
+  if (!raw || raw === 'null' || raw === '{}') return null;
+
+  try {
+    const payload = JSON.parse(raw);
+    if (payload.source !== 'lumigo' || !payload.lumigo) return null;
+
+    const { event, data } = payload.lumigo;
+    if (event !== 'alert' || !data?.issue) return null;
+
+    const level = (data.issue.level || '').toLowerCase();
+    const name = data.issue.name || 'Unknown issue';
+    const resource = data.resource?.name || 'unknown resource';
+
+    let hpDelta;
+    switch (level) {
+      case 'critical': hpDelta = HP_LUMIGO_CRITICAL; break;
+      case 'warning':  hpDelta = HP_LUMIGO_WARNING; break;
+      default:         hpDelta = HP_LUMIGO_INFO; break;
+    }
+
+    return { level, name, resource, hpDelta };
+  } catch {
+    return null;
+  }
+}
 
 async function githubFetch(path) {
   const url = `${API_BASE}${path}`;
@@ -55,7 +86,7 @@ function loadState() {
       last_update_timestamp: new Date().toISOString(),
       last_update_message: 'Initial state',
       cycles_since_incident: 0,
-      metrics: { failed_runs: 0, open_alerts: 0, fix_commits: 0, time_decay_hours: 0 },
+      metrics: { failed_runs: 0, open_alerts: 0, fix_commits: 0, lumigo_alert: null },
     };
   }
 }
@@ -124,11 +155,18 @@ async function main() {
 
   console.log(`Metrics: failed_runs=${failedRuns}, open_alerts=${openAlerts}, fix_commits=${fixCount}, total_commits=${totalCount}`);
 
+  // Check for Lumigo webhook payload
+  const lumigoEvent = parseLumigoPayload();
+  if (lumigoEvent) {
+    console.log(`Lumigo alert: [${lumigoEvent.level}] ${lumigoEvent.name} on ${lumigoEvent.resource} (${lumigoEvent.hpDelta} HP)`);
+  }
+
   // Calculate HP delta
   let delta = 0;
   delta += failedRuns * HP_FAILED_RUN;
   delta += openAlerts * HP_OPEN_ALERT;
   delta += fixCount * HP_FIX_COMMIT;
+  if (lumigoEvent) delta += lumigoEvent.hpDelta;
 
   console.log(`HP delta: ${delta}`);
 
@@ -155,6 +193,7 @@ async function main() {
     if (failedRuns > 0) messageParts.push(`${failedRuns} failed run(s) (${failedRuns * Math.abs(HP_FAILED_RUN)} HP lost)`);
     if (openAlerts > 0) messageParts.push(`${openAlerts} open alert(s) (${openAlerts * Math.abs(HP_OPEN_ALERT)} HP lost)`);
     if (fixCount > 0) messageParts.push(`${fixCount} fix commit(s) (+${fixCount * HP_FIX_COMMIT} HP)`);
+    if (lumigoEvent) messageParts.push(`Lumigo [${lumigoEvent.level}]: ${lumigoEvent.name} (${Math.abs(lumigoEvent.hpDelta)} HP lost)`);
     if (newHp <= 0) {
       state.current_hp = 0;
       state.status = 'dead';
@@ -189,6 +228,7 @@ async function main() {
     failed_runs: failedRuns,
     open_alerts: openAlerts,
     fix_commits: fixCount,
+    lumigo_alert: lumigoEvent ? `${lumigoEvent.level}: ${lumigoEvent.name}` : null,
   };
 
   saveState(state);
