@@ -1,0 +1,53 @@
+name: Update Lizydrasil State
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    types: [opened, synchronize, closed]
+  workflow_run:
+    workflows: ["Deploy to GitHub Pages"]
+    types: [completed]
+  workflow_dispatch:
+  repository_dispatch:
+    types: [update-state]
+
+concurrency:
+  group: update-state
+  cancel-in-progress: false
+
+permissions:
+  contents: write
+  actions: read
+  security-events: read
+
+jobs:
+  update:
+    runs-on: ubuntu-latest
+    if: >
+      (github.event_name != 'push' || !contains(github.event.head_commit.message, '[state-update]')) &&
+      (github.event_name != 'workflow_run' || github.event.workflow_run.name != 'Update Lizydrasil State')
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Run state controller
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_REPOSITORY: ${{ github.repository }}
+        run: node scripts/update-state.mjs
+
+      - name: Commit updated state
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add public/data/state.json
+          git diff --cached --quiet || git commit -m "chore: update Lizydrasil state [state-update]"
+          git push

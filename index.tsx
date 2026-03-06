@@ -770,6 +770,8 @@ function App() {
 
   // Health System
   const [health, setHealth] = useState(100);
+  const [liveMaxHp, setLiveMaxHp] = useState<number | null>(null);
+  const [liveCycles, setLiveCycles] = useState<number | null>(null);
   const [visualEffects, setVisualEffects] = useState<{id: number; type: 'sparkle' | 'rune' | 'milestone'; x: number; y: number; content?: string}[]>([]);
   const [bounceTrigger, setBounceTrigger] = useState(0);
 
@@ -804,16 +806,16 @@ function App() {
               const res = await fetch('./data/state.json');
               if (res.ok) {
                   const data = await res.json();
-                  // In a real environment, these would map to the "backend" state
                   if (data.current_hp !== undefined) setHealth(data.current_hp);
-                  if (data.last_incident_timestamp) setLastIncident(data.last_incident_timestamp);
+                  if (data.max_hp !== undefined) setLiveMaxHp(data.max_hp);
+                  if (data.cycles_since_incident !== undefined) setLiveCycles(data.cycles_since_incident);
+                  if (data.last_activity_timestamp) setLastIncident(new Date(data.last_activity_timestamp).getTime());
                   if (data.status === 'dead') setIsDead(true);
                   if (data.status === 'healthy') setIsDead(false);
-                  
-                  // If we see a message we haven't shown, we could show it (simplification)
-                  if (data.last_update_message && Math.random() > 0.95) {
+
+                  if (data.last_update_message) {
                       setIncidentMessage(data.last_update_message);
-                      setTimeout(() => setIncidentMessage(null), 4000);
+                      setTimeout(() => setIncidentMessage(null), 6000);
                   }
               }
           } catch (e) {
@@ -828,15 +830,18 @@ function App() {
   }, [isDemoMode]);
 
   const diff = currentTime - lastIncident;
-  const timeUnit = isDemoMode ? TIME_UNITS.SECOND : TIME_UNITS.DAY; 
+  const timeUnit = isDemoMode ? TIME_UNITS.SECOND : TIME_UNITS.DAY;
   const unitsPassed = Math.floor(diff / timeUnit);
-  
-  let currentStageIndex = STAGES.findIndex((s) => unitsPassed < s.threshold) - 1;
-  if (currentStageIndex === -2) currentStageIndex = STAGES.length - 1; 
+
+  // In live mode, use cycles_since_incident from state.json for growth stage
+  const effectiveUnits = isDemoMode ? unitsPassed : (liveCycles ?? 0);
+
+  let currentStageIndex = STAGES.findIndex((s) => effectiveUnits < s.threshold) - 1;
+  if (currentStageIndex === -2) currentStageIndex = STAGES.length - 1;
   if (currentStageIndex < 0) currentStageIndex = 0;
 
   const currentStage = STAGES[currentStageIndex];
-  const maxHealth = (currentStageIndex + 1) * 50 + 50; // HP grows with level
+  const maxHealth = (!isDemoMode && liveMaxHp) ? liveMaxHp : (currentStageIndex + 1) * 50 + 50;
 
   // Healing Logic (Only in Demo Mode - Live mode expects backend to update HP)
   useEffect(() => {

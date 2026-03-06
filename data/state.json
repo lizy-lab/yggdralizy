@@ -1,7 +1,0 @@
-{
-  "current_hp": 100,
-  "last_incident_timestamp": 1715000000000,
-  "cycles_since_incident": 5,
-  "status": "healthy",
-  "last_update_message": "System operational"
-}
