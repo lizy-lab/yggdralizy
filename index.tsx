@@ -773,6 +773,7 @@ function App() {
   const [health, setHealth] = useState(100);
   const [liveMaxHp, setLiveMaxHp] = useState<number | null>(null);
   const [liveCycles, setLiveCycles] = useState<number | null>(null);
+  const [eventLog, setEventLog] = useState<{timestamp: string; message: string; hp_before: number; hp_after: number}[]>([]);
   const [visualEffects, setVisualEffects] = useState<{id: number; type: 'sparkle' | 'rune' | 'milestone'; x: number; y: number; content?: string}[]>([]);
   const [bounceTrigger, setBounceTrigger] = useState(0);
 
@@ -814,9 +815,8 @@ function App() {
                   if (data.status === 'dead') setIsDead(true);
                   if (data.status === 'healthy') setIsDead(false);
 
-                  if (data.last_update_message) {
-                      setIncidentMessage(data.last_update_message);
-                      setTimeout(() => setIncidentMessage(null), 6000);
+                  if (Array.isArray(data.event_log)) {
+                      setEventLog(data.event_log);
                   }
               }
           } catch (e) {
@@ -1259,6 +1259,37 @@ function App() {
                 </button>
             </div>
         </div>
+
+        {/* Event Log (Live mode only) */}
+        {!isDemoMode && eventLog.length > 0 && (
+          <div className="bg-slate-800 border-2 border-slate-600 w-full p-4 rounded-xl shadow-2xl relative overflow-hidden">
+            <div className="flex items-center gap-2 mb-3">
+              <Scroll size={14} className="text-purple-400" />
+              <span className="font-pixel text-[10px] text-purple-400 uppercase tracking-widest">Chronicle</span>
+            </div>
+            <div className="space-y-1 max-h-48 overflow-y-auto scrollbar-thin pr-1">
+              {[...eventLog].reverse().map((entry, i) => {
+                const date = new Date(entry.timestamp);
+                const timeStr = date.toLocaleDateString('en-US', { month: 'short', day: 'numeric' }) + ' ' + date.toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit' });
+                const hpDiff = entry.hp_after - entry.hp_before;
+                const hpColor = hpDiff > 0 ? 'text-emerald-400' : hpDiff < 0 ? 'text-red-400' : 'text-slate-400';
+                const hpSign = hpDiff > 0 ? '+' : '';
+                return (
+                  <div key={i} className={`flex items-start gap-3 py-2 ${i < eventLog.length - 1 ? 'border-b border-slate-700/50' : ''}`}>
+                    <span className="font-mono text-[10px] text-slate-500 whitespace-nowrap mt-0.5">{timeStr}</span>
+                    <span className="font-rpg text-sm text-slate-300 flex-1 leading-tight">{entry.message}</span>
+                    <span className={`font-pixel text-[10px] whitespace-nowrap mt-0.5 ${hpColor}`}>
+                      {hpSign}{hpDiff} HP
+                    </span>
+                    <span className="font-mono text-[10px] text-slate-500 whitespace-nowrap mt-0.5">
+                      {entry.hp_after}/{liveMaxHp ?? 100}
+                    </span>
+                  </div>
+                );
+              })}
+            </div>
+          </div>
+        )}
 
       </div>
     </div>

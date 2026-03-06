@@ -172,6 +172,7 @@ async function main() {
 
   // Build update message parts
   const messageParts = [];
+  const hpBefore = state.current_hp;
 
   // Apply HP changes
   if (state.status === 'dead') {
@@ -230,6 +231,18 @@ async function main() {
     fix_commits: fixCount,
     lumigo_alert: lumigoEvent ? `${lumigoEvent.level}: ${lumigoEvent.name}` : null,
   };
+
+  // Append to event log (keep last 20 entries)
+  const eventLog = Array.isArray(state.event_log) ? state.event_log : [];
+  if (messageParts.length > 0) {
+    eventLog.push({
+      timestamp: now.toISOString(),
+      message: messageParts.join(' | '),
+      hp_before: hpBefore,
+      hp_after: state.current_hp,
+    });
+  }
+  state.event_log = eventLog.slice(-20);
 
   saveState(state);
   console.log(`State updated: HP=${state.current_hp}/${state.max_hp}, status=${state.status}, cycles=${state.cycles_since_incident}`);
