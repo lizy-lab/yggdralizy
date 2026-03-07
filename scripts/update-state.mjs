@@ -80,7 +80,6 @@ function loadState() {
       status: 'healthy',
       last_update_timestamp: new Date().toISOString(),
       last_update_message: 'Initial state',
-      cycles_since_incident: 0,
       metrics: { failed_runs: 0, open_alerts: 0, lumigo_alert: null },
       event_log: [],
     };
@@ -167,7 +166,6 @@ async function main() {
     if (regenAmount > 0) {
       state.current_hp = clamp(regenAmount, 0, MAX_HP);
       state.status = 'healthy';
-      state.cycles_since_incident = 0;
       messageParts.push(`RESURRECTION: Tree revived by natural regeneration (+${state.current_hp} HP)`);
       console.log('Tree resurrected via passive regen!');
     } else {
@@ -185,18 +183,11 @@ async function main() {
     if (newHp <= 0) {
       state.current_hp = 0;
       state.status = 'dead';
-      state.cycles_since_incident = 0;
       messageParts.push('RAGNAROK: Tree has died!');
       console.log('Tree died!');
     } else {
       state.current_hp = newHp;
       state.status = 'healthy';
-
-      if (failedRuns === 0 && openAlerts === 0 && !lumigoEvent) {
-        state.cycles_since_incident = (state.cycles_since_incident ?? 0) + 1;
-      } else {
-        state.cycles_since_incident = 0;
-      }
     }
   }
 
@@ -225,7 +216,7 @@ async function main() {
   state.event_log = eventLog.slice(-20);
 
   saveState(state);
-  console.log(`State updated: HP=${state.current_hp}/${state.max_hp}, status=${state.status}, cycles=${state.cycles_since_incident}`);
+  console.log(`State updated: HP=${state.current_hp}/${state.max_hp}, status=${state.status}`);
 }
 
 main().catch((err) => {

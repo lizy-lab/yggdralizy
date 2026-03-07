@@ -772,7 +772,6 @@ function App() {
   // Health System
   const [health, setHealth] = useState(100);
   const [liveMaxHp, setLiveMaxHp] = useState<number | null>(null);
-  const [liveCycles, setLiveCycles] = useState<number | null>(null);
   const [eventLog, setEventLog] = useState<{timestamp: string; message: string; hp_before: number; hp_after: number}[]>([]);
   const [visualEffects, setVisualEffects] = useState<{id: number; type: 'sparkle' | 'rune' | 'milestone'; x: number; y: number; content?: string}[]>([]);
   const [bounceTrigger, setBounceTrigger] = useState(0);
@@ -810,7 +809,6 @@ function App() {
                   const data = await res.json();
                   if (data.current_hp !== undefined) setHealth(data.current_hp);
                   if (data.max_hp !== undefined) setLiveMaxHp(data.max_hp);
-                  if (data.cycles_since_incident !== undefined) setLiveCycles(data.cycles_since_incident);
                   if (data.last_activity_timestamp) setLastIncident(new Date(data.last_activity_timestamp).getTime());
                   if (data.status === 'dead') setIsDead(true);
                   if (data.status === 'healthy') setIsDead(false);
@@ -834,10 +832,7 @@ function App() {
   const timeUnit = isDemoMode ? TIME_UNITS.SECOND : TIME_UNITS.DAY;
   const unitsPassed = Math.floor(diff / timeUnit);
 
-  // In live mode, use cycles_since_incident from state.json for growth stage
-  const effectiveUnits = isDemoMode ? unitsPassed : (liveCycles ?? 0);
-
-  let currentStageIndex = STAGES.findIndex((s) => effectiveUnits < s.threshold) - 1;
+  let currentStageIndex = STAGES.findIndex((s) => unitsPassed < s.threshold) - 1;
   if (currentStageIndex === -2) currentStageIndex = STAGES.length - 1;
   if (currentStageIndex < 0) currentStageIndex = 0;
 
@@ -918,8 +913,8 @@ function App() {
   if (!isMaxLevel) {
       const currentThreshold = currentStage.threshold;
       const nextThreshold = STAGES[currentStageIndex + 1].threshold;
-      progress = ((effectiveUnits - currentThreshold) / (nextThreshold - currentThreshold)) * 100;
-      cyclesRemaining = nextThreshold - effectiveUnits;
+      progress = ((unitsPassed - currentThreshold) / (nextThreshold - currentThreshold)) * 100;
+      cyclesRemaining = nextThreshold - unitsPassed;
   } else {
       progress = 100;
   }
