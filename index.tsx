@@ -90,10 +90,10 @@ const TREE_PALETTES = {
 // Pixel Art Assets (SVG based)
 const PixelArt = ({ stage, isDead, bounceTrigger, health, maxHealth }: { stage: number; isDead: boolean, bounceTrigger?: number, health: number, maxHealth: number }) => {
   const [isJumping, setIsJumping] = useState(false);
-  
-  // Calculate damage ratio for visual cracks (0 to 1, where 1 is full health)
-  const hpRatio = health / maxHealth;
+
   const hpPercent = (health / maxHealth) * 100;
+  const stageName = STAGES[stage]?.name ?? 'Unknown';
+  const svgLabel = isDead ? `Yggdrasil - Dead` : `Yggdrasil - ${stageName} (${Math.round(hpPercent)}% HP)`;
   
   // Determine Visual State based on HP rules
   let palette = TREE_PALETTES.lush;
@@ -173,7 +173,7 @@ const PixelArt = ({ stage, isDead, bounceTrigger, health, maxHealth }: { stage: 
 
   if (isDead) {
     return (
-      <svg viewBox="0 0 64 64" className={`w-64 h-64 pixel-art drop-shadow-2xl ${animationClass}`}>
+      <svg viewBox="0 0 64 64" className={`w-64 h-64 pixel-art drop-shadow-2xl ${animationClass}`} role="img" aria-label={svgLabel}>
         {/* Broken Trunk */}
         <path d="M24 64 L26 50 L38 50 L40 64 Z" fill={cStemD} />
         <path d="M26 50 L24 40 L30 46 L34 40 L40 50 Z" fill={cStem} />
@@ -194,7 +194,7 @@ const PixelArt = ({ stage, isDead, bounceTrigger, health, maxHealth }: { stage: 
   switch (stage) {
     case 0: // Seed of Origin
       return (
-        <svg viewBox="0 0 64 64" className={`w-64 h-64 pixel-art ${animationClass}`}>
+        <svg viewBox="0 0 64 64" className={`w-64 h-64 pixel-art ${animationClass}`} role="img" aria-label={svgLabel}>
           {/* Soil Mound - Grounded look */}
           <path d="M22 64 L26 60 L38 60 L42 64 Z" fill={cStemD} />
           
@@ -209,7 +209,7 @@ const PixelArt = ({ stage, isDead, bounceTrigger, health, maxHealth }: { stage: 
       );
     case 1: // Awakening Seed
       return (
-        <svg viewBox="0 0 64 64" className={`w-64 h-64 pixel-art ${animationClass}`}>
+        <svg viewBox="0 0 64 64" className={`w-64 h-64 pixel-art ${animationClass}`} role="img" aria-label={svgLabel}>
           {/* Soil Mound */}
           <path d="M22 64 L26 60 L38 60 L42 64 Z" fill={cStemD} />
           
@@ -234,7 +234,7 @@ const PixelArt = ({ stage, isDead, bounceTrigger, health, maxHealth }: { stage: 
       );
     case 2: // Sprout of Realms
       return (
-        <svg viewBox="0 0 64 64" className={`w-64 h-64 pixel-art ${animationClass}`}>
+        <svg viewBox="0 0 64 64" className={`w-64 h-64 pixel-art ${animationClass}`} role="img" aria-label={svgLabel}>
           <rect x="30" y="48" width="4" height="12" fill={cStem} />
           <rect x="30" y="48" width="1" height="12" fill={cStemL} opacity="0.3" />
           <rect x="32" y="52" width="1" height="2" fill={cStemD} opacity="0.3" />
@@ -254,7 +254,7 @@ const PixelArt = ({ stage, isDead, bounceTrigger, health, maxHealth }: { stage: 
       );
     case 3: // Roots of Wisdom
       return (
-        <svg viewBox="0 0 64 64" className={`w-64 h-64 pixel-art ${animationClass}`}>
+        <svg viewBox="0 0 64 64" className={`w-64 h-64 pixel-art ${animationClass}`} role="img" aria-label={svgLabel}>
           <rect x="28" y="40" width="8" height="20" fill={cStem} />
           {/* Shading */}
           <rect x="34" y="40" width="2" height="20" fill={cStemD} opacity="0.3" />
@@ -284,7 +284,7 @@ const PixelArt = ({ stage, isDead, bounceTrigger, health, maxHealth }: { stage: 
     case 4: // Trunk of Strength
     case 5: // Branches of Fate
       return (
-        <svg viewBox="0 0 64 64" className={`w-64 h-64 pixel-art ${animationClass}`}>
+        <svg viewBox="0 0 64 64" className={`w-64 h-64 pixel-art ${animationClass}`} role="img" aria-label={svgLabel}>
           <path d="M26 64 L28 40 L36 40 L38 64 Z" fill={cStem} />
           {/* Trunk Texture */}
           <rect x="34" y="40" width="2" height="24" fill={cStemD} opacity="0.3" />
@@ -333,7 +333,7 @@ const PixelArt = ({ stage, isDead, bounceTrigger, health, maxHealth }: { stage: 
     case 7: // Yggdrasil Ascendant
     default:
       return (
-        <svg viewBox="0 0 64 64" className={`w-64 h-64 pixel-art ${animationClass}`}>
+        <svg viewBox="0 0 64 64" className={`w-64 h-64 pixel-art ${animationClass}`} role="img" aria-label={svgLabel}>
           <path d="M22 64 L26 30 L38 30 L42 64 Z" fill={cStem} />
           <path d="M22 64 L16 64 L24 50 Z" fill={cStemD} />
           <path d="M42 64 L48 64 L40 50 Z" fill={cStemD} />
@@ -818,7 +818,7 @@ function App() {
                   }
               }
           } catch (e) {
-              console.log("Could not fetch state.json (Live mode active but file not found or CORS)");
+              console.warn("Could not fetch state.json (Live mode active but file not found or CORS)");
           }
       };
 
@@ -1171,7 +1171,8 @@ function App() {
                      </div>
                  ))}
 
-                <div className="absolute bottom-[10%] z-10 pointer-events-auto cursor-pointer hover:scale-105 transition-transform duration-500" 
+                <div className="absolute bottom-[10%] z-10 pointer-events-auto cursor-pointer hover:scale-105 transition-transform duration-500"
+                     role="button" aria-label="Click tree to spawn rune effect"
                      onClick={() => spawnEffect('rune', undefined, 50, 60)}>
                      <PixelArt stage={currentStage.id} isDead={isDead} bounceTrigger={bounceTrigger} health={health} maxHealth={maxHealth} />
                 </div>
@@ -1203,6 +1204,7 @@ function App() {
                     onClick={() => setIsDemoMode(!isDemoMode)}
                     className={`btn-mythic border-b-4 rounded p-3 flex items-center gap-2 font-pixel text-[10px] mr-2 ${isDemoMode ? 'bg-purple-600 border-purple-800 text-white' : 'bg-green-700 border-green-900 text-green-100'}`}
                     title="Toggle Simulation vs Real Data"
+                    aria-label={isDemoMode ? 'Switch to live data mode' : 'Switch to demo mode'}
                   >
                       {isDemoMode ? <Zap size={16} /> : <Database size={16} />}
                       <span className="hidden md:inline">{isDemoMode ? 'DEMO MODE' : 'LIVE DATA'}</span>
@@ -1216,6 +1218,7 @@ function App() {
                           onClick={() => setThemeMode(m => m === 'day' ? 'night' : 'day')}
                           className="btn-mythic bg-indigo-600 hover:bg-indigo-500 text-white border-b-4 border-indigo-900 rounded p-3 shadow-lg flex items-center gap-1"
                           title="Toggle Day/Night"
+                          aria-label={themeMode === 'day' ? 'Switch to night mode' : 'Switch to day mode'}
                         >
                             {themeMode === 'day' ? <Moon size={16} /> : <Sun size={16} />}
                         </button>
@@ -1224,6 +1227,7 @@ function App() {
                           onClick={() => handleDamage(10, "CI Pipeline Failure (-10 HP)")}
                           className="btn-mythic bg-red-600 hover:bg-red-500 text-white border-b-4 border-red-900 rounded p-3 shadow-lg flex items-center gap-1"
                           title="Simulate CI Failure"
+                          aria-label="Simulate CI pipeline failure, minus 10 HP"
                         >
                             <AlertTriangle size={16} />
                             <span className="font-pixel text-[8px]">-10</span>
@@ -1233,6 +1237,7 @@ function App() {
                           onClick={() => handleDamage(5, "Dependabot Alert (-5 HP)")}
                           className="btn-mythic bg-orange-600 hover:bg-orange-500 text-white border-b-4 border-orange-900 rounded p-3 shadow-lg flex items-center gap-1"
                           title="Simulate Security Alert"
+                          aria-label="Simulate security alert, minus 5 HP"
                         >
                             <ShieldAlert size={16} />
                             <span className="font-pixel text-[8px]">-5</span>
@@ -1242,6 +1247,7 @@ function App() {
                           onClick={() => handleHeal(15, "Hotfix Merged (+15 HP)")}
                           className="btn-mythic bg-emerald-600 hover:bg-emerald-500 text-white border-b-4 border-emerald-900 rounded p-3 shadow-lg flex items-center gap-1"
                           title="Simulate Fix"
+                          aria-label="Simulate hotfix merge, plus 15 HP"
                         >
                             <GitCommit size={16} />
                             <span className="font-pixel text-[8px]">+15</span>
@@ -1251,6 +1257,7 @@ function App() {
                           onClick={resetToCleanSlate}
                           className="btn-mythic bg-amber-600 hover:bg-amber-500 text-white border-b-4 border-amber-800 rounded p-3 shadow-lg"
                           title="Hard Reset"
+                          aria-label="Reset tree to initial state"
                         >
                             <RefreshCcw size={16} />
                         </button>
@@ -1262,6 +1269,7 @@ function App() {
                   onClick={() => setWeather(w => w === 'sunny' ? 'rainy' : 'sunny')}
                   className={`btn-mythic border-b-4 rounded p-3 flex items-center gap-2 font-pixel text-[10px] ${weather === 'sunny' ? 'bg-cyan-700 border-cyan-900 text-cyan-100' : 'bg-slate-600 border-slate-800 text-slate-300'}`}
                   title="Alter Weather"
+                  aria-label={weather === 'sunny' ? 'Switch to rainy weather' : 'Switch to sunny weather'}
                 >
                     {weather === 'sunny' ? <Sun size={16} /> : <CloudRain size={16} />}
                 </button>
