@@ -26,18 +26,18 @@ const PAGES_URL = `https://${OWNER}.github.io/${REPO}/`;
 
 const STAGES = [
   { name: 'Seed of Origin', threshold: 0 },
-  { name: 'Awakening Seed', threshold: 5 },
-  { name: 'Sprout of Realms', threshold: 10 },
-  { name: 'Roots of Wisdom', threshold: 25 },
-  { name: 'Trunk of Strength', threshold: 45 },
-  { name: 'Branches of Fate', threshold: 70 },
-  { name: 'Guardian of Worlds', threshold: 100 },
-  { name: 'Yggdrasil Ascendant', threshold: 140 },
+  { name: 'Awakening Seed', threshold: 1 },
+  { name: 'Sprout of Realms', threshold: 3 },
+  { name: 'Roots of Wisdom', threshold: 8 },
+  { name: 'Trunk of Strength', threshold: 18 },
+  { name: 'Branches of Fate', threshold: 36 },
+  { name: 'Guardian of Worlds', threshold: 72 },
+  { name: 'Yggdrasil Ascendant', threshold: 144 },
 ];
-const DAY_MS = 24 * 60 * 60 * 1000;
+const HOUR_MS = 60 * 60 * 1000;
 
-function getStageIndex(daysSinceActivity) {
-  let idx = STAGES.findIndex(s => daysSinceActivity < s.threshold) - 1;
+function getStageIndex(hoursSinceActivity) {
+  let idx = STAGES.findIndex(s => hoursSinceActivity < s.threshold) - 1;
   if (idx === -2) idx = STAGES.length - 1;
   if (idx < 0) idx = 0;
   return idx;
@@ -161,6 +161,8 @@ async function notifySlack(state, hpBefore, messageParts, isDeath, isResurrectio
   else if (state.current_hp / state.max_hp <= 0.2) color = '#6b7280';
   else if (state.current_hp / state.max_hp <= 0.8) color = '#eab308';
 
+  const ogImageUrl = `${PAGES_URL}og-image.png`;
+
   const blocks = {
     attachments: [{
       color,
@@ -171,6 +173,11 @@ async function notifySlack(state, hpBefore, messageParts, isDeath, isResurrectio
             type: 'mrkdwn',
             text: `${emoji} *Yggdralizy* ${hpBar(state.current_hp, state.max_hp)} ${state.current_hp}/${state.max_hp} HP (${hpSign}${hpDiff})\n${messageParts.join('\n')}`,
           },
+        },
+        {
+          type: 'image',
+          image_url: ogImageUrl,
+          alt_text: `Yggdralizy tree - ${state.current_hp}/${state.max_hp} HP`,
         },
         {
           type: 'context',
@@ -305,12 +312,18 @@ async function main() {
   const isDeath = state.status === 'dead' && hpBefore > 0;
   const isResurrection = state.status === 'healthy' && hpBefore === 0 && state.current_hp > 0;
 
+  // Reset last_activity_timestamp when damage occurs (tree growth restarts)
+  const hasDamage = damageOnly < 0;
+  if (hasDamage) {
+    state.last_activity_timestamp = now.toISOString();
+  }
+
   // Detect level up (compare stage before and after based on last_activity_timestamp)
   const activityTs = state.last_activity_timestamp ? new Date(state.last_activity_timestamp).getTime() : now.getTime();
-  const daysBefore = Math.floor((lastUpdate.getTime() - activityTs) / DAY_MS);
-  const daysNow = Math.floor((now.getTime() - activityTs) / DAY_MS);
-  const stageBefore = getStageIndex(daysBefore);
-  const stageNow = getStageIndex(daysNow);
+  const hoursBefore = Math.floor((lastUpdate.getTime() - activityTs) / HOUR_MS);
+  const hoursNow = Math.floor((now.getTime() - activityTs) / HOUR_MS);
+  const stageBefore = getStageIndex(hoursBefore);
+  const stageNow = getStageIndex(hoursNow);
   const isLevelUp = stageNow > stageBefore;
   if (isLevelUp) {
     messageParts.push(`LEVEL UP: ${STAGES[stageNow].name} (Level ${stageNow + 1})`);

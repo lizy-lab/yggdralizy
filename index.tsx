@@ -12,16 +12,16 @@ const TIME_UNITS = {
   DAY: 24 * 60 * 60 * 1000,
 };
 
-// Stages for Yggdrasil growth
+// Stages for Yggdrasil growth (thresholds in hours, exponential)
 const STAGES = [
   { id: 0, name: 'Seed of Origin', threshold: 0 },
-  { id: 1, name: 'Awakening Seed', threshold: 5 },
-  { id: 2, name: 'Sprout of Realms', threshold: 10 },
-  { id: 3, name: 'Roots of Wisdom', threshold: 25 },
-  { id: 4, name: 'Trunk of Strength', threshold: 45 },
-  { id: 5, name: 'Branches of Fate', threshold: 70 },
-  { id: 6, name: 'Guardian of Worlds', threshold: 100 },
-  { id: 7, name: 'Yggdrasil Ascendant', threshold: 140 },
+  { id: 1, name: 'Awakening Seed', threshold: 1 },
+  { id: 2, name: 'Sprout of Realms', threshold: 3 },
+  { id: 3, name: 'Roots of Wisdom', threshold: 8 },
+  { id: 4, name: 'Trunk of Strength', threshold: 18 },
+  { id: 5, name: 'Branches of Fate', threshold: 36 },
+  { id: 6, name: 'Guardian of Worlds', threshold: 72 },
+  { id: 7, name: 'Yggdrasil Ascendant', threshold: 144 },
 ];
 
 // DYNAMIC PALETTES
@@ -829,7 +829,7 @@ function App() {
   }, [isDemoMode]);
 
   const diff = currentTime - lastIncident;
-  const timeUnit = isDemoMode ? TIME_UNITS.SECOND : TIME_UNITS.DAY;
+  const timeUnit = isDemoMode ? TIME_UNITS.SECOND : TIME_UNITS.HOUR;
   const unitsPassed = Math.floor(diff / timeUnit);
 
   let currentStageIndex = STAGES.findIndex((s) => unitsPassed < s.threshold) - 1;
@@ -1146,7 +1146,7 @@ function App() {
                     </div>
                     {!isMaxLevel && (
                         <div className="text-[9px] text-slate-400 mt-1 font-mono">
-                            {isDemoMode ? `${cyclesRemaining} cycles left` : `~${cyclesRemaining}d to next`}
+                            {isDemoMode ? `${cyclesRemaining} cycles left` : `~${cyclesRemaining}h to next`}
                         </div>
                     )}
                 </div>
