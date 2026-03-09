@@ -21,6 +21,9 @@ const HEADERS = {
   'X-GitHub-Api-Version': '2022-11-28',
 };
 
+const SLACK_WEBHOOK_URL = process.env.SLACK_WEBHOOK_URL;
+const PAGES_URL = `https://${OWNER}.github.io/${REPO}/`;
+
 // HP rules
 const HP_FAILED_RUN = -10;
 const HP_OPEN_ALERT = -5;
@@ -108,6 +111,72 @@ async function getOpenAlerts() {
 
 function clamp(value, min, max) {
   return Math.max(min, Math.min(max, value));
+}
+
+function hpBar(hp, max) {
+  const filled = Math.round((hp / max) * 10);
+  return '`' + '\u2588'.repeat(filled) + '\u2591'.repeat(10 - filled) + '`';
+}
+
+function treeEmoji(hp, max, isDead) {
+  if (isDead) return ':skull:';
+  const pct = (hp / max) * 100;
+  if (pct > 80) return ':evergreen_tree:';
+  if (pct > 40) return ':fallen_leaf:';
+  return ':bare_tree:';
+}
+
+async function notifySlack(state, hpBefore, messageParts, isDeath, isResurrection) {
+  if (!SLACK_WEBHOOK_URL) return;
+
+  // Only notify on significant events: damage, death, resurrection
+  const hasDamage = messageParts.some(m =>
+    m.includes('failed') || m.includes('alert') || m.includes('Lumigo')
+  );
+  if (!hasDamage && !isDeath && !isResurrection) return;
+
+  const emoji = treeEmoji(state.current_hp, state.max_hp, state.status === 'dead');
+  const hpDiff = state.current_hp - hpBefore;
+  const hpSign = hpDiff > 0 ? '+' : '';
+
+  let color = '#22c55e'; // green
+  if (state.status === 'dead') color = '#000000';
+  else if (state.current_hp / state.max_hp <= 0.2) color = '#6b7280';
+  else if (state.current_hp / state.max_hp <= 0.8) color = '#eab308';
+
+  const blocks = {
+    attachments: [{
+      color,
+      blocks: [
+        {
+          type: 'section',
+          text: {
+            type: 'mrkdwn',
+            text: `${emoji} *Yggdralizy* ${hpBar(state.current_hp, state.max_hp)} ${state.current_hp}/${state.max_hp} HP (${hpSign}${hpDiff})\n${messageParts.join('\n')}`,
+          },
+        },
+        {
+          type: 'context',
+          elements: [{
+            type: 'mrkdwn',
+            text: `<${PAGES_URL}|View live tree>`,
+          }],
+        },
+      ],
+    }],
+  };
+
+  try {
+    const res = await fetch(SLACK_WEBHOOK_URL, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(blocks),
+    });
+    if (!res.ok) console.warn(`Slack notification failed: ${res.status}`);
+    else console.log('Slack notification sent');
+  } catch (err) {
+    console.warn('Slack notification error:', err.message);
+  }
 }
 
 async function main() {
@@ -215,8 +284,15 @@ async function main() {
   }
   state.event_log = eventLog.slice(-20);
 
+  // Detect significant events
+  const isDeath = state.status === 'dead' && hpBefore > 0;
+  const isResurrection = state.status === 'healthy' && hpBefore === 0 && state.current_hp > 0;
+
   saveState(state);
   console.log(`State updated: HP=${state.current_hp}/${state.max_hp}, status=${state.status}`);
+
+  // Notify Slack on significant events
+  await notifySlack(state, hpBefore, messageParts, isDeath, isResurrection);
 }
 
 main().catch((err) => {
