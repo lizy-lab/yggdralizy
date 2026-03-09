@@ -1,10 +1,10 @@
 {
-  "current_hp": 91,
+  "current_hp": 94,
   "max_hp": 100,
   "status": "healthy",
   "last_activity_timestamp": "2026-03-09T12:16:35.275Z",
-  "last_update_timestamp": "2026-03-09T12:26:30.642Z",
-  "last_update_message": "No changes detected",
+  "last_update_timestamp": "2026-03-09T12:48:49.139Z",
+  "last_update_message": "Passive regen (+3 HP)",
   "cycles_since_incident": 49,
   "metrics": {
     "failed_runs": 0,
@@ -23,6 +23,12 @@
       "message": "Passive regen (+1 HP)",
       "hp_before": 90,
       "hp_after": 91
+    },
+    {
+      "timestamp": "2026-03-09T12:48:49.139Z",
+      "message": "Passive regen (+3 HP)",
+      "hp_before": 91,
+      "hp_after": 94
     }
   ]
 }
