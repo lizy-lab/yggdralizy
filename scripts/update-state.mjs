@@ -24,6 +24,25 @@ const HEADERS = {
 const SLACK_WEBHOOK_URL = process.env.SLACK_WEBHOOK_URL;
 const PAGES_URL = `https://${OWNER}.github.io/${REPO}/`;
 
+const STAGES = [
+  { name: 'Seed of Origin', threshold: 0 },
+  { name: 'Awakening Seed', threshold: 5 },
+  { name: 'Sprout of Realms', threshold: 10 },
+  { name: 'Roots of Wisdom', threshold: 25 },
+  { name: 'Trunk of Strength', threshold: 45 },
+  { name: 'Branches of Fate', threshold: 70 },
+  { name: 'Guardian of Worlds', threshold: 100 },
+  { name: 'Yggdrasil Ascendant', threshold: 140 },
+];
+const DAY_MS = 24 * 60 * 60 * 1000;
+
+function getStageIndex(daysSinceActivity) {
+  let idx = STAGES.findIndex(s => daysSinceActivity < s.threshold) - 1;
+  if (idx === -2) idx = STAGES.length - 1;
+  if (idx < 0) idx = 0;
+  return idx;
+}
+
 // HP rules
 const HP_FAILED_RUN = -10;
 const HP_OPEN_ALERT = -5;
@@ -126,14 +145,12 @@ function treeEmoji(hp, max, isDead) {
   return ':bare_tree:';
 }
 
-async function notifySlack(state, hpBefore, messageParts, isDeath, isResurrection) {
+async function notifySlack(state, hpBefore, messageParts, isDeath, isResurrection, isLevelUp) {
   if (!SLACK_WEBHOOK_URL) return;
 
-  // Only notify on significant events: damage, death, resurrection
-  const hasDamage = messageParts.some(m =>
-    m.includes('failed') || m.includes('alert') || m.includes('Lumigo')
-  );
-  if (!hasDamage && !isDeath && !isResurrection) return;
+  // Only notify on significant events
+  const isFirstDamage = hpBefore === MAX_HP && state.current_hp < MAX_HP;
+  if (!isDeath && !isResurrection && !isFirstDamage && !isLevelUp) return;
 
   const emoji = treeEmoji(state.current_hp, state.max_hp, state.status === 'dead');
   const hpDiff = state.current_hp - hpBefore;
@@ -288,11 +305,22 @@ async function main() {
   const isDeath = state.status === 'dead' && hpBefore > 0;
   const isResurrection = state.status === 'healthy' && hpBefore === 0 && state.current_hp > 0;
 
+  // Detect level up (compare stage before and after based on last_activity_timestamp)
+  const activityTs = state.last_activity_timestamp ? new Date(state.last_activity_timestamp).getTime() : now.getTime();
+  const daysBefore = Math.floor((lastUpdate.getTime() - activityTs) / DAY_MS);
+  const daysNow = Math.floor((now.getTime() - activityTs) / DAY_MS);
+  const stageBefore = getStageIndex(daysBefore);
+  const stageNow = getStageIndex(daysNow);
+  const isLevelUp = stageNow > stageBefore;
+  if (isLevelUp) {
+    messageParts.push(`LEVEL UP: ${STAGES[stageNow].name} (Level ${stageNow + 1})`);
+  }
+
   saveState(state);
   console.log(`State updated: HP=${state.current_hp}/${state.max_hp}, status=${state.status}`);
 
   // Notify Slack on significant events
-  await notifySlack(state, hpBefore, messageParts, isDeath, isResurrection);
+  await notifySlack(state, hpBefore, messageParts, isDeath, isResurrection, isLevelUp);
 }
 
 main().catch((err) => {
