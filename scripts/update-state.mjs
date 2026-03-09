@@ -147,9 +147,9 @@ function hpBar(hp, max) {
 function treeEmoji(hp, max, isDead) {
   if (isDead) return ':skull:';
   const pct = (hp / max) * 100;
-  if (pct > 80) return ':evergreen_tree:';
+  if (pct > 80) return ':deciduous_tree:';
   if (pct > 40) return ':fallen_leaf:';
-  return ':bare_tree:';
+  return ':seedling:';
 }
 
 async function notifySlack(state, hpBefore, messageParts, isDeath, isResurrection, isLevelUp) {
