@@ -3,8 +3,8 @@
   "max_hp": 100,
   "status": "healthy",
   "last_activity_timestamp": "2026-03-09T20:58:55.503Z",
-  "last_update_timestamp": "2026-03-09T22:07:04.945Z",
-  "last_update_message": "Passive regen (+9 HP)",
+  "last_update_timestamp": "2026-03-09T23:07:08.900Z",
+  "last_update_message": "No changes detected",
   "metrics": {
     "failed_runs": 0,
     "open_alerts": 0,
