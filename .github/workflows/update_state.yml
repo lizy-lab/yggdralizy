@@ -40,6 +40,9 @@ jobs:
         with:
           node-version: '20'
 
+      - name: Install dependencies
+        run: npm install
+
       - name: Run state controller
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
@@ -48,10 +51,13 @@ jobs:
           SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
         run: node scripts/update-state.mjs
 
+      - name: Regenerate OG image
+        run: node scripts/generate-og-image.mjs --public
+
       - name: Commit updated state
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
-          git add public/data/state.json
+          git add public/data/state.json public/og-image.png
           git diff --cached --quiet || git commit -m "chore: update Lizydrasil state [state-update]"
           git push
