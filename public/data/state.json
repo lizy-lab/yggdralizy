@@ -1,14 +1,21 @@
 {
-  "current_hp": 100,
+  "current_hp": 90,
   "max_hp": 100,
   "status": "healthy",
-  "last_activity_timestamp": "2026-03-09T12:52:09.319Z",
-  "last_update_timestamp": "2026-03-09T20:08:22.008Z",
-  "last_update_message": "No changes detected",
+  "last_activity_timestamp": "2026-03-09T20:58:55.503Z",
+  "last_update_timestamp": "2026-03-09T20:58:55.503Z",
+  "last_update_message": "1 failed run(s) (-10 HP)",
   "metrics": {
-    "failed_runs": 0,
+    "failed_runs": 1,
     "open_alerts": 0,
     "lumigo_alert": null
   },
-  "event_log": []
+  "event_log": [
+    {
+      "timestamp": "2026-03-09T20:58:55.503Z",
+      "message": "1 failed run(s) (-10 HP)",
+      "hp_before": 100,
+      "hp_after": 90
+    }
+  ]
 }
