@@ -828,7 +828,7 @@ function App() {
       return () => clearInterval(poll);
   }, [isDemoMode]);
 
-  const diff = currentTime - lastIncident;
+  const diff = Math.max(0, currentTime - lastIncident);
   const timeUnit = isDemoMode ? TIME_UNITS.SECOND : TIME_UNITS.HOUR;
   const unitsPassed = Math.floor(diff / timeUnit);
 
