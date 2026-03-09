@@ -68,6 +68,13 @@ function parseLumigoPayload() {
     const name = data.issue.name || 'Unknown issue';
     const resource = data.resource?.name || 'unknown resource';
 
+    // Build Lumigo platform URL from project + issue IDs
+    const projectId = data.lumigoProject?.id;
+    const issueId = data.issue?.id;
+    const url = projectId && issueId
+      ? `https://platform.lumigo.io/project/${projectId}/issues/${issueId}`
+      : null;
+
     let hpDelta;
     switch (level) {
       case 'critical': hpDelta = HP_LUMIGO_CRITICAL; break;
@@ -75,7 +82,7 @@ function parseLumigoPayload() {
       default:         hpDelta = HP_LUMIGO_INFO; break;
     }
 
-    return { level, name, resource, hpDelta };
+    return { level, name, resource, hpDelta, url };
   } catch {
     return null;
   }
@@ -299,12 +306,14 @@ async function main() {
   // Append to event log (keep last 20 entries)
   const eventLog = Array.isArray(state.event_log) ? state.event_log : [];
   if (messageParts.length > 0) {
-    eventLog.push({
+    const entry = {
       timestamp: now.toISOString(),
       message: messageParts.join(' | '),
       hp_before: hpBefore,
       hp_after: state.current_hp,
-    });
+    };
+    if (lumigoEvent?.url) entry.url = lumigoEvent.url;
+    eventLog.push(entry);
   }
   state.event_log = eventLog.slice(-20);
 

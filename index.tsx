@@ -772,7 +772,7 @@ function App() {
   // Health System
   const [health, setHealth] = useState(100);
   const [liveMaxHp, setLiveMaxHp] = useState<number | null>(null);
-  const [eventLog, setEventLog] = useState<{timestamp: string; message: string; hp_before: number; hp_after: number}[]>([]);
+  const [eventLog, setEventLog] = useState<{timestamp: string; message: string; hp_before: number; hp_after: number; url?: string}[]>([]);
   const [visualEffects, setVisualEffects] = useState<{id: number; type: 'sparkle' | 'rune' | 'milestone'; x: number; y: number; content?: string}[]>([]);
   const [bounceTrigger, setBounceTrigger] = useState(0);
 
@@ -1285,7 +1285,13 @@ function App() {
                 return (
                   <div key={i} className={`flex items-start gap-3 py-2 ${i < eventLog.length - 1 ? 'border-b border-slate-700/50' : ''}`}>
                     <span className="font-mono text-[10px] text-slate-500 whitespace-nowrap mt-0.5">{timeStr}</span>
-                    <span className="font-rpg text-sm text-slate-300 flex-1 leading-tight">{entry.message}</span>
+                    <span className="font-rpg text-sm text-slate-300 flex-1 leading-tight">
+                      {entry.url ? (
+                        <a href={entry.url} target="_blank" rel="noopener noreferrer" className="hover:text-purple-300 underline decoration-slate-600 hover:decoration-purple-400 transition-colors">
+                          {entry.message}
+                        </a>
+                      ) : entry.message}
+                    </span>
                     <span className={`font-pixel text-[10px] whitespace-nowrap mt-0.5 ${hpColor}`}>
                       {hpSign}{hpDiff} HP
                     </span>
