@@ -294,9 +294,22 @@ function main() {
   const pngData = resvg.render();
   const pngBuffer = pngData.asPng();
 
+  // Always write og-image.png (for HTML meta tags)
   mkdirSync(OUTPUT_DIR, { recursive: true });
   writeFileSync(OUTPUT_PATH, pngBuffer);
   console.log(`OG image generated: ${OUTPUT_PATH} (${pngBuffer.length} bytes)`);
+
+  // When --public, also write a timestamped snapshot for Slack (so past messages keep their image)
+  if (usePublic) {
+    const snapshotDir = resolve(OUTPUT_DIR, 'og-snapshots');
+    mkdirSync(snapshotDir, { recursive: true });
+    const ts = Math.floor(Date.now() / 1000);
+    const snapshotName = `og-${ts}.png`;
+    const snapshotPath = resolve(snapshotDir, snapshotName);
+    writeFileSync(snapshotPath, pngBuffer);
+    // Print snapshot filename on its own line so the caller can parse it
+    console.log(`SNAPSHOT:${snapshotName}`);
+  }
 }
 
 main();

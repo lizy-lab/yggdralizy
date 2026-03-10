@@ -168,8 +168,7 @@ async function notifySlack(state, hpBefore, messageParts, isDeath, isResurrectio
   else if (state.current_hp / state.max_hp <= 0.2) color = '#6b7280';
   else if (state.current_hp / state.max_hp <= 0.8) color = '#eab308';
 
-  const ogImageUrl = `${PAGES_URL}og-image.png`;
-
+  // Build the Slack payload without image (image URL injected later after OG generation)
   const blocks = {
     attachments: [{
       color,
@@ -182,11 +181,6 @@ async function notifySlack(state, hpBefore, messageParts, isDeath, isResurrectio
           },
         },
         {
-          type: 'image',
-          image_url: ogImageUrl,
-          alt_text: `Yggdralizy tree - ${state.current_hp}/${state.max_hp} HP`,
-        },
-        {
           type: 'context',
           elements: [{
             type: 'mrkdwn',
@@ -197,17 +191,10 @@ async function notifySlack(state, hpBefore, messageParts, isDeath, isResurrectio
     }],
   };
 
-  try {
-    const res = await fetch(SLACK_WEBHOOK_URL, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(blocks),
-    });
-    if (!res.ok) console.warn(`Slack notification failed: ${res.status}`);
-    else console.log('Slack notification sent');
-  } catch (err) {
-    console.warn('Slack notification error:', err.message);
-  }
+  // Write pending Slack payload to file (send-slack.mjs will inject image and send)
+  const pendingPath = resolve(__dirname, '..', 'public', 'data', '.slack-pending.json');
+  writeFileSync(pendingPath, JSON.stringify(blocks, null, 2), 'utf-8');
+  console.log('Slack notification saved to pending file (will be sent after OG image generation)');
 }
 
 async function main() {

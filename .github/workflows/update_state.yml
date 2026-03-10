@@ -51,13 +51,26 @@ jobs:
           SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
         run: node scripts/update-state.mjs
 
-      - name: Regenerate OG image
-        run: node scripts/generate-og-image.mjs --public
+      - name: Generate OG image snapshot
+        id: og
+        run: |
+          OUTPUT=$(node scripts/generate-og-image.mjs --public)
+          echo "$OUTPUT"
+          SNAPSHOT=$(echo "$OUTPUT" | grep '^SNAPSHOT:' | cut -d: -f2)
+          echo "snapshot=$SNAPSHOT" >> "$GITHUB_OUTPUT"
 
       - name: Commit updated state
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
-          git add public/data/state.json public/og-image.png
+          git add public/data/state.json public/og-image.png public/og-snapshots/
           git diff --cached --quiet || git commit -m "chore: update Lizydrasil state [state-update]"
           git push
+
+      - name: Send Slack notification
+        if: always()
+        env:
+          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
+          OG_SNAPSHOT_NAME: ${{ steps.og.outputs.snapshot }}
+          GITHUB_REPOSITORY: ${{ github.repository }}
+        run: node scripts/send-slack.mjs
