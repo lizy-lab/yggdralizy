@@ -22,22 +22,9 @@ if (!SLACK_WEBHOOK_URL) {
 
 const payload = JSON.parse(readFileSync(PENDING_PATH, 'utf-8'));
 
-// Inject the snapshot image before the context block
-if (SNAPSHOT_NAME && GITHUB_REPOSITORY) {
-  const [owner] = GITHUB_REPOSITORY.split('/');
-  const repo = GITHUB_REPOSITORY.split('/')[1];
-  const imageUrl = `https://${owner}.github.io/${repo}/og-snapshots/${SNAPSHOT_NAME}`;
-
-  const blocks = payload.attachments[0].blocks;
-  // Insert image block before the last block (context)
-  const contextBlock = blocks.pop();
-  blocks.push({
-    type: 'image',
-    image_url: imageUrl,
-    alt_text: 'Yggdralizy tree status',
-  });
-  blocks.push(contextBlock);
-}
+// Note: We don't embed the OG image in Slack notifications because GitHub Pages
+// deploys asynchronously — the snapshot URL won't be available when the message is sent.
+// The OG image is used for link unfurling when someone shares the live tree URL instead.
 
 try {
   const res = await fetch(SLACK_WEBHOOK_URL, {
@@ -45,8 +32,12 @@ try {
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify(payload),
   });
-  if (!res.ok) console.warn(`Slack notification failed: ${res.status}`);
-  else console.log('Slack notification sent');
+  if (!res.ok) {
+    const body = await res.text();
+    console.warn(`Slack notification failed: ${res.status} - ${body}`);
+  } else {
+    console.log('Slack notification sent');
+  }
 } catch (err) {
   console.warn('Slack notification error:', err.message);
 }
