@@ -3,12 +3,12 @@
   "max_hp": 100,
   "status": "healthy",
   "last_activity_timestamp": "2026-03-12T11:07:36.667Z",
-  "last_update_timestamp": "2026-03-12T11:07:36.667Z",
-  "last_update_message": "Lumigo [info]: Unknown Lumigo event (-5 HP)",
+  "last_update_timestamp": "2026-03-12T11:13:08.316Z",
+  "last_update_message": "No changes detected",
   "metrics": {
     "failed_runs": 0,
     "open_alerts": 0,
-    "lumigo_alert": "info: Unknown Lumigo event"
+    "lumigo_alert": null
   },
   "event_log": [
     {
