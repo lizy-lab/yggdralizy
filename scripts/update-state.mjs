@@ -59,31 +59,59 @@ function parseLumigoPayload() {
 
   try {
     const payload = JSON.parse(raw);
-    if (payload.source !== 'lumigo' || !payload.lumigo) return null;
+    if (payload.source !== 'lumigo') return null;
 
-    const { event, data } = payload.lumigo;
-    if (event !== 'alert' || !data?.issue) return null;
+    const lumigo = payload.lumigo;
+    if (!lumigo) {
+      console.warn('Lumigo payload present but missing lumigo key. Full payload:', JSON.stringify(payload).substring(0, 500));
+      return null;
+    }
 
-    const level = (data.issue.level || '').toLowerCase();
-    const name = data.issue.name || 'Unknown issue';
-    const resource = data.resource?.name || 'unknown resource';
+    // Try multiple payload structures:
+    // Structure 1: { event: "alert", data: { issue: {...}, resource: {...} } }
+    // Structure 2: { issue: {...}, resource: {...} } (flat)
+    let issue, resource, lumigoProject;
+    if (lumigo.data?.issue) {
+      issue = lumigo.data.issue;
+      resource = lumigo.data.resource;
+      lumigoProject = lumigo.data.lumigoProject;
+    } else if (lumigo.issue) {
+      issue = lumigo.issue;
+      resource = lumigo.resource;
+      lumigoProject = lumigo.lumigoProject;
+    } else {
+      console.warn('Lumigo payload has no recognizable issue structure:', JSON.stringify(lumigo).substring(0, 500));
+      // Still treat as a generic alert
+      return {
+        level: 'info',
+        name: lumigo.event || 'Unknown Lumigo event',
+        resource: 'unknown',
+        hpDelta: HP_LUMIGO_INFO,
+        url: null,
+      };
+    }
+
+    const level = (issue.level || issue.type || '').toLowerCase();
+    const name = issue.name || issue.message || 'Unknown issue';
+    const resourceName = resource?.name || 'unknown resource';
 
     // Build Lumigo platform URL from project + issue IDs
-    const projectId = data.lumigoProject?.id;
-    const issueId = data.issue?.id;
+    const projectId = lumigoProject?.id;
+    const issueId = issue?.id;
     const url = projectId && issueId
       ? `https://platform.lumigo.io/project/${projectId}/issues/${issueId}`
       : null;
 
     let hpDelta;
     switch (level) {
-      case 'critical': hpDelta = HP_LUMIGO_CRITICAL; break;
+      case 'critical': case 'error': hpDelta = HP_LUMIGO_CRITICAL; break;
       case 'warning':  hpDelta = HP_LUMIGO_WARNING; break;
       default:         hpDelta = HP_LUMIGO_INFO; break;
     }
 
-    return { level, name, resource, hpDelta, url };
-  } catch {
+    return { level, name, resource: resourceName, hpDelta, url };
+  } catch (err) {
+    console.warn('Failed to parse Lumigo payload:', err.message);
     return null;
   }
 }
