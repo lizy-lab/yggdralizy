@@ -68,20 +68,37 @@ function parseLumigoPayload() {
     }
 
     // Try multiple payload structures:
-    // Structure 1: { event: "alert", data: { issue: {...}, resource: {...} } }
-    // Structure 2: { issue: {...}, resource: {...} } (flat)
+    // Structure 1: { message: "{\"lumigoProject\":..., \"issue\":..., \"resource\":...}" } (stringified JSON)
+    // Structure 2: { data: { issue: {...}, resource: {...} } }
+    // Structure 3: { issue: {...}, resource: {...} } (flat)
     let issue, resource, lumigoProject;
-    if (lumigo.data?.issue) {
+
+    if (typeof lumigo.message === 'string') {
+      // Real Lumigo webhook: alert data is stringified JSON inside lumigo.message
+      try {
+        const parsed = JSON.parse(lumigo.message);
+        issue = parsed.issue;
+        resource = parsed.resource;
+        lumigoProject = parsed.lumigoProject;
+      } catch (e) {
+        console.warn('Failed to parse lumigo.message as JSON:', e.message);
+      }
+    }
+
+    if (!issue && lumigo.data?.issue) {
       issue = lumigo.data.issue;
       resource = lumigo.data.resource;
       lumigoProject = lumigo.data.lumigoProject;
-    } else if (lumigo.issue) {
+    }
+
+    if (!issue && lumigo.issue) {
       issue = lumigo.issue;
       resource = lumigo.resource;
       lumigoProject = lumigo.lumigoProject;
-    } else {
+    }
+
+    if (!issue) {
       console.warn('Lumigo payload has no recognizable issue structure:', JSON.stringify(lumigo).substring(0, 500));
-      // Still treat as a generic alert
       return {
         level: 'info',
         name: lumigo.event || 'Unknown Lumigo event',
@@ -95,12 +112,11 @@ function parseLumigoPayload() {
     const name = issue.name || issue.message || 'Unknown issue';
     const resourceName = resource?.name || 'unknown resource';
 
-    // Build Lumigo platform URL from project + issue IDs
-    const projectId = lumigoProject?.id;
-    const issueId = issue?.id;
-    const url = projectId && issueId
-      ? `https://platform.lumigo.io/project/${projectId}/issues/${issueId}`
-      : null;
+    // Use direct URL from issue if available, otherwise build from project + issue IDs
+    const url = issue.url
+      || (lumigoProject?.id && issue.id
+        ? `https://platform.lumigo.io/project/${lumigoProject.id}/issues/${issue.id}`
+        : null);
 
     let hpDelta;
     switch (level) {
@@ -180,12 +196,12 @@ function treeEmoji(hp, max, isDead) {
   return ':seedling:';
 }
 
-async function notifySlack(state, hpBefore, messageParts, isDeath, isResurrection, isLevelUp) {
+async function notifySlack(state, hpBefore, messageParts, isDeath, isResurrection, isLevelUp, isGrowthRestart) {
   if (!SLACK_WEBHOOK_URL) return;
 
   // Only notify on significant events
   const isFirstDamage = hpBefore === MAX_HP && state.current_hp < MAX_HP;
-  if (!isDeath && !isResurrection && !isFirstDamage && !isLevelUp) return;
+  if (!isDeath && !isResurrection && !isFirstDamage && !isLevelUp && !isGrowthRestart) return;
 
   const emoji = treeEmoji(state.current_hp, state.max_hp, state.status === 'dead');
 
@@ -347,15 +363,19 @@ async function main() {
 
   // Reset last_activity_timestamp when damage occurs (tree growth restarts)
   const hasDamage = damageOnly < 0;
+  const isGrowthRestart = hasDamage && stageNow > 0;
   if (hasDamage) {
     state.last_activity_timestamp = now.toISOString();
+    if (isGrowthRestart) {
+      messageParts.push(`Growth reset: tree returns to ${STAGES[0].name} (was ${STAGES[stageNow].name})`);
+    }
   }
 
   saveState(state);
   console.log(`State updated: HP=${state.current_hp}/${state.max_hp}, status=${state.status}`);
 
   // Notify Slack on significant events
-  await notifySlack(state, hpBefore, messageParts, isDeath, isResurrection, isLevelUp);
+  await notifySlack(state, hpBefore, messageParts, isDeath, isResurrection, isLevelUp, isGrowthRestart);
 }
 
 main().catch((err) => {
