@@ -188,8 +188,6 @@ async function notifySlack(state, hpBefore, messageParts, isDeath, isResurrectio
   if (!isDeath && !isResurrection && !isFirstDamage && !isLevelUp) return;
 
   const emoji = treeEmoji(state.current_hp, state.max_hp, state.status === 'dead');
-  const hpDiff = state.current_hp - hpBefore;
-  const hpSign = hpDiff > 0 ? '+' : '';
 
   let color = '#22c55e'; // green
   if (state.status === 'dead') color = '#000000';
@@ -205,7 +203,7 @@ async function notifySlack(state, hpBefore, messageParts, isDeath, isResurrectio
           type: 'section',
           text: {
             type: 'mrkdwn',
-            text: `${emoji} *Yggdralizy* ${hpBar(state.current_hp, state.max_hp)} ${state.current_hp}/${state.max_hp} HP (${hpSign}${hpDiff})\n${messageParts.join('\n')}`,
+            text: `${emoji} ${hpBar(state.current_hp, state.max_hp)} ${state.current_hp}/${state.max_hp} HP\n${messageParts.join('\n')}`,
           },
         },
         {
@@ -336,21 +334,21 @@ async function main() {
   const isDeath = state.status === 'dead' && hpBefore > 0;
   const isResurrection = state.status === 'healthy' && hpBefore === 0 && state.current_hp > 0;
 
-  // Reset last_activity_timestamp when damage occurs (tree growth restarts)
-  const hasDamage = damageOnly < 0;
-  if (hasDamage) {
-    state.last_activity_timestamp = now.toISOString();
-  }
-
-  // Detect level up (compare stage before and after based on last_activity_timestamp)
+  // Detect level up BEFORE resetting activity timestamp
   const activityTs = state.last_activity_timestamp ? new Date(state.last_activity_timestamp).getTime() : now.getTime();
-  const hoursBefore = Math.floor((lastUpdate.getTime() - activityTs) / HOUR_MS);
-  const hoursNow = Math.floor((now.getTime() - activityTs) / HOUR_MS);
+  const hoursBefore = Math.max(0, Math.floor((lastUpdate.getTime() - activityTs) / HOUR_MS));
+  const hoursNow = Math.max(0, Math.floor((now.getTime() - activityTs) / HOUR_MS));
   const stageBefore = getStageIndex(hoursBefore);
   const stageNow = getStageIndex(hoursNow);
   const isLevelUp = stageNow > stageBefore;
   if (isLevelUp) {
     messageParts.push(`LEVEL UP: ${STAGES[stageNow].name} (Level ${stageNow + 1})`);
+  }
+
+  // Reset last_activity_timestamp when damage occurs (tree growth restarts)
+  const hasDamage = damageOnly < 0;
+  if (hasDamage) {
+    state.last_activity_timestamp = now.toISOString();
   }
 
   saveState(state);
