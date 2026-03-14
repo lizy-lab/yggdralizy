@@ -1,9 +1,9 @@
 {
-  "current_hp": 84,
+  "current_hp": 96,
   "max_hp": 100,
   "status": "healthy",
   "last_activity_timestamp": "2026-03-13T17:42:25.039Z",
-  "last_update_timestamp": "2026-03-14T00:20:33.196Z",
+  "last_update_timestamp": "2026-03-14T01:34:42.147Z",
   "last_update_message": "Passive regen (+12 HP)",
   "metrics": {
     "failed_runs": 0,
@@ -11,12 +11,6 @@
     "lumigo_alert": null
   },
   "event_log": [
-    {
-      "timestamp": "2026-03-13T16:44:11.145Z",
-      "message": "Lumigo [info]: Unknown Lumigo event (-5 HP)",
-      "hp_before": 93,
-      "hp_after": 88
-    },
     {
       "timestamp": "2026-03-13T16:46:32.579Z",
       "message": "Lumigo [info]: Unknown Lumigo event (-5 HP)",
@@ -130,6 +124,12 @@
       "message": "Passive regen (+12 HP)",
       "hp_before": 72,
       "hp_after": 84
+    },
+    {
+      "timestamp": "2026-03-14T01:34:42.147Z",
+      "message": "Passive regen (+12 HP)",
+      "hp_before": 84,
+      "hp_after": 96
     }
   ]
 }
