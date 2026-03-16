@@ -1,23 +1,16 @@
 {
-  "current_hp": 0,
+  "current_hp": 4,
   "max_hp": 100,
-  "status": "dead",
-  "last_activity_timestamp": "2026-03-16T20:27:04.821Z",
-  "last_update_timestamp": "2026-03-16T20:27:04.821Z",
-  "last_update_message": "No changes detected",
+  "status": "healthy",
+  "last_activity_timestamp": "2026-03-16T20:53:40.790Z",
+  "last_update_timestamp": "2026-03-16T20:53:40.790Z",
+  "last_update_message": "RESURRECTION: Tree revived by natural regeneration (+4 HP)",
   "metrics": {
     "failed_runs": 0,
     "open_alerts": 0,
     "lumigo_alert": "error: Timed out"
   },
   "event_log": [
-    {
-      "timestamp": "2026-03-16T13:22:19.064Z",
-      "message": "Lumigo [error]: Timed out (-15 HP)",
-      "hp_before": 100,
-      "hp_after": 85,
-      "url": "https://platform.lumigo.io/project/c_c66f9a9348c24/issues/c9a9d45bbf32385288aed310662e608f?timespan=CUSTOM-1773660082291-1773674482291"
-    },
     {
       "timestamp": "2026-03-16T13:33:10.748Z",
       "message": "Passive regen (+1 HP)",
@@ -142,6 +135,13 @@
       "hp_before": 3,
       "hp_after": 0,
       "url": "https://platform.lumigo.io/project/c_c66f9a9348c24/issues/c9a9d45bbf32385288aed310662e608f?timespan=CUSTOM-1773685422984-1773699822984"
+    },
+    {
+      "timestamp": "2026-03-16T20:53:40.790Z",
+      "message": "RESURRECTION: Tree revived by natural regeneration (+4 HP)",
+      "hp_before": 0,
+      "hp_after": 4,
+      "url": "https://platform.lumigo.io/project/c_c66f9a9348c24/issues/5e31c78d737bd9c2fe30cdff1dbb20f3?timespan=CUSTOM-1773687123440-1773701523440"
     }
   ]
 }
