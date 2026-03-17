@@ -1,9 +1,9 @@
 {
-  "current_hp": 75,
+  "current_hp": 65,
   "max_hp": 100,
   "status": "healthy",
-  "last_activity_timestamp": "2026-03-17T14:29:54.333Z",
-  "last_update_timestamp": "2026-03-17T14:29:54.333Z",
+  "last_activity_timestamp": "2026-03-17T14:30:18.243Z",
+  "last_update_timestamp": "2026-03-17T14:30:18.243Z",
   "last_update_message": "Lumigo [warning]: InvalidStatusError (-10 HP)",
   "metrics": {
     "failed_runs": 0,
@@ -11,13 +11,6 @@
     "lumigo_alert": "warning: InvalidStatusError"
   },
   "event_log": [
-    {
-      "timestamp": "2026-03-16T20:24:03.672Z",
-      "message": "Lumigo [error]: Timed out (-15 HP)",
-      "hp_before": 43,
-      "hp_after": 28,
-      "url": "https://platform.lumigo.io/project/c_c66f9a9348c24/issues/5e31c78d737bd9c2fe30cdff1dbb20f3?timespan=CUSTOM-1773685364678-1773699764678"
-    },
     {
       "timestamp": "2026-03-16T20:24:34.909Z",
       "message": "1 failed run(s) (-10 HP) | Lumigo [error]: Timed out (-15 HP)",
@@ -137,6 +130,13 @@
       "message": "Lumigo [warning]: InvalidStatusError (-10 HP)",
       "hp_before": 85,
       "hp_after": 75,
+      "url": "https://platform.lumigo.io/project/c_c66f9a9348c24/issues/536d02aceeb779e18c1a40a7c7d16008?timespan=CUSTOM-1773750501908-1773764901908"
+    },
+    {
+      "timestamp": "2026-03-17T14:30:18.243Z",
+      "message": "Lumigo [warning]: InvalidStatusError (-10 HP)",
+      "hp_before": 75,
+      "hp_after": 65,
       "url": "https://platform.lumigo.io/project/c_c66f9a9348c24/issues/536d02aceeb779e18c1a40a7c7d16008?timespan=CUSTOM-1773750501908-1773764901908"
     }
   ]
