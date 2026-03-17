@@ -1,23 +1,16 @@
 {
-  "current_hp": 59,
+  "current_hp": 75,
   "max_hp": 100,
   "status": "healthy",
   "last_activity_timestamp": "2026-03-16T20:54:18.638Z",
-  "last_update_timestamp": "2026-03-17T03:00:15.539Z",
-  "last_update_message": "Passive regen (+14 HP)",
+  "last_update_timestamp": "2026-03-17T04:37:22.391Z",
+  "last_update_message": "Passive regen (+16 HP)",
   "metrics": {
     "failed_runs": 0,
     "open_alerts": 0,
     "lumigo_alert": null
   },
   "event_log": [
-    {
-      "timestamp": "2026-03-16T16:25:48.260Z",
-      "message": "Lumigo [error]: ForbiddenAccessError (-15 HP)",
-      "hp_before": 82,
-      "hp_after": 67,
-      "url": "https://platform.lumigo.io/project/c_c66f9a9348c24/issues/de0ba022bc15e08c9f35c909f21edd49?timespan=CUSTOM-1773671111038-1773685511038"
-    },
     {
       "timestamp": "2026-03-16T16:26:59.638Z",
       "message": "Lumigo [error]: ForbiddenAccessError (-15 HP)",
@@ -140,6 +133,12 @@
       "message": "Passive regen (+14 HP)",
       "hp_before": 45,
       "hp_after": 59
+    },
+    {
+      "timestamp": "2026-03-17T04:37:22.391Z",
+      "message": "Passive regen (+16 HP)",
+      "hp_before": 59,
+      "hp_after": 75
     }
   ]
 }
