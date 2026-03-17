@@ -1,22 +1,16 @@
 {
-  "current_hp": 100,
+  "current_hp": 85,
   "max_hp": 100,
   "status": "healthy",
-  "last_activity_timestamp": "2026-03-17T12:01:04.311Z",
-  "last_update_timestamp": "2026-03-17T14:26:01.013Z",
-  "last_update_message": "No changes detected",
+  "last_activity_timestamp": "2026-03-17T14:29:07.416Z",
+  "last_update_timestamp": "2026-03-17T14:29:07.416Z",
+  "last_update_message": "Lumigo [error]: 500 Server error response (-15 HP)",
   "metrics": {
     "failed_runs": 0,
     "open_alerts": 0,
-    "lumigo_alert": null
+    "lumigo_alert": "error: 500 Server error response"
   },
   "event_log": [
-    {
-      "timestamp": "2026-03-16T20:11:48.472Z",
-      "message": "Passive regen (+7 HP)",
-      "hp_before": 50,
-      "hp_after": 57
-    },
     {
       "timestamp": "2026-03-16T20:23:30.016Z",
       "message": "Lumigo [error]: Timed out (-15 HP) | Passive regen (+1 HP)",
@@ -137,6 +131,13 @@
       "message": "Passive regen (+8 HP)",
       "hp_before": 92,
       "hp_after": 100
+    },
+    {
+      "timestamp": "2026-03-17T14:29:07.416Z",
+      "message": "Lumigo [error]: 500 Server error response (-15 HP)",
+      "hp_before": 100,
+      "hp_after": 85,
+      "url": "https://platform.lumigo.io/project/c_c66f9a9348c24/issues/39fa0b843df7a999bcef873cbbc93a62?timespan=CUSTOM-1773750501767-1773764901767"
     }
   ]
 }
