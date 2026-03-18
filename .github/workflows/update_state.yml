@@ -1,13 +1,10 @@
-name: Update Lizydrasil State
+name: Update Yggdralizy State
 
 on:
   push:
     branches: [main]
   pull_request:
     types: [opened, synchronize, closed]
-  workflow_run:
-    workflows: ["Deploy to GitHub Pages"]
-    types: [completed]
   schedule:
     - cron: '0 * * * *'
   workflow_dispatch:
@@ -26,9 +23,7 @@ permissions:
 jobs:
   update:
     runs-on: ubuntu-latest
-    if: >
-      (github.event_name != 'push' || !contains(github.event.head_commit.message, '[state-update]')) &&
-      (github.event_name != 'workflow_run' || github.event.workflow_run.name != 'Update Lizydrasil State')
+    if: github.event_name != 'push' || !contains(github.event.head_commit.message, '[state-update]')
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
@@ -64,7 +59,7 @@ jobs:
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
           git add public/data/state.json public/og-image.png public/og-snapshots/
-          git diff --cached --quiet || git commit -m "chore: update Lizydrasil state [state-update]"
+          git diff --cached --quiet || git commit -m "chore: update Yggdralizy state [state-update]"
           git push
 
       - name: Send Slack notification
