@@ -1,22 +1,16 @@
 {
-  "current_hp": 9,
+  "current_hp": 6,
   "max_hp": 100,
   "status": "healthy",
-  "last_activity_timestamp": "2026-03-18T19:11:20.418Z",
-  "last_update_timestamp": "2026-03-18T20:12:23.950Z",
-  "last_update_message": "Passive regen (+8 HP)",
+  "last_activity_timestamp": "2026-03-18T20:55:08.278Z",
+  "last_update_timestamp": "2026-03-18T20:55:08.278Z",
+  "last_update_message": "Lumigo [warning]: SSLError (-10 HP) | Passive regen (+7 HP)",
   "metrics": {
     "failed_runs": 0,
     "open_alerts": 0,
-    "lumigo_alert": null
+    "lumigo_alert": "warning: SSLError"
   },
   "event_log": [
-    {
-      "timestamp": "2026-03-18T15:28:20.602Z",
-      "message": "RESURRECTION: Tree revived by natural regeneration (+4 HP)",
-      "hp_before": 0,
-      "hp_after": 4
-    },
     {
       "timestamp": "2026-03-18T15:35:30.104Z",
       "message": "Lumigo [error]: Duplicate Event (-15 HP) | Passive regen (+1 HP) | RAGNAROK: Tree has died!",
@@ -145,6 +139,13 @@
       "message": "Passive regen (+8 HP)",
       "hp_before": 1,
       "hp_after": 9
+    },
+    {
+      "timestamp": "2026-03-18T20:55:08.278Z",
+      "message": "Lumigo [warning]: SSLError (-10 HP) | Passive regen (+7 HP)",
+      "hp_before": 9,
+      "hp_after": 6,
+      "url": "https://platform.lumigo.io/project/c_c66f9a9348c24/issues/9e5a2b667ccf25af729578d014a6b86b?timespan=CUSTOM-1773856035512-1773870435512"
     }
   ]
 }
