@@ -1,22 +1,16 @@
 {
-  "current_hp": 48,
+  "current_hp": 33,
   "max_hp": 100,
   "status": "healthy",
-  "last_activity_timestamp": "2026-03-18T11:01:38.370Z",
-  "last_update_timestamp": "2026-03-18T11:18:17.211Z",
-  "last_update_message": "Passive regen (+2 HP)",
+  "last_activity_timestamp": "2026-03-18T11:24:11.154Z",
+  "last_update_timestamp": "2026-03-18T11:24:11.154Z",
+  "last_update_message": "Lumigo [error]: Duplicate Event (-15 HP)",
   "metrics": {
     "failed_runs": 0,
     "open_alerts": 0,
-    "lumigo_alert": null
+    "lumigo_alert": "error: Duplicate Event"
   },
   "event_log": [
-    {
-      "timestamp": "2026-03-17T16:25:41.645Z",
-      "message": "Passive regen (+10 HP)",
-      "hp_before": 63,
-      "hp_after": 73
-    },
     {
       "timestamp": "2026-03-17T16:40:47.966Z",
       "message": "Lumigo [error]: JSONDecodeError (-15 HP) | Passive regen (+2 HP)",
@@ -139,6 +133,13 @@
       "message": "Passive regen (+2 HP)",
       "hp_before": 46,
       "hp_after": 48
+    },
+    {
+      "timestamp": "2026-03-18T11:24:11.154Z",
+      "message": "Lumigo [error]: Duplicate Event (-15 HP)",
+      "hp_before": 48,
+      "hp_after": 33,
+      "url": "https://platform.lumigo.io/project/c_c66f9a9348c24/issues/976c862137980497922ed1a234a75a4b?timespan=CUSTOM-1773825157938-1773839557938"
     }
   ]
 }
