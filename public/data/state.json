@@ -1,23 +1,16 @@
 {
-  "current_hp": 0,
+  "current_hp": 5,
   "max_hp": 100,
-  "status": "dead",
-  "last_activity_timestamp": "2026-03-18T13:37:02.273Z",
-  "last_update_timestamp": "2026-03-18T13:37:02.273Z",
-  "last_update_message": "No changes detected",
+  "status": "healthy",
+  "last_activity_timestamp": "2026-03-18T14:07:56.216Z",
+  "last_update_timestamp": "2026-03-18T14:07:56.216Z",
+  "last_update_message": "RESURRECTION: Tree revived by natural regeneration (+5 HP)",
   "metrics": {
     "failed_runs": 0,
     "open_alerts": 0,
-    "lumigo_alert": "warning: TimeoutError"
+    "lumigo_alert": "error: Duplicate Event"
   },
   "event_log": [
-    {
-      "timestamp": "2026-03-17T18:31:19.492Z",
-      "message": "Lumigo [warning]: InvalidDataError (-10 HP) | Passive regen (+1 HP)",
-      "hp_before": 55,
-      "hp_after": 46,
-      "url": "https://platform.lumigo.io/project/c_c66f9a9348c24/issues/28937c7f7f40459b47eca70dcc5190f7?timespan=CUSTOM-1773764968717-1773779368717"
-    },
     {
       "timestamp": "2026-03-17T18:36:43.272Z",
       "message": "Lumigo [warning]: InvalidDataError (-10 HP)",
@@ -141,6 +134,13 @@
       "hp_before": 4,
       "hp_after": 0,
       "url": "https://platform.lumigo.io/project/c_c66f9a9348c24/issues/976c862137980497922ed1a234a75a4b?timespan=CUSTOM-1773832325936-1773846725936"
+    },
+    {
+      "timestamp": "2026-03-18T14:07:56.216Z",
+      "message": "RESURRECTION: Tree revived by natural regeneration (+5 HP)",
+      "hp_before": 0,
+      "hp_after": 5,
+      "url": "https://platform.lumigo.io/project/c_c66f9a9348c24/issues/976c862137980497922ed1a234a75a4b?timespan=CUSTOM-1773834694242-1773849094242"
     }
   ]
 }
