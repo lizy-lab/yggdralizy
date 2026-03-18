@@ -2,9 +2,9 @@
   "current_hp": 0,
   "max_hp": 100,
   "status": "dead",
-  "last_activity_timestamp": "2026-03-18T22:43:50.171Z",
-  "last_update_timestamp": "2026-03-18T22:43:50.171Z",
-  "last_update_message": "Lumigo [error]: Duplicate Event (-15 HP) | Passive regen (+1 HP) | RAGNAROK: Tree has died!",
+  "last_activity_timestamp": "2026-03-18T22:47:02.416Z",
+  "last_update_timestamp": "2026-03-18T22:47:02.416Z",
+  "last_update_message": "No changes detected",
   "metrics": {
     "failed_runs": 0,
     "open_alerts": 0,
