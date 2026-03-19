@@ -1,23 +1,16 @@
 {
-  "current_hp": 2,
+  "current_hp": 0,
   "max_hp": 100,
-  "status": "healthy",
-  "last_activity_timestamp": "2026-03-19T18:02:22.040Z",
-  "last_update_timestamp": "2026-03-19T18:02:22.040Z",
-  "last_update_message": "Lumigo [warning]: ConnectionError (-10 HP) | Passive regen (+2 HP)",
+  "status": "dead",
+  "last_activity_timestamp": "2026-03-19T18:03:18.159Z",
+  "last_update_timestamp": "2026-03-19T18:03:18.159Z",
+  "last_update_message": "Lumigo [warning]: ConnectionError (-10 HP) | RAGNAROK: Tree has died!",
   "metrics": {
     "failed_runs": 0,
     "open_alerts": 0,
     "lumigo_alert": "warning: ConnectionError"
   },
   "event_log": [
-    {
-      "timestamp": "2026-03-19T08:23:32.541Z",
-      "message": "Lumigo [error]: KeyError (-15 HP) | Passive regen (+1 HP) | RAGNAROK: Tree has died!",
-      "hp_before": 13,
-      "hp_after": 0,
-      "url": "https://platform.lumigo.io/project/c_c66f9a9348c24/issues/06720b76a48a09abcbe707e7c2f73042?timespan=CUSTOM-1773901320277-1773915720277"
-    },
     {
       "timestamp": "2026-03-19T09:16:20.706Z",
       "message": "RESURRECTION: Tree revived by natural regeneration (+8 HP)",
@@ -142,6 +135,13 @@
       "message": "Lumigo [warning]: ConnectionError (-10 HP) | Passive regen (+2 HP)",
       "hp_before": 10,
       "hp_after": 2,
+      "url": "https://platform.lumigo.io/project/c_c66f9a9348c24/issues/0b15679af6974bb88cc8cf4161509d47?timespan=CUSTOM-1773936072228-1773950472228"
+    },
+    {
+      "timestamp": "2026-03-19T18:03:18.159Z",
+      "message": "Lumigo [warning]: ConnectionError (-10 HP) | RAGNAROK: Tree has died!",
+      "hp_before": 2,
+      "hp_after": 0,
       "url": "https://platform.lumigo.io/project/c_c66f9a9348c24/issues/0b15679af6974bb88cc8cf4161509d47?timespan=CUSTOM-1773936072228-1773950472228"
     }
   ]
