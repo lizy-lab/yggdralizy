@@ -1,9 +1,9 @@
 {
-  "current_hp": 11,
+  "current_hp": 21,
   "max_hp": 100,
   "status": "healthy",
   "last_activity_timestamp": "2026-03-19T15:16:37.998Z",
-  "last_update_timestamp": "2026-03-19T16:20:03.157Z",
+  "last_update_timestamp": "2026-03-19T17:22:29.106Z",
   "last_update_message": "Passive regen (+10 HP)",
   "metrics": {
     "failed_runs": 0,
@@ -11,12 +11,6 @@
     "lumigo_alert": null
   },
   "event_log": [
-    {
-      "timestamp": "2026-03-19T06:22:17.611Z",
-      "message": "Passive regen (+8 HP)",
-      "hp_before": 3,
-      "hp_after": 11
-    },
     {
       "timestamp": "2026-03-19T07:21:55.998Z",
       "message": "Passive regen (+9 HP)",
@@ -142,6 +136,12 @@
       "message": "Passive regen (+10 HP)",
       "hp_before": 1,
       "hp_after": 11
+    },
+    {
+      "timestamp": "2026-03-19T17:22:29.106Z",
+      "message": "Passive regen (+10 HP)",
+      "hp_before": 11,
+      "hp_after": 21
     }
   ]
 }
