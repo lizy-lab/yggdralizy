@@ -1,23 +1,16 @@
 {
-  "current_hp": 26,
+  "current_hp": 16,
   "max_hp": 100,
   "status": "healthy",
-  "last_activity_timestamp": "2026-03-19T08:23:32.541Z",
-  "last_update_timestamp": "2026-03-19T11:14:40.166Z",
-  "last_update_message": "Passive regen (+9 HP)",
+  "last_activity_timestamp": "2026-03-19T11:17:12.291Z",
+  "last_update_timestamp": "2026-03-19T11:17:12.291Z",
+  "last_update_message": "Lumigo [warning]: ValueError (-10 HP)",
   "metrics": {
     "failed_runs": 0,
     "open_alerts": 0,
-    "lumigo_alert": null
+    "lumigo_alert": "warning: ValueError"
   },
   "event_log": [
-    {
-      "timestamp": "2026-03-19T01:03:32.140Z",
-      "message": "RESURRECTION: Tree revived by natural regeneration (+4 HP)",
-      "hp_before": 0,
-      "hp_after": 4,
-      "url": "https://platform.lumigo.io/project/c_c66f9a9348c24/issues/976c862137980497922ed1a234a75a4b?timespan=CUSTOM-1773873965044-1773888365044"
-    },
     {
       "timestamp": "2026-03-19T01:19:41.053Z",
       "message": "Lumigo [warning]: ReadTimeout (-10 HP) | Passive regen (+2 HP) | RAGNAROK: Tree has died!",
@@ -141,6 +134,13 @@
       "message": "Passive regen (+9 HP)",
       "hp_before": 17,
       "hp_after": 26
+    },
+    {
+      "timestamp": "2026-03-19T11:17:12.291Z",
+      "message": "Lumigo [warning]: ValueError (-10 HP)",
+      "hp_before": 26,
+      "hp_after": 16,
+      "url": "https://platform.lumigo.io/project/c_c66f9a9348c24/issues/0a4c350a360fa4d8593858df82a2f24a?timespan=CUSTOM-1773911686323-1773926086323"
     }
   ]
 }
