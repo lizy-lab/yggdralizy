@@ -1,22 +1,16 @@
 {
-  "current_hp": 72,
+  "current_hp": 63,
   "max_hp": 100,
   "status": "healthy",
   "last_activity_timestamp": "2026-03-20T12:48:03.666Z",
-  "last_update_timestamp": "2026-03-20T17:07:02.361Z",
-  "last_update_message": "Lumigo [warning]: ConnectTimeout (-10 HP) | Passive regen (+8 HP)",
+  "last_update_timestamp": "2026-03-20T17:13:20.227Z",
+  "last_update_message": "Lumigo [warning]: ConnectTimeout (-10 HP) | Passive regen (+1 HP)",
   "metrics": {
     "failed_runs": 0,
     "open_alerts": 0,
     "lumigo_alert": "warning: ConnectTimeout"
   },
   "event_log": [
-    {
-      "timestamp": "2026-03-20T02:59:09.992Z",
-      "message": "Passive regen (+14 HP)",
-      "hp_before": 28,
-      "hp_after": 42
-    },
     {
       "timestamp": "2026-03-20T03:52:46.160Z",
       "message": "Passive regen (+8 HP)",
@@ -136,6 +130,13 @@
       "message": "Lumigo [warning]: ConnectTimeout (-10 HP) | Passive regen (+8 HP)",
       "hp_before": 74,
       "hp_after": 72,
+      "url": "https://platform.lumigo.io/project/c_c66f9a9348c24/issues/d4e14fb72dc81548da410a2d7c495b28?timespan=CUSTOM-1774019081312-1774033481312"
+    },
+    {
+      "timestamp": "2026-03-20T17:13:20.227Z",
+      "message": "Lumigo [warning]: ConnectTimeout (-10 HP) | Passive regen (+1 HP)",
+      "hp_before": 72,
+      "hp_after": 63,
       "url": "https://platform.lumigo.io/project/c_c66f9a9348c24/issues/d4e14fb72dc81548da410a2d7c495b28?timespan=CUSTOM-1774019081312-1774033481312"
     }
   ]
