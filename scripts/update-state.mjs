@@ -361,10 +361,9 @@ async function main() {
     messageParts.push(`LEVEL UP: ${STAGES[stageNow].name} (Level ${stageNow + 1})`);
   }
 
-  // Reset last_activity_timestamp when damage occurs (tree growth restarts)
-  const hasDamage = damageOnly < 0;
-  const isGrowthRestart = hasDamage && stageNow > 0;
-  if (hasDamage) {
+  // Reset last_activity_timestamp only on death (HP reached 0)
+  const isGrowthRestart = isDeath && stageNow > 0;
+  if (isDeath) {
     state.last_activity_timestamp = now.toISOString();
     if (isGrowthRestart) {
       messageParts.push(`Growth reset: tree returns to ${STAGES[0].name} (was ${STAGES[stageNow].name})`);
