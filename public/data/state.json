@@ -1,22 +1,16 @@
 {
-  "current_hp": 69,
+  "current_hp": 59,
   "max_hp": 100,
   "status": "healthy",
   "last_activity_timestamp": "2026-03-20T12:48:03.666Z",
-  "last_update_timestamp": "2026-03-23T12:32:28.698Z",
-  "last_update_message": "Lumigo [error]: ReadTimeout (-15 HP)",
+  "last_update_timestamp": "2026-03-23T12:34:21.578Z",
+  "last_update_message": "Lumigo [warning]: ReadTimeout (-10 HP)",
   "metrics": {
     "failed_runs": 0,
     "open_alerts": 0,
-    "lumigo_alert": "error: ReadTimeout"
+    "lumigo_alert": "warning: ReadTimeout"
   },
   "event_log": [
-    {
-      "timestamp": "2026-03-20T23:07:51.733Z",
-      "message": "Passive regen (+10 HP)",
-      "hp_before": 63,
-      "hp_after": 73
-    },
     {
       "timestamp": "2026-03-21T00:21:01.811Z",
       "message": "Passive regen (+12 HP)",
@@ -137,6 +131,13 @@
       "hp_before": 84,
       "hp_after": 69,
       "url": "https://platform.lumigo.io/project/c_c66f9a9348c24/issues/0d12d3f89c747a47017d8275b8753459?timespan=CUSTOM-1774261891746-1774276291746"
+    },
+    {
+      "timestamp": "2026-03-23T12:34:21.578Z",
+      "message": "Lumigo [warning]: ReadTimeout (-10 HP)",
+      "hp_before": 69,
+      "hp_after": 59,
+      "url": "https://platform.lumigo.io/project/c_c66f9a9348c24/issues/aebd5657f5dd764de1ce33272146cecc?timespan=CUSTOM-1774261621153-1774276021153"
     }
   ]
 }
