@@ -779,6 +779,7 @@ function App() {
   const prevProgressRef = useRef(0);
   const prevStageRef = useRef(0);
   const isFirstRender = useRef(true);
+  const hasLoadedLiveData = useRef(false);
 
   // Time Logic
   useEffect(() => {
@@ -809,6 +810,7 @@ function App() {
                   const data = await res.json();
                   if (data.current_hp !== undefined) setHealth(data.current_hp);
                   if (data.max_hp !== undefined) setLiveMaxHp(data.max_hp);
+                  hasLoadedLiveData.current = true;
                   if (data.last_activity_timestamp) setLastIncident(new Date(data.last_activity_timestamp).getTime());
                   if (data.status === 'dead') setIsDead(true);
                   if (data.status === 'healthy') setIsDead(false);
@@ -939,8 +941,8 @@ function App() {
       const prevP = prevProgressRef.current;
       const currP = progress;
       
-      // Milestone effects
-      if (currentStageIndex > prevStageRef.current) {
+      // Milestone effects - only trigger for real level-ups, not initial data load
+      if (currentStageIndex > prevStageRef.current && hasLoadedLiveData.current) {
           for(let i=0; i<5; i++) spawnEffect('sparkle');
           spawnEffect('rune');
           spawnEffect('milestone', 'LEVEL UP!');
