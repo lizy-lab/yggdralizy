@@ -1,22 +1,16 @@
 {
-  "current_hp": 100,
+  "current_hp": 85,
   "max_hp": 100,
   "status": "healthy",
   "last_activity_timestamp": "2026-03-20T12:48:03.666Z",
-  "last_update_timestamp": "2026-03-24T12:17:23.266Z",
-  "last_update_message": "No changes detected",
+  "last_update_timestamp": "2026-03-24T13:23:11.981Z",
+  "last_update_message": "Lumigo [error]: JSONDecodeError (-15 HP)",
   "metrics": {
     "failed_runs": 0,
     "open_alerts": 0,
-    "lumigo_alert": null
+    "lumigo_alert": "error: JSONDecodeError"
   },
   "event_log": [
-    {
-      "timestamp": "2026-03-23T13:32:17.540Z",
-      "message": "Passive regen (+8 HP)",
-      "hp_before": 39,
-      "hp_after": 47
-    },
     {
       "timestamp": "2026-03-23T14:00:57.582Z",
       "message": "Lumigo [error]: Exception (-15 HP) | Passive regen (+4 HP)",
@@ -135,6 +129,13 @@
       "message": "Passive regen (+4 HP)",
       "hp_before": 96,
       "hp_after": 100
+    },
+    {
+      "timestamp": "2026-03-24T13:23:11.981Z",
+      "message": "Lumigo [error]: JSONDecodeError (-15 HP)",
+      "hp_before": 100,
+      "hp_after": 85,
+      "url": "https://platform.lumigo.io/project/c_c66f9a9348c24/issues/66b2c1c6fba85d5ffd29140c6d2d938d?timespan=CUSTOM-1774351336924-1774365736924"
     }
   ]
 }
