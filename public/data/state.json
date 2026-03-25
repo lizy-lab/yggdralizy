@@ -1,22 +1,16 @@
 {
-  "current_hp": 74,
+  "current_hp": 64,
   "max_hp": 100,
   "status": "healthy",
   "last_activity_timestamp": "2026-03-20T12:48:03.666Z",
-  "last_update_timestamp": "2026-03-25T12:26:10.197Z",
-  "last_update_message": "Lumigo [error]: 500 Server error response (-15 HP) | Passive regen (+1 HP)",
+  "last_update_timestamp": "2026-03-25T12:27:27.927Z",
+  "last_update_message": "Lumigo [warning]: InvalidStatusError (-10 HP)",
   "metrics": {
     "failed_runs": 0,
     "open_alerts": 0,
-    "lumigo_alert": "error: 500 Server error response"
+    "lumigo_alert": "warning: InvalidStatusError"
   },
   "event_log": [
-    {
-      "timestamp": "2026-03-24T10:18:28.838Z",
-      "message": "Passive regen (+6 HP)",
-      "hp_before": 90,
-      "hp_after": 96
-    },
     {
       "timestamp": "2026-03-24T11:18:10.957Z",
       "message": "Passive regen (+4 HP)",
@@ -137,6 +131,13 @@
       "hp_before": 88,
       "hp_after": 74,
       "url": "https://platform.lumigo.io/project/c_c66f9a9348c24/issues/39fa0b843df7a999bcef873cbbc93a62?timespan=CUSTOM-1774434337926-1774448737926"
+    },
+    {
+      "timestamp": "2026-03-25T12:27:27.927Z",
+      "message": "Lumigo [warning]: InvalidStatusError (-10 HP)",
+      "hp_before": 74,
+      "hp_after": 64,
+      "url": "https://platform.lumigo.io/project/c_c66f9a9348c24/issues/536d02aceeb779e18c1a40a7c7d16008?timespan=CUSTOM-1774434338075-1774448738075"
     }
   ]
 }
