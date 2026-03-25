@@ -3,8 +3,8 @@
   "max_hp": 100,
   "status": "dead",
   "last_activity_timestamp": "2026-03-25T13:32:52.440Z",
-  "last_update_timestamp": "2026-03-25T13:32:52.440Z",
-  "last_update_message": "Lumigo [warning]: ValidationError (-10 HP) | RAGNAROK: Tree has died!",
+  "last_update_timestamp": "2026-03-25T13:33:39.787Z",
+  "last_update_message": "No changes detected",
   "metrics": {
     "failed_runs": 0,
     "open_alerts": 0,
