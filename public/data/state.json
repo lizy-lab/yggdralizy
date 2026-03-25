@@ -1,23 +1,16 @@
 {
-  "current_hp": 88,
+  "current_hp": 74,
   "max_hp": 100,
   "status": "healthy",
   "last_activity_timestamp": "2026-03-20T12:48:03.666Z",
-  "last_update_timestamp": "2026-03-25T12:16:30.051Z",
-  "last_update_message": "Passive regen (+3 HP)",
+  "last_update_timestamp": "2026-03-25T12:26:10.197Z",
+  "last_update_message": "Lumigo [error]: 500 Server error response (-15 HP) | Passive regen (+1 HP)",
   "metrics": {
     "failed_runs": 0,
     "open_alerts": 0,
-    "lumigo_alert": null
+    "lumigo_alert": "error: 500 Server error response"
   },
   "event_log": [
-    {
-      "timestamp": "2026-03-24T09:41:23.000Z",
-      "message": "Lumigo [warning]: ApiException (-10 HP)",
-      "hp_before": 100,
-      "hp_after": 90,
-      "url": "https://platform.lumigo.io/project/c_c66f9a9348c24/issues/3b3d1252dc127efa2fd3c1b6e71847d1?timespan=CUSTOM-1774337977820-1774352377820"
-    },
     {
       "timestamp": "2026-03-24T10:18:28.838Z",
       "message": "Passive regen (+6 HP)",
@@ -137,6 +130,13 @@
       "message": "Passive regen (+3 HP)",
       "hp_before": 85,
       "hp_after": 88
+    },
+    {
+      "timestamp": "2026-03-25T12:26:10.197Z",
+      "message": "Lumigo [error]: 500 Server error response (-15 HP) | Passive regen (+1 HP)",
+      "hp_before": 88,
+      "hp_after": 74,
+      "url": "https://platform.lumigo.io/project/c_c66f9a9348c24/issues/39fa0b843df7a999bcef873cbbc93a62?timespan=CUSTOM-1774434337926-1774448737926"
     }
   ]
 }
