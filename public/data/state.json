@@ -1,22 +1,16 @@
 {
-  "current_hp": 50,
+  "current_hp": 40,
   "max_hp": 100,
   "status": "healthy",
   "last_activity_timestamp": "2026-03-25T16:41:31.739Z",
-  "last_update_timestamp": "2026-03-26T13:13:14.376Z",
-  "last_update_message": "Lumigo [warning]: ReadTimeout (-10 HP) | Passive regen (+8 HP)",
+  "last_update_timestamp": "2026-03-26T13:14:45.671Z",
+  "last_update_message": "Lumigo [warning]: ReadTimeout (-10 HP)",
   "metrics": {
     "failed_runs": 0,
     "open_alerts": 0,
     "lumigo_alert": "warning: ReadTimeout"
   },
   "event_log": [
-    {
-      "timestamp": "2026-03-25T17:23:31.660Z",
-      "message": "RESURRECTION: Tree revived by natural regeneration (+6 HP)",
-      "hp_before": 0,
-      "hp_after": 6
-    },
     {
       "timestamp": "2026-03-25T18:20:45.201Z",
       "message": "Passive regen (+9 HP)",
@@ -136,6 +130,13 @@
       "message": "Lumigo [warning]: ReadTimeout (-10 HP) | Passive regen (+8 HP)",
       "hp_before": 52,
       "hp_after": 50,
+      "url": "https://platform.lumigo.io/project/c_c66f9a9348c24/issues/456fd89a130c2997641f6fc29b3f8da0?timespan=CUSTOM-1774523494688-1774537894688"
+    },
+    {
+      "timestamp": "2026-03-26T13:14:45.671Z",
+      "message": "Lumigo [warning]: ReadTimeout (-10 HP)",
+      "hp_before": 50,
+      "hp_after": 40,
       "url": "https://platform.lumigo.io/project/c_c66f9a9348c24/issues/456fd89a130c2997641f6fc29b3f8da0?timespan=CUSTOM-1774523494688-1774537894688"
     }
   ]
