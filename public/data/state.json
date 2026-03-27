@@ -1,9 +1,9 @@
 {
-  "current_hp": 90,
+  "current_hp": 80,
   "max_hp": 100,
   "status": "healthy",
   "last_activity_timestamp": "2026-03-26T22:18:46.025Z",
-  "last_update_timestamp": "2026-03-27T15:11:50.652Z",
+  "last_update_timestamp": "2026-03-27T15:12:23.362Z",
   "last_update_message": "Lumigo [warning]: IntegrityError (-10 HP)",
   "metrics": {
     "failed_runs": 0,
@@ -11,13 +11,6 @@
     "lumigo_alert": "warning: IntegrityError"
   },
   "event_log": [
-    {
-      "timestamp": "2026-03-26T22:44:04.641Z",
-      "message": "RESURRECTION: Tree revived by natural regeneration (+4 HP)",
-      "hp_before": 0,
-      "hp_after": 4,
-      "url": "https://platform.lumigo.io/project/c_c66f9a9348c24/issues/7a42293526ab18e2756f225504b4140a?timespan=CUSTOM-1774557797130-1774572197130"
-    },
     {
       "timestamp": "2026-03-26T23:07:36.386Z",
       "message": "Passive regen (+3 HP)",
@@ -135,6 +128,13 @@
       "message": "Lumigo [warning]: IntegrityError (-10 HP)",
       "hp_before": 100,
       "hp_after": 90,
+      "url": "https://platform.lumigo.io/project/c_c66f9a9348c24/issues/b261e8a4c3be056c88093ff860baaf4c?timespan=CUSTOM-1774617050125-1774631450125"
+    },
+    {
+      "timestamp": "2026-03-27T15:12:23.362Z",
+      "message": "Lumigo [warning]: IntegrityError (-10 HP)",
+      "hp_before": 90,
+      "hp_after": 80,
       "url": "https://platform.lumigo.io/project/c_c66f9a9348c24/issues/b261e8a4c3be056c88093ff860baaf4c?timespan=CUSTOM-1774617050125-1774631450125"
     }
   ]
