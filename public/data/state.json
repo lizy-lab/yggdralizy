@@ -1,9 +1,9 @@
 {
-  "current_hp": 75,
+  "current_hp": 65,
   "max_hp": 100,
   "status": "healthy",
   "last_activity_timestamp": "2026-03-26T22:18:46.025Z",
-  "last_update_timestamp": "2026-03-28T00:34:02.807Z",
+  "last_update_timestamp": "2026-03-28T00:34:20.082Z",
   "last_update_message": "Lumigo [warning]: ValueError (-10 HP)",
   "metrics": {
     "failed_runs": 0,
@@ -11,13 +11,6 @@
     "lumigo_alert": "warning: ValueError"
   },
   "event_log": [
-    {
-      "timestamp": "2026-03-27T04:02:35.018Z",
-      "message": "Lumigo [warning]: ValidationError (-10 HP)",
-      "hp_before": 38,
-      "hp_after": 28,
-      "url": "https://platform.lumigo.io/project/c_c66f9a9348c24/issues/0fb769377408e2499a531e3a34d01477?timespan=CUSTOM-1774576875244-1774591275244"
-    },
     {
       "timestamp": "2026-03-27T04:08:18.946Z",
       "message": "Lumigo [warning]: ValidationError (-10 HP)",
@@ -136,6 +129,13 @@
       "message": "Lumigo [warning]: ValueError (-10 HP)",
       "hp_before": 85,
       "hp_after": 75,
+      "url": "https://platform.lumigo.io/project/c_c66f9a9348c24/issues/8ceeaf053245d0bc5f30c6988358c3db?timespan=CUSTOM-1774650725145-1774665125145"
+    },
+    {
+      "timestamp": "2026-03-28T00:34:20.082Z",
+      "message": "Lumigo [warning]: ValueError (-10 HP)",
+      "hp_before": 75,
+      "hp_after": 65,
       "url": "https://platform.lumigo.io/project/c_c66f9a9348c24/issues/8ceeaf053245d0bc5f30c6988358c3db?timespan=CUSTOM-1774650725145-1774665125145"
     }
   ]
