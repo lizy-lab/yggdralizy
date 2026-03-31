@@ -1,9 +1,9 @@
 {
-  "current_hp": 90,
+  "current_hp": 80,
   "max_hp": 100,
   "status": "healthy",
   "last_activity_timestamp": "2026-03-26T22:18:46.025Z",
-  "last_update_timestamp": "2026-03-31T04:20:56.477Z",
+  "last_update_timestamp": "2026-03-31T04:21:20.967Z",
   "last_update_message": "Lumigo [warning]: RestError (-10 HP)",
   "metrics": {
     "failed_runs": 0,
@@ -11,13 +11,6 @@
     "lumigo_alert": "warning: RestError"
   },
   "event_log": [
-    {
-      "timestamp": "2026-03-30T06:43:04.933Z",
-      "message": "Lumigo [error]: JSONDecodeError (-15 HP)",
-      "hp_before": 100,
-      "hp_after": 85,
-      "url": "https://platform.lumigo.io/project/c_c66f9a9348c24/issues/79bea65563345d4f2ea82632cbf6b60f?timespan=CUSTOM-1774845746707-1774860146707"
-    },
     {
       "timestamp": "2026-03-30T06:43:49.026Z",
       "message": "1 failed run(s) (-10 HP) | Lumigo [error]: JSONDecodeError (-15 HP)",
@@ -137,6 +130,13 @@
       "message": "Lumigo [warning]: RestError (-10 HP)",
       "hp_before": 100,
       "hp_after": 90,
+      "url": "https://platform.lumigo.io/project/c_c66f9a9348c24/issues/dcf41346ed8ce0cd1a80d302cbf50d32?timespan=CUSTOM-1774923580983-1774937980983"
+    },
+    {
+      "timestamp": "2026-03-31T04:21:20.967Z",
+      "message": "Lumigo [warning]: RestError (-10 HP)",
+      "hp_before": 90,
+      "hp_after": 80,
       "url": "https://platform.lumigo.io/project/c_c66f9a9348c24/issues/dcf41346ed8ce0cd1a80d302cbf50d32?timespan=CUSTOM-1774923580983-1774937980983"
     }
   ]
