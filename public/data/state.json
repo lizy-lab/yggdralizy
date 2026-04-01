@@ -1,22 +1,16 @@
 {
-  "current_hp": 57,
+  "current_hp": 44,
   "max_hp": 100,
   "status": "healthy",
   "last_activity_timestamp": "2026-03-26T22:18:46.025Z",
-  "last_update_timestamp": "2026-04-01T12:19:58.720Z",
-  "last_update_message": "Passive regen (+8 HP)",
+  "last_update_timestamp": "2026-04-01T12:35:14.085Z",
+  "last_update_message": "Lumigo [error]: RuntimeError (-15 HP) | Passive regen (+2 HP)",
   "metrics": {
     "failed_runs": 0,
     "open_alerts": 0,
-    "lumigo_alert": null
+    "lumigo_alert": "error: RuntimeError"
   },
   "event_log": [
-    {
-      "timestamp": "2026-03-30T18:20:24.385Z",
-      "message": "Passive regen (+8 HP)",
-      "hp_before": 92,
-      "hp_after": 100
-    },
     {
       "timestamp": "2026-03-31T04:20:56.477Z",
       "message": "Lumigo [warning]: RestError (-10 HP)",
@@ -139,6 +133,13 @@
       "message": "Passive regen (+8 HP)",
       "hp_before": 49,
       "hp_after": 57
+    },
+    {
+      "timestamp": "2026-04-01T12:35:14.085Z",
+      "message": "Lumigo [error]: RuntimeError (-15 HP) | Passive regen (+2 HP)",
+      "hp_before": 57,
+      "hp_after": 44,
+      "url": "https://platform.lumigo.io/project/c_c66f9a9348c24/issues/9e3f394a79e851c91454f7db8aa94398?timespan=CUSTOM-1775039640672-1775054040672"
     }
   ]
 }
