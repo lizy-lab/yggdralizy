@@ -1,22 +1,16 @@
 {
-  "current_hp": 85,
+  "current_hp": 70,
   "max_hp": 100,
   "status": "healthy",
   "last_activity_timestamp": "2026-03-26T22:18:46.025Z",
-  "last_update_timestamp": "2026-04-01T08:48:20.228Z",
-  "last_update_message": "Lumigo [error]: RuntimeError (-15 HP)",
+  "last_update_timestamp": "2026-04-01T08:48:34.052Z",
+  "last_update_message": "Lumigo [error]: ResponseSizeTooLarge (-15 HP)",
   "metrics": {
     "failed_runs": 0,
     "open_alerts": 0,
-    "lumigo_alert": "error: RuntimeError"
+    "lumigo_alert": "error: ResponseSizeTooLarge"
   },
   "event_log": [
-    {
-      "timestamp": "2026-03-30T12:19:37.622Z",
-      "message": "Passive regen (+9 HP)",
-      "hp_before": 57,
-      "hp_after": 66
-    },
     {
       "timestamp": "2026-03-30T13:33:30.287Z",
       "message": "Passive regen (+12 HP)",
@@ -137,6 +131,13 @@
       "hp_before": 100,
       "hp_after": 85,
       "url": "https://platform.lumigo.io/project/c_c66f9a9348c24/issues/9e3f394a79e851c91454f7db8aa94398?timespan=CUSTOM-1775026005139-1775040405139"
+    },
+    {
+      "timestamp": "2026-04-01T08:48:34.052Z",
+      "message": "Lumigo [error]: ResponseSizeTooLarge (-15 HP)",
+      "hp_before": 85,
+      "hp_after": 70,
+      "url": "https://platform.lumigo.io/project/c_c66f9a9348c24/issues/55dc2787179a6c9ecbce8d58ac0d7081?timespan=CUSTOM-1775026009431-1775040409431"
     }
   ]
 }
