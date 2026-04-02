@@ -1,22 +1,16 @@
 {
-  "current_hp": 54,
+  "current_hp": 45,
   "max_hp": 100,
   "status": "healthy",
   "last_activity_timestamp": "2026-03-26T22:18:46.025Z",
-  "last_update_timestamp": "2026-04-02T07:44:31.535Z",
-  "last_update_message": "Lumigo [warning]: SourcingError (-10 HP) | Passive regen (+1 HP)",
+  "last_update_timestamp": "2026-04-02T07:51:01.463Z",
+  "last_update_message": "Lumigo [warning]: OSError (-10 HP) | Passive regen (+1 HP)",
   "metrics": {
     "failed_runs": 0,
     "open_alerts": 0,
-    "lumigo_alert": "warning: SourcingError"
+    "lumigo_alert": "warning: OSError"
   },
   "event_log": [
-    {
-      "timestamp": "2026-04-01T12:19:58.720Z",
-      "message": "Passive regen (+8 HP)",
-      "hp_before": 49,
-      "hp_after": 57
-    },
     {
       "timestamp": "2026-04-01T12:35:14.085Z",
       "message": "Lumigo [error]: RuntimeError (-15 HP) | Passive regen (+2 HP)",
@@ -138,6 +132,13 @@
       "hp_before": 63,
       "hp_after": 54,
       "url": "https://platform.lumigo.io/project/c_c66f9a9348c24/issues/c0996e2009d655601ab025979cb18e41?timespan=CUSTOM-1775108561069-1775122961069"
+    },
+    {
+      "timestamp": "2026-04-02T07:51:01.463Z",
+      "message": "Lumigo [warning]: OSError (-10 HP) | Passive regen (+1 HP)",
+      "hp_before": 54,
+      "hp_after": 45,
+      "url": "https://platform.lumigo.io/project/c_c66f9a9348c24/issues/d95260d0f10d6032391897f78ae6a7b9?timespan=CUSTOM-1775108961180-1775123361180"
     }
   ]
 }
