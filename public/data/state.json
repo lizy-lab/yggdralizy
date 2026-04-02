@@ -1,23 +1,16 @@
 {
-  "current_hp": 6,
+  "current_hp": 7,
   "max_hp": 100,
   "status": "healthy",
   "last_activity_timestamp": "2026-04-02T08:17:50.143Z",
-  "last_update_timestamp": "2026-04-02T12:11:49.337Z",
-  "last_update_message": "Lumigo [error]: HubspotMaxObjectsReturnedError (-15 HP) | Passive regen (+1 HP)",
+  "last_update_timestamp": "2026-04-02T12:18:58.466Z",
+  "last_update_message": "Passive regen (+1 HP)",
   "metrics": {
     "failed_runs": 0,
     "open_alerts": 0,
-    "lumigo_alert": "error: HubspotMaxObjectsReturnedError"
+    "lumigo_alert": null
   },
   "event_log": [
-    {
-      "timestamp": "2026-04-02T01:12:27.791Z",
-      "message": "Lumigo [error]: HubspotMaxObjectsReturnedError (-15 HP) | Passive regen (+1 HP)",
-      "hp_before": 85,
-      "hp_after": 71,
-      "url": "https://platform.lumigo.io/project/c_c66f9a9348c24/issues/f507dea7a98b4093cc7ea57a99be54e6?timespan=CUSTOM-1775085072794-1775099472794"
-    },
     {
       "timestamp": "2026-04-02T01:35:13.618Z",
       "message": "Passive regen (+3 HP)",
@@ -143,6 +136,12 @@
       "hp_before": 20,
       "hp_after": 6,
       "url": "https://platform.lumigo.io/project/c_c66f9a9348c24/issues/f507dea7a98b4093cc7ea57a99be54e6?timespan=CUSTOM-1775124679515-1775139079515"
+    },
+    {
+      "timestamp": "2026-04-02T12:18:58.466Z",
+      "message": "Passive regen (+1 HP)",
+      "hp_before": 6,
+      "hp_after": 7
     }
   ]
 }
