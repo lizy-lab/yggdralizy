@@ -1,23 +1,16 @@
 {
-  "current_hp": 100,
+  "current_hp": 90,
   "max_hp": 100,
   "status": "healthy",
   "last_activity_timestamp": "2026-04-02T08:17:50.143Z",
-  "last_update_timestamp": "2026-04-03T06:26:49.182Z",
-  "last_update_message": "No changes detected",
+  "last_update_timestamp": "2026-04-03T07:29:19.693Z",
+  "last_update_message": "Lumigo [warning]: RetryError (-10 HP)",
   "metrics": {
     "failed_runs": 0,
     "open_alerts": 0,
-    "lumigo_alert": null
+    "lumigo_alert": "warning: RetryError"
   },
   "event_log": [
-    {
-      "timestamp": "2026-04-02T07:54:43.705Z",
-      "message": "Lumigo [warning]: SourcingError (-10 HP)",
-      "hp_before": 45,
-      "hp_after": 35,
-      "url": "https://platform.lumigo.io/project/c_c66f9a9348c24/issues/c0996e2009d655601ab025979cb18e41?timespan=CUSTOM-1775108561069-1775122961069"
-    },
     {
       "timestamp": "2026-04-02T07:56:22.167Z",
       "message": "Lumigo [warning]: OSError (-10 HP)",
@@ -136,6 +129,13 @@
       "message": "Passive regen (+8 HP)",
       "hp_before": 92,
       "hp_after": 100
+    },
+    {
+      "timestamp": "2026-04-03T07:29:19.693Z",
+      "message": "Lumigo [warning]: RetryError (-10 HP)",
+      "hp_before": 100,
+      "hp_after": 90,
+      "url": "https://platform.lumigo.io/project/c_c66f9a9348c24/issues/34ecc268a6fbee75ffc6fbfd0112a662?timespan=CUSTOM-1775194065618-1775208465618"
     }
   ]
 }
