@@ -3,12 +3,12 @@
   "max_hp": 100,
   "status": "healthy",
   "last_activity_timestamp": "2026-04-02T08:17:50.143Z",
-  "last_update_timestamp": "2026-04-03T14:15:44.361Z",
-  "last_update_message": "Lumigo [error]: 422 Client error response (-15 HP) | Passive regen (+6 HP)",
+  "last_update_timestamp": "2026-04-03T14:17:29.278Z",
+  "last_update_message": "No changes detected",
   "metrics": {
     "failed_runs": 0,
     "open_alerts": 0,
-    "lumigo_alert": "error: 422 Client error response"
+    "lumigo_alert": null
   },
   "event_log": [
     {
