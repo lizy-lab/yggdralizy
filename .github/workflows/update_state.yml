@@ -46,7 +46,7 @@ jobs:
           SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
         run: node scripts/update-state.mjs
 
-      - name: Generate OG image snapshot
+      - name: Generate OG image
         id: og
         run: |
           OUTPUT=$(node scripts/generate-og-image.mjs --public)
@@ -69,3 +69,10 @@ jobs:
           OG_SNAPSHOT_NAME: ${{ steps.og.outputs.snapshot }}
           GITHUB_REPOSITORY: ${{ github.repository }}
         run: node scripts/send-slack.mjs
+
+      - name: Update Slack channel topic
+        if: always()
+        env:
+          SLACK_BOT_TOKEN: ${{ secrets.SLACK_BOT_TOKEN }}
+          SLACK_CHANNEL_ID: ${{ secrets.SLACK_CHANNEL_ID }}
+        run: node scripts/update-slack-topic.mjs
