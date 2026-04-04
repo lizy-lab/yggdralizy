@@ -18,7 +18,7 @@ const STAGES = [
   { name: 'Awakening Seed', threshold: 1, emoji: '\u{1F331}' },        // seedling
   { name: 'Sprout of Realms', threshold: 3, emoji: '\u{1F33F}' },      // herb
   { name: 'Roots of Wisdom', threshold: 8, emoji: '\u{1F33E}' },       // rice (rooted)
-  { name: 'Trunk of Strength', threshold: 18, emoji: '\u{1FAB5}' },    // wood
+  { name: 'Trunk of Strength', threshold: 18, emoji: '\u{1F333}' },    // deciduous tree
   { name: 'Branches of Fate', threshold: 36, emoji: '\u{1F333}' },     // deciduous tree
   { name: 'Guardian of Worlds', threshold: 72, emoji: '\u{1F333}' },   // deciduous tree
   { name: 'Yggdrasil Ascendant', threshold: 144, emoji: '\u{1F333}' }, // deciduous tree
@@ -54,10 +54,16 @@ function buildTopic(state) {
   const stageIdx = getStageIndex(hoursElapsed);
   const stage = STAGES[stageIdx];
 
+  const pct = (state.current_hp / state.max_hp) * 100;
+  const isTree = stageIdx >= 4; // Trunk of Strength onward (🌳)
+  let emoji = stage.emoji;
+  if (isTree && pct <= 50) emoji = '\u{1FABE}';       // 🪾 leafless tree (critical)
+  else if (isTree && pct <= 80) emoji = '\u{1F342}';   // 🍂 fallen leaf (hurt)
+
   const hearts = hpEmojis(state.current_hp, state.max_hp);
   const hpText = `${state.current_hp}/${state.max_hp}`;
 
-  return `${stage.emoji} ${stage.name} ${hearts} ${hpText} HP`;
+  return `${emoji} ${stage.name} ${hearts} ${hpText} HP`;
 }
 
 const state = JSON.parse(readFileSync(STATE_PATH, 'utf-8'));
