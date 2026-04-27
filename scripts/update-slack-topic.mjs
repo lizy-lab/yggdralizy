@@ -96,6 +96,17 @@ try {
   console.warn('Slack channel join error:', err.message);
 }
 
+// Slack returns emojis as shortcodes (:heart:) and URLs wrapped in <>.
+// Strip those so we can compare the meaningful text content.
+function normalize(s) {
+  return s
+    .replace(/<(https?:\/\/[^>|]+)(?:\|[^>]*)?>/g, '$1') // <url> or <url|label> → url
+    .replace(/:[a-z0-9_+-]+:/g, '')                        // strip :emoji_shortcodes:
+    .replace(/[\u{1F000}-\u{1FFFF}\u{2600}-\u{27BF}\u{FE00}-\u{FE0F}\u{200D}\u{20E3}\u{E0020}-\u{E007F}]/gu, '') // strip unicode emojis
+    .replace(/\s+/g, ' ')
+    .trim();
+}
+
 // Fetch current topic to avoid unnecessary updates (which post a notification)
 try {
   const infoRes = await fetch(`https://slack.com/api/conversations.info?channel=${SLACK_CHANNEL_ID}`, {
@@ -105,10 +116,12 @@ try {
   if (!infoData.ok) {
     console.warn(`conversations.info failed: ${infoData.error}`);
   } else {
-    const currentTopic = infoData.channel?.topic?.value;
-    console.log(`Current topic: ${currentTopic}`);
-    console.log(`New topic:     ${topic}`);
-    if (currentTopic === topic) {
+    const currentTopic = infoData.channel?.topic?.value ?? '';
+    const currentNorm = normalize(currentTopic);
+    const newNorm = normalize(topic);
+    console.log(`Current (normalized): ${currentNorm}`);
+    console.log(`New     (normalized): ${newNorm}`);
+    if (currentNorm === newNorm) {
       console.log('Topic unchanged, skipping update');
       process.exit(0);
     }
