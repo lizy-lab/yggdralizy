@@ -102,9 +102,16 @@ try {
     headers: { 'Authorization': `Bearer ${SLACK_BOT_TOKEN}` },
   });
   const infoData = await infoRes.json();
-  if (infoData.ok && infoData.channel?.topic?.value === topic) {
-    console.log('Topic unchanged, skipping update');
-    process.exit(0);
+  if (!infoData.ok) {
+    console.warn(`conversations.info failed: ${infoData.error}`);
+  } else {
+    const currentTopic = infoData.channel?.topic?.value;
+    console.log(`Current topic: ${currentTopic}`);
+    console.log(`New topic:     ${topic}`);
+    if (currentTopic === topic) {
+      console.log('Topic unchanged, skipping update');
+      process.exit(0);
+    }
   }
 } catch (err) {
   console.warn('Could not check current topic, proceeding with update:', err.message);
