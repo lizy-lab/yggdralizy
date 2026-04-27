@@ -7,6 +7,10 @@ const STATE_PATH = resolve(__dirname, '..', 'public', 'data', 'state.json');
 
 const SLACK_BOT_TOKEN = process.env.SLACK_BOT_TOKEN;
 const SLACK_CHANNEL_ID = process.env.SLACK_CHANNEL_ID;
+const GITHUB_REPOSITORY = process.env.GITHUB_REPOSITORY;
+const PAGES_URL = GITHUB_REPOSITORY
+  ? `https://${GITHUB_REPOSITORY.split('/')[0]}.github.io/${GITHUB_REPOSITORY.split('/')[1]}/`
+  : null;
 
 if (!SLACK_BOT_TOKEN || !SLACK_CHANNEL_ID) {
   console.log('No SLACK_BOT_TOKEN or SLACK_CHANNEL_ID set, skipping topic update.');
@@ -43,7 +47,8 @@ function buildTopic(state) {
   const isDead = state.status === 'dead';
 
   if (isDead) {
-    return '\u{1F480} Yggdralizy is dead \u{1F480} \u2014 waiting for resurrection...';
+    const dead = '\u{1F480} Yggdralizy is dead \u{1F480}';
+    return PAGES_URL ? `${dead} | ${PAGES_URL}` : dead;
   }
 
   const now = new Date();
@@ -63,7 +68,9 @@ function buildTopic(state) {
   const hearts = hpEmojis(state.current_hp, state.max_hp);
   const hpText = `${state.current_hp}/${state.max_hp}`;
 
-  return `${emoji} ${stage.name} ${hearts} ${hpText} HP`;
+  const parts = [`${emoji} ${stage.name} ${hearts} ${hpText} HP`];
+  if (PAGES_URL) parts.push(PAGES_URL);
+  return parts.join(' | ');
 }
 
 const state = JSON.parse(readFileSync(STATE_PATH, 'utf-8'));
@@ -87,6 +94,20 @@ try {
   }
 } catch (err) {
   console.warn('Slack channel join error:', err.message);
+}
+
+// Fetch current topic to avoid unnecessary updates (which post a notification)
+try {
+  const infoRes = await fetch(`https://slack.com/api/conversations.info?channel=${SLACK_CHANNEL_ID}`, {
+    headers: { 'Authorization': `Bearer ${SLACK_BOT_TOKEN}` },
+  });
+  const infoData = await infoRes.json();
+  if (infoData.ok && infoData.channel?.topic?.value === topic) {
+    console.log('Topic unchanged, skipping update');
+    process.exit(0);
+  }
+} catch (err) {
+  console.warn('Could not check current topic, proceeding with update:', err.message);
 }
 
 try {
