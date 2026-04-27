@@ -71,6 +71,24 @@ const topic = buildTopic(state);
 
 console.log(`Setting channel topic: ${topic}`);
 
+// Ensure bot is in the channel (requires channels:join scope)
+try {
+  const joinRes = await fetch('https://slack.com/api/conversations.join', {
+    method: 'POST',
+    headers: {
+      'Authorization': `Bearer ${SLACK_BOT_TOKEN}`,
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({ channel: SLACK_CHANNEL_ID }),
+  });
+  const joinData = await joinRes.json();
+  if (!joinData.ok && joinData.error !== 'already_in_channel') {
+    console.warn(`Slack channel join failed: ${joinData.error}`);
+  }
+} catch (err) {
+  console.warn('Slack channel join error:', err.message);
+}
+
 try {
   const res = await fetch('https://slack.com/api/conversations.setTopic', {
     method: 'POST',
