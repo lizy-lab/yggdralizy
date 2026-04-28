@@ -1,22 +1,16 @@
 {
-  "current_hp": 87,
+  "current_hp": 77,
   "max_hp": 100,
   "status": "healthy",
   "last_activity_timestamp": "2026-04-02T08:17:50.143Z",
-  "last_update_timestamp": "2026-04-28T10:40:56.214Z",
-  "last_update_message": "Passive regen (+8 HP)",
+  "last_update_timestamp": "2026-04-28T10:41:57.848Z",
+  "last_update_message": "Lumigo [warning]: SSHException (-10 HP)",
   "metrics": {
     "failed_runs": 0,
     "open_alerts": 0,
-    "lumigo_alert": null
+    "lumigo_alert": "warning: SSHException"
   },
   "event_log": [
-    {
-      "timestamp": "2026-04-04T17:09:36.548Z",
-      "message": "Passive regen (+10 HP)",
-      "hp_before": 62,
-      "hp_after": 72
-    },
     {
       "timestamp": "2026-04-04T18:09:42.409Z",
       "message": "Passive regen (+10 HP)",
@@ -136,6 +130,13 @@
       "message": "Passive regen (+8 HP)",
       "hp_before": 79,
       "hp_after": 87
+    },
+    {
+      "timestamp": "2026-04-28T10:41:57.848Z",
+      "message": "Lumigo [warning]: SSHException (-10 HP)",
+      "hp_before": 87,
+      "hp_after": 77,
+      "url": "https://platform.lumigo.io/project/c_c66f9a9348c24/issues/0db29edde59367a060c408a0ca5a86ea?timespan=CUSTOM-1777365645039-1777380045039"
     }
   ]
 }
