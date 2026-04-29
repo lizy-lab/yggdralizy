@@ -66,9 +66,8 @@ function buildTopic(state) {
   else if (isTree && pct <= 80) emoji = '\u{1F342}';   // 🍂 fallen leaf (hurt)
 
   const hearts = hpEmojis(state.current_hp, state.max_hp);
-  const hpText = `${state.current_hp}/${state.max_hp}`;
 
-  const parts = [`${emoji} ${stage.name} ${hearts} ${hpText} HP`];
+  const parts = [`${emoji} ${stage.name} ${hearts}`];
   if (PAGES_URL) parts.push(PAGES_URL);
   return parts.join(' | ');
 }
