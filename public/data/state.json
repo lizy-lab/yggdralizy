@@ -1,23 +1,16 @@
 {
-  "current_hp": 85,
+  "current_hp": 75,
   "max_hp": 100,
   "status": "healthy",
   "last_activity_timestamp": "2026-04-28T11:37:59.612Z",
-  "last_update_timestamp": "2026-04-29T17:10:30.395Z",
-  "last_update_message": "Lumigo [error]: ValueError (-15 HP)",
+  "last_update_timestamp": "2026-04-29T17:11:31.254Z",
+  "last_update_message": "Lumigo [warning]: ValueError (-10 HP)",
   "metrics": {
     "failed_runs": 0,
     "open_alerts": 0,
-    "lumigo_alert": "error: ValueError"
+    "lumigo_alert": "warning: ValueError"
   },
   "event_log": [
-    {
-      "timestamp": "2026-04-28T10:48:22.855Z",
-      "message": "Lumigo [warning]: HTTPError (-10 HP)",
-      "hp_before": 47,
-      "hp_after": 37,
-      "url": "https://platform.lumigo.io/project/c_c66f9a9348c24/issues/4269ee74e24ad9ff75570d2affc25857?timespan=CUSTOM-1777365985354-1777380385354"
-    },
     {
       "timestamp": "2026-04-28T10:48:44.426Z",
       "message": "Lumigo [warning]: SourcingError (-10 HP)",
@@ -138,6 +131,13 @@
       "hp_before": 100,
       "hp_after": 85,
       "url": "https://platform.lumigo.io/project/c_c66f9a9348c24/issues/f6a4f347d85f7fff7672450ca3c7232c?timespan=CUSTOM-1777475391601-1777489791601"
+    },
+    {
+      "timestamp": "2026-04-29T17:11:31.254Z",
+      "message": "Lumigo [warning]: ValueError (-10 HP)",
+      "hp_before": 85,
+      "hp_after": 75,
+      "url": "https://platform.lumigo.io/project/c_c66f9a9348c24/issues/8ceeaf053245d0bc5f30c6988358c3db?timespan=CUSTOM-1777475391826-1777489791826"
     }
   ]
 }
