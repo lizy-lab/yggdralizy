@@ -3,12 +3,12 @@
   "max_hp": 100,
   "status": "healthy",
   "last_activity_timestamp": "2026-04-28T11:37:59.612Z",
-  "last_update_timestamp": "2026-04-29T17:31:59.973Z",
-  "last_update_message": "Lumigo [error]: HTTPError (-15 HP) | Passive regen (+2 HP)",
+  "last_update_timestamp": "2026-04-29T17:33:01.838Z",
+  "last_update_message": "No changes detected",
   "metrics": {
     "failed_runs": 0,
     "open_alerts": 0,
-    "lumigo_alert": "error: HTTPError"
+    "lumigo_alert": null
   },
   "event_log": [
     {
