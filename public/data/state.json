@@ -3,12 +3,12 @@
   "max_hp": 100,
   "status": "healthy",
   "last_activity_timestamp": "2026-04-30T11:43:57.807Z",
-  "last_update_timestamp": "2026-04-30T22:15:34.614Z",
-  "last_update_message": "Lumigo [warning]: NotFoundException (-10 HP)",
+  "last_update_timestamp": "2026-04-30T22:20:24.811Z",
+  "last_update_message": "No changes detected",
   "metrics": {
     "failed_runs": 0,
     "open_alerts": 0,
-    "lumigo_alert": "warning: NotFoundException"
+    "lumigo_alert": null
   },
   "event_log": [
     {
