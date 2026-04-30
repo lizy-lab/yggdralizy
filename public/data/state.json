@@ -1,23 +1,16 @@
 {
-  "current_hp": 22,
+  "current_hp": 20,
   "max_hp": 100,
   "status": "healthy",
   "last_activity_timestamp": "2026-04-28T11:37:59.612Z",
-  "last_update_timestamp": "2026-04-30T10:36:20.431Z",
-  "last_update_message": "Passive regen (+5 HP)",
+  "last_update_timestamp": "2026-04-30T11:27:17.786Z",
+  "last_update_message": "Lumigo [warning]: PermissionError (-10 HP) | Passive regen (+8 HP)",
   "metrics": {
     "failed_runs": 0,
     "open_alerts": 0,
-    "lumigo_alert": null
+    "lumigo_alert": "warning: PermissionError"
   },
   "event_log": [
-    {
-      "timestamp": "2026-04-30T02:23:05.617Z",
-      "message": "Lumigo [warning]: Exception (-10 HP)",
-      "hp_before": 90,
-      "hp_after": 80,
-      "url": "https://platform.lumigo.io/project/c_c66f9a9348c24/issues/f074d8c687c6327c1516bef2797e5cd3?timespan=CUSTOM-1777508504724-1777522904724"
-    },
     {
       "timestamp": "2026-04-30T02:24:23.344Z",
       "message": "Lumigo [warning]: Exception (-10 HP)",
@@ -143,6 +136,13 @@
       "message": "Passive regen (+5 HP)",
       "hp_before": 17,
       "hp_after": 22
+    },
+    {
+      "timestamp": "2026-04-30T11:27:17.786Z",
+      "message": "Lumigo [warning]: PermissionError (-10 HP) | Passive regen (+8 HP)",
+      "hp_before": 22,
+      "hp_after": 20,
+      "url": "https://platform.lumigo.io/project/c_c66f9a9348c24/issues/d9d159cddae7c97050d811cebbb3a0b9?timespan=CUSTOM-1777541108703-1777555508703"
     }
   ]
 }
