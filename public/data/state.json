@@ -1,23 +1,16 @@
 {
-  "current_hp": 6,
+  "current_hp": 16,
   "max_hp": 100,
   "status": "healthy",
   "last_activity_timestamp": "2026-04-30T11:43:57.807Z",
-  "last_update_timestamp": "2026-04-30T12:33:25.243Z",
-  "last_update_message": "RESURRECTION: Tree revived by natural regeneration (+6 HP)",
+  "last_update_timestamp": "2026-04-30T13:35:36.257Z",
+  "last_update_message": "Passive regen (+10 HP)",
   "metrics": {
     "failed_runs": 0,
     "open_alerts": 0,
     "lumigo_alert": null
   },
   "event_log": [
-    {
-      "timestamp": "2026-04-30T05:16:17.615Z",
-      "message": "Lumigo [warning]: RestError (-10 HP) | Passive regen (+1 HP)",
-      "hp_before": 97,
-      "hp_after": 88,
-      "url": "https://platform.lumigo.io/project/c_c66f9a9348c24/issues/dcf41346ed8ce0cd1a80d302cbf50d32?timespan=CUSTOM-1777518855453-1777533255453"
-    },
     {
       "timestamp": "2026-04-30T05:17:13.920Z",
       "message": "Lumigo [warning]: RestError (-10 HP)",
@@ -144,6 +137,12 @@
       "message": "RESURRECTION: Tree revived by natural regeneration (+6 HP)",
       "hp_before": 0,
       "hp_after": 6
+    },
+    {
+      "timestamp": "2026-04-30T13:35:36.257Z",
+      "message": "Passive regen (+10 HP)",
+      "hp_before": 6,
+      "hp_after": 16
     }
   ]
 }
