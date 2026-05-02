@@ -1,23 +1,16 @@
 {
-  "current_hp": 53,
+  "current_hp": 45,
   "max_hp": 100,
   "status": "healthy",
   "last_activity_timestamp": "2026-04-30T11:43:57.807Z",
-  "last_update_timestamp": "2026-05-02T10:19:57.395Z",
-  "last_update_message": "No changes detected",
+  "last_update_timestamp": "2026-05-02T11:04:25.311Z",
+  "last_update_message": "Lumigo [error]: Timed out (-15 HP) | Passive regen (+7 HP)",
   "metrics": {
     "failed_runs": 0,
     "open_alerts": 0,
-    "lumigo_alert": null
+    "lumigo_alert": "error: Timed out"
   },
   "event_log": [
-    {
-      "timestamp": "2026-05-01T07:48:59.791Z",
-      "message": "Lumigo [error]: Timed out (-15 HP)",
-      "hp_before": 87,
-      "hp_after": 72,
-      "url": "https://platform.lumigo.io/project/c_c66f9a9348c24/issues/21336346e130833a2f29acd40bbc878e?timespan=CUSTOM-1777614470656-1777628870656"
-    },
     {
       "timestamp": "2026-05-01T08:04:12.172Z",
       "message": "Lumigo [error]: Timed out (-15 HP) | Passive regen (+2 HP)",
@@ -140,6 +133,13 @@
       "hp_before": 67,
       "hp_after": 53,
       "url": "https://platform.lumigo.io/project/c_c66f9a9348c24/issues/21336346e130833a2f29acd40bbc878e?timespan=CUSTOM-1777709864117-1777724264117"
+    },
+    {
+      "timestamp": "2026-05-02T11:04:25.311Z",
+      "message": "Lumigo [error]: Timed out (-15 HP) | Passive regen (+7 HP)",
+      "hp_before": 53,
+      "hp_after": 45,
+      "url": "https://platform.lumigo.io/project/c_c66f9a9348c24/issues/21336346e130833a2f29acd40bbc878e?timespan=CUSTOM-1777712586538-1777726986538"
     }
   ]
 }
