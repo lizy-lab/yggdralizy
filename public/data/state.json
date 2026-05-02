@@ -3,12 +3,12 @@
   "max_hp": 100,
   "status": "healthy",
   "last_activity_timestamp": "2026-04-30T11:43:57.807Z",
-  "last_update_timestamp": "2026-05-02T10:19:20.286Z",
-  "last_update_message": "Lumigo [error]: Timed out (-15 HP) | Passive regen (+1 HP)",
+  "last_update_timestamp": "2026-05-02T10:19:57.395Z",
+  "last_update_message": "No changes detected",
   "metrics": {
     "failed_runs": 0,
     "open_alerts": 0,
-    "lumigo_alert": "error: Timed out"
+    "lumigo_alert": null
   },
   "event_log": [
     {
