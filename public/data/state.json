@@ -1,22 +1,16 @@
 {
-  "current_hp": 100,
+  "current_hp": 90,
   "max_hp": 100,
   "status": "healthy",
   "last_activity_timestamp": "2026-05-03T00:19:46.670Z",
-  "last_update_timestamp": "2026-05-03T17:17:45.240Z",
-  "last_update_message": "No changes detected",
+  "last_update_timestamp": "2026-05-03T18:03:01.436Z",
+  "last_update_message": "Lumigo [warning]: SourcingError (-10 HP)",
   "metrics": {
     "failed_runs": 0,
     "open_alerts": 0,
-    "lumigo_alert": null
+    "lumigo_alert": "warning: SourcingError"
   },
   "event_log": [
-    {
-      "timestamp": "2026-05-02T23:16:19.276Z",
-      "message": "Passive regen (+1 HP)",
-      "hp_before": 2,
-      "hp_after": 3
-    },
     {
       "timestamp": "2026-05-03T00:19:46.670Z",
       "message": "Lumigo [error]: Timed out (-15 HP) | Passive regen (+10 HP) | RAGNAROK: Tree has died!",
@@ -135,6 +129,13 @@
       "message": "Passive regen (+2 HP)",
       "hp_before": 98,
       "hp_after": 100
+    },
+    {
+      "timestamp": "2026-05-03T18:03:01.436Z",
+      "message": "Lumigo [warning]: SourcingError (-10 HP)",
+      "hp_before": 100,
+      "hp_after": 90,
+      "url": "https://platform.lumigo.io/project/c_c66f9a9348c24/issues/c0996e2009d655601ab025979cb18e41?timespan=CUSTOM-1777824064186-1777838464186"
     }
   ]
 }
