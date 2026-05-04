@@ -1,23 +1,16 @@
 {
-  "current_hp": 2,
+  "current_hp": 0,
   "max_hp": 100,
-  "status": "healthy",
-  "last_activity_timestamp": "2026-05-04T09:19:17.497Z",
-  "last_update_timestamp": "2026-05-04T14:58:38.630Z",
-  "last_update_message": "Lumigo [warning]: RetryError (-10 HP) | Passive regen (+1 HP)",
+  "status": "dead",
+  "last_activity_timestamp": "2026-05-04T15:04:10.379Z",
+  "last_update_timestamp": "2026-05-04T15:04:10.379Z",
+  "last_update_message": "Lumigo [warning]: RetryError (-10 HP) | RAGNAROK: Tree has died!",
   "metrics": {
     "failed_runs": 0,
     "open_alerts": 0,
     "lumigo_alert": "warning: RetryError"
   },
   "event_log": [
-    {
-      "timestamp": "2026-05-04T07:28:11.408Z",
-      "message": "Lumigo [warning]: Exception (-10 HP)",
-      "hp_before": 90,
-      "hp_after": 80,
-      "url": "https://platform.lumigo.io/project/c_c66f9a9348c24/issues/f074d8c687c6327c1516bef2797e5cd3?timespan=CUSTOM-1777872164416-1777886564416"
-    },
     {
       "timestamp": "2026-05-04T07:36:17.658Z",
       "message": "Lumigo [error]: Timed out (-15 HP) | Passive regen (+1 HP)",
@@ -142,6 +135,13 @@
       "message": "Lumigo [warning]: RetryError (-10 HP) | Passive regen (+1 HP)",
       "hp_before": 11,
       "hp_after": 2,
+      "url": "https://platform.lumigo.io/project/c_c66f9a9348c24/issues/ae1201d475e37d2f5e942627633d7646?timespan=CUSTOM-1777899383531-1777913783531"
+    },
+    {
+      "timestamp": "2026-05-04T15:04:10.379Z",
+      "message": "Lumigo [warning]: RetryError (-10 HP) | RAGNAROK: Tree has died!",
+      "hp_before": 2,
+      "hp_after": 0,
       "url": "https://platform.lumigo.io/project/c_c66f9a9348c24/issues/ae1201d475e37d2f5e942627633d7646?timespan=CUSTOM-1777899383531-1777913783531"
     }
   ]
