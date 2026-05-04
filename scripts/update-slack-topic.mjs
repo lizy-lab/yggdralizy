@@ -12,8 +12,6 @@ const PAGES_URL = GITHUB_REPOSITORY
   ? `https://${GITHUB_REPOSITORY.split('/')[0]}.github.io/${GITHUB_REPOSITORY.split('/')[1]}/`
   : 'https://example.com';
 
-const BOOKMARK_TITLE_PREFIX = 'YggdraLizy';
-
 if (!SLACK_BOT_TOKEN || !SLACK_CHANNEL_ID) {
   console.log('No SLACK_BOT_TOKEN or SLACK_CHANNEL_ID set, skipping.');
   process.exit(0);
@@ -47,7 +45,7 @@ function hpEmojis(hp, max) {
 
 function buildTitle(state) {
   if (state.status === 'dead') {
-    return `\u{1F480} ${BOOKMARK_TITLE_PREFIX} is dead`;
+    return '\u{1F480} YggdraLizy is dead';
   }
 
   const now = new Date();
@@ -102,17 +100,31 @@ if (!listData.ok) {
   process.exit(1);
 }
 
-const existing = listData.bookmarks?.find(b => b.title?.startsWith(BOOKMARK_TITLE_PREFIX));
+// Match all our bookmarks by URL (we always use the same PAGES_URL)
+const ours = (listData.bookmarks ?? []).filter(b => b.link === PAGES_URL);
+const [keep, ...duplicates] = ours;
 
-if (existing) {
-  // Update existing bookmark (silent, no channel notification)
-  if (existing.title === title && existing.link === PAGES_URL) {
+// Remove any duplicates (created before we had reliable matching)
+for (const dup of duplicates) {
+  const removeData = await slackApi('bookmarks.remove', {
+    channel_id: SLACK_CHANNEL_ID,
+    bookmark_id: dup.id,
+  });
+  if (!removeData.ok) {
+    console.warn(`bookmarks.remove failed for ${dup.id}: ${removeData.error}`);
+  } else {
+    console.log(`Removed duplicate bookmark: ${dup.title}`);
+  }
+}
+
+if (keep) {
+  if (keep.title === title) {
     console.log('Bookmark unchanged, skipping');
     process.exit(0);
   }
   const editData = await slackApi('bookmarks.edit', {
     channel_id: SLACK_CHANNEL_ID,
-    bookmark_id: existing.id,
+    bookmark_id: keep.id,
     title,
     link: PAGES_URL,
   });
