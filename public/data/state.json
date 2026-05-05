@@ -1,22 +1,16 @@
 {
-  "current_hp": 1,
+  "current_hp": 0,
   "max_hp": 100,
-  "status": "healthy",
-  "last_activity_timestamp": "2026-05-05T09:43:58.388Z",
-  "last_update_timestamp": "2026-05-05T09:51:10.684Z",
-  "last_update_message": "RESURRECTION: Tree revived by natural regeneration (+1 HP)",
+  "status": "dead",
+  "last_activity_timestamp": "2026-05-05T09:56:03.753Z",
+  "last_update_timestamp": "2026-05-05T09:56:03.753Z",
+  "last_update_message": "Lumigo [warning]: EmailDeliverabilityError (-10 HP) | RAGNAROK: Tree has died!",
   "metrics": {
     "failed_runs": 0,
     "open_alerts": 0,
-    "lumigo_alert": "warning: RetryError"
+    "lumigo_alert": "warning: EmailDeliverabilityError"
   },
   "event_log": [
-    {
-      "timestamp": "2026-05-05T03:06:09.119Z",
-      "message": "Passive regen (+15 HP)",
-      "hp_before": 52,
-      "hp_after": 67
-    },
     {
       "timestamp": "2026-05-05T03:34:09.803Z",
       "message": "Lumigo [warning]: UnboundLocalError (-10 HP) | Passive regen (+4 HP)",
@@ -144,6 +138,13 @@
       "hp_before": 0,
       "hp_after": 1,
       "url": "https://platform.lumigo.io/project/c_c66f9a9348c24/issues/ae1201d475e37d2f5e942627633d7646?timespan=CUSTOM-1777966923592-1777981323592"
+    },
+    {
+      "timestamp": "2026-05-05T09:56:03.753Z",
+      "message": "Lumigo [warning]: EmailDeliverabilityError (-10 HP) | RAGNAROK: Tree has died!",
+      "hp_before": 1,
+      "hp_after": 0,
+      "url": "https://platform.lumigo.io/project/c_c66f9a9348c24/issues/5f786653aa948a0fffcaeb84bdf2199d?timespan=CUSTOM-1777967665853-1777982065853"
     }
   ]
 }
