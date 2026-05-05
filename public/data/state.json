@@ -1,23 +1,16 @@
 {
-  "current_hp": 0,
+  "current_hp": 5,
   "max_hp": 100,
-  "status": "dead",
+  "status": "healthy",
   "last_activity_timestamp": "2026-05-05T09:56:03.753Z",
-  "last_update_timestamp": "2026-05-05T10:01:40.630Z",
-  "last_update_message": "No changes detected",
+  "last_update_timestamp": "2026-05-05T10:34:09.846Z",
+  "last_update_message": "RESURRECTION: Tree revived by natural regeneration (+5 HP)",
   "metrics": {
     "failed_runs": 0,
     "open_alerts": 0,
-    "lumigo_alert": "warning: EmailDeliverabilityError"
+    "lumigo_alert": null
   },
   "event_log": [
-    {
-      "timestamp": "2026-05-05T03:34:09.803Z",
-      "message": "Lumigo [warning]: UnboundLocalError (-10 HP) | Passive regen (+4 HP)",
-      "hp_before": 67,
-      "hp_after": 61,
-      "url": "https://platform.lumigo.io/project/c_c66f9a9348c24/issues/a042c3b5bbca972f30973c399a30035b?timespan=CUSTOM-1777944772308-1777959172308"
-    },
     {
       "timestamp": "2026-05-05T03:34:27.793Z",
       "message": "Lumigo [warning]: UnboundLocalError (-10 HP)",
@@ -145,6 +138,12 @@
       "hp_before": 1,
       "hp_after": 0,
       "url": "https://platform.lumigo.io/project/c_c66f9a9348c24/issues/5f786653aa948a0fffcaeb84bdf2199d?timespan=CUSTOM-1777967665853-1777982065853"
+    },
+    {
+      "timestamp": "2026-05-05T10:34:09.846Z",
+      "message": "RESURRECTION: Tree revived by natural regeneration (+5 HP)",
+      "hp_before": 0,
+      "hp_after": 5
     }
   ]
 }
