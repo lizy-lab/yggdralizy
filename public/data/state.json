@@ -1,22 +1,16 @@
 {
-  "current_hp": 41,
+  "current_hp": 33,
   "max_hp": 100,
   "status": "healthy",
   "last_activity_timestamp": "2026-05-04T16:14:37.550Z",
-  "last_update_timestamp": "2026-05-05T04:35:08.355Z",
-  "last_update_message": "Lumigo [warning]: SSHException (-10 HP)",
+  "last_update_timestamp": "2026-05-05T04:48:31.387Z",
+  "last_update_message": "Lumigo [warning]: UnboundLocalError (-10 HP) | Passive regen (+2 HP)",
   "metrics": {
     "failed_runs": 0,
     "open_alerts": 0,
-    "lumigo_alert": "warning: SSHException"
+    "lumigo_alert": "warning: UnboundLocalError"
   },
   "event_log": [
-    {
-      "timestamp": "2026-05-04T15:40:57.069Z",
-      "message": "RESURRECTION: Tree revived by natural regeneration (+1 HP)",
-      "hp_before": 0,
-      "hp_after": 1
-    },
     {
       "timestamp": "2026-05-04T16:14:37.550Z",
       "message": "1 failed run(s) (-10 HP) | Lumigo [warning]: RetryError (-10 HP) | Passive regen (+5 HP) | RAGNAROK: Tree has died!",
@@ -138,6 +132,13 @@
       "hp_before": 51,
       "hp_after": 41,
       "url": "https://platform.lumigo.io/project/c_c66f9a9348c24/issues/0db29edde59367a060c408a0ca5a86ea?timespan=CUSTOM-1777948385218-1777962785218"
+    },
+    {
+      "timestamp": "2026-05-05T04:48:31.387Z",
+      "message": "Lumigo [warning]: UnboundLocalError (-10 HP) | Passive regen (+2 HP)",
+      "hp_before": 41,
+      "hp_after": 33,
+      "url": "https://platform.lumigo.io/project/c_c66f9a9348c24/issues/a042c3b5bbca972f30973c399a30035b?timespan=CUSTOM-1777949249332-1777963649332"
     }
   ]
 }
