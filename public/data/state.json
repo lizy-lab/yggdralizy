@@ -1,23 +1,16 @@
 {
-  "current_hp": 5,
+  "current_hp": 14,
   "max_hp": 100,
   "status": "healthy",
   "last_activity_timestamp": "2026-05-05T09:56:03.753Z",
-  "last_update_timestamp": "2026-05-05T10:34:09.846Z",
-  "last_update_message": "RESURRECTION: Tree revived by natural regeneration (+5 HP)",
+  "last_update_timestamp": "2026-05-05T11:29:11.793Z",
+  "last_update_message": "Passive regen (+9 HP)",
   "metrics": {
     "failed_runs": 0,
     "open_alerts": 0,
     "lumigo_alert": null
   },
   "event_log": [
-    {
-      "timestamp": "2026-05-05T03:34:27.793Z",
-      "message": "Lumigo [warning]: UnboundLocalError (-10 HP)",
-      "hp_before": 61,
-      "hp_after": 51,
-      "url": "https://platform.lumigo.io/project/c_c66f9a9348c24/issues/a042c3b5bbca972f30973c399a30035b?timespan=CUSTOM-1777944772308-1777959172308"
-    },
     {
       "timestamp": "2026-05-05T04:34:30.811Z",
       "message": "Lumigo [warning]: SSHException (-10 HP) | Passive regen (+10 HP)",
@@ -144,6 +137,12 @@
       "message": "RESURRECTION: Tree revived by natural regeneration (+5 HP)",
       "hp_before": 0,
       "hp_after": 5
+    },
+    {
+      "timestamp": "2026-05-05T11:29:11.793Z",
+      "message": "Passive regen (+9 HP)",
+      "hp_before": 5,
+      "hp_after": 14
     }
   ]
 }
