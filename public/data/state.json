@@ -1,23 +1,16 @@
 {
-  "current_hp": 33,
+  "current_hp": 26,
   "max_hp": 100,
   "status": "healthy",
   "last_activity_timestamp": "2026-05-05T09:56:03.753Z",
-  "last_update_timestamp": "2026-05-06T13:36:08.553Z",
-  "last_update_message": "Passive regen (+1 HP)",
+  "last_update_timestamp": "2026-05-06T14:24:22.631Z",
+  "last_update_message": "Lumigo [error]: 422 Client error response (-15 HP) | Passive regen (+8 HP)",
   "metrics": {
     "failed_runs": 0,
     "open_alerts": 0,
-    "lumigo_alert": null
+    "lumigo_alert": "error: 422 Client error response"
   },
   "event_log": [
-    {
-      "timestamp": "2026-05-06T01:14:22.832Z",
-      "message": "Lumigo [warning]: Exception (-10 HP)",
-      "hp_before": 53,
-      "hp_after": 43,
-      "url": "https://platform.lumigo.io/project/c_c66f9a9348c24/issues/f074d8c687c6327c1516bef2797e5cd3?timespan=CUSTOM-1778022738338-1778037138338"
-    },
     {
       "timestamp": "2026-05-06T01:35:59.360Z",
       "message": "Passive regen (+3 HP)",
@@ -141,6 +134,13 @@
       "message": "Passive regen (+1 HP)",
       "hp_before": 32,
       "hp_after": 33
+    },
+    {
+      "timestamp": "2026-05-06T14:24:22.631Z",
+      "message": "Lumigo [error]: 422 Client error response (-15 HP) | Passive regen (+8 HP)",
+      "hp_before": 33,
+      "hp_after": 26,
+      "url": "https://platform.lumigo.io/project/c_c66f9a9348c24/issues/00923653b6dfa832f3a293ff72e73fdc?timespan=CUSTOM-1778070202168-1778084602168"
     }
   ]
 }
