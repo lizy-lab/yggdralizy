@@ -3,12 +3,12 @@
   "max_hp": 100,
   "status": "dead",
   "last_activity_timestamp": "2026-05-07T14:03:12.131Z",
-  "last_update_timestamp": "2026-05-07T14:03:12.131Z",
-  "last_update_message": "Lumigo [warning]: HTTPError (-10 HP) | Passive regen (+4 HP) | RAGNAROK: Tree has died!",
+  "last_update_timestamp": "2026-05-07T14:07:19.628Z",
+  "last_update_message": "No changes detected",
   "metrics": {
     "failed_runs": 0,
     "open_alerts": 0,
-    "lumigo_alert": "warning: HTTPError"
+    "lumigo_alert": "warning: InvalidDataError"
   },
   "event_log": [
     {
