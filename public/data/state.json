@@ -1,23 +1,16 @@
 {
-  "current_hp": 8,
+  "current_hp": 4,
   "max_hp": 100,
   "status": "healthy",
   "last_activity_timestamp": "2026-05-07T14:03:12.131Z",
-  "last_update_timestamp": "2026-05-07T14:56:38.189Z",
-  "last_update_message": "RESURRECTION: Tree revived by natural regeneration (+8 HP)",
+  "last_update_timestamp": "2026-05-07T15:32:42.501Z",
+  "last_update_message": "Lumigo [warning]: RestError (-10 HP) | Passive regen (+6 HP)",
   "metrics": {
     "failed_runs": 0,
     "open_alerts": 0,
-    "lumigo_alert": null
+    "lumigo_alert": "warning: RestError"
   },
   "event_log": [
-    {
-      "timestamp": "2026-05-07T08:09:29.523Z",
-      "message": "Lumigo [warning]: RetryError (-10 HP)",
-      "hp_before": 58,
-      "hp_after": 48,
-      "url": "https://platform.lumigo.io/project/c_c66f9a9348c24/issues/ae1201d475e37d2f5e942627633d7646?timespan=CUSTOM-1778133721075-1778148121075"
-    },
     {
       "timestamp": "2026-05-07T08:15:01.539Z",
       "message": "Lumigo [warning]: ValueError (-10 HP)",
@@ -144,6 +137,13 @@
       "message": "RESURRECTION: Tree revived by natural regeneration (+8 HP)",
       "hp_before": 0,
       "hp_after": 8
+    },
+    {
+      "timestamp": "2026-05-07T15:32:42.501Z",
+      "message": "Lumigo [warning]: RestError (-10 HP) | Passive regen (+6 HP)",
+      "hp_before": 8,
+      "hp_after": 4,
+      "url": "https://platform.lumigo.io/project/c_c66f9a9348c24/issues/932c3fc5a55803e0e8094fac79fcc77c?timespan=CUSTOM-1778160653301-1778175053301"
     }
   ]
 }
