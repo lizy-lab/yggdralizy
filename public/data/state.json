@@ -3,12 +3,12 @@
   "max_hp": 100,
   "status": "dead",
   "last_activity_timestamp": "2026-05-07T08:38:15.923Z",
-  "last_update_timestamp": "2026-05-07T08:48:31.967Z",
+  "last_update_timestamp": "2026-05-07T08:49:21.148Z",
   "last_update_message": "No changes detected",
   "metrics": {
     "failed_runs": 0,
     "open_alerts": 0,
-    "lumigo_alert": "error: 500 Server error response"
+    "lumigo_alert": "warning: ConnectionError"
   },
   "event_log": [
     {
