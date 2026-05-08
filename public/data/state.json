@@ -1,9 +1,9 @@
 {
-  "current_hp": 85,
+  "current_hp": 70,
   "max_hp": 100,
   "status": "healthy",
   "last_activity_timestamp": "2026-05-07T15:34:02.536Z",
-  "last_update_timestamp": "2026-05-08T12:38:58.519Z",
+  "last_update_timestamp": "2026-05-08T12:42:44.628Z",
   "last_update_message": "Lumigo [error]: HTTPError (-15 HP)",
   "metrics": {
     "failed_runs": 0,
@@ -11,13 +11,6 @@
     "lumigo_alert": "error: HTTPError"
   },
   "event_log": [
-    {
-      "timestamp": "2026-05-07T21:32:00.817Z",
-      "message": "Lumigo [error]: Duplicate Event (-15 HP) | Passive regen (+1 HP)",
-      "hp_before": 54,
-      "hp_after": 40,
-      "url": "https://platform.lumigo.io/project/c_c66f9a9348c24/issues/259ccc2d4a5dad6cd88b93d240dfc34c?timespan=CUSTOM-1778182188364-1778196588364"
-    },
     {
       "timestamp": "2026-05-07T22:23:33.364Z",
       "message": "Passive regen (+8 HP)",
@@ -138,6 +131,13 @@
       "hp_before": 100,
       "hp_after": 85,
       "url": "https://platform.lumigo.io/project/c_c66f9a9348c24/issues/74c50a92129fd8134186a6730a4b2a40?timespan=CUSTOM-1778236689549-1778251089549"
+    },
+    {
+      "timestamp": "2026-05-08T12:42:44.628Z",
+      "message": "Lumigo [error]: HTTPError (-15 HP)",
+      "hp_before": 85,
+      "hp_after": 70,
+      "url": "https://platform.lumigo.io/project/c_c66f9a9348c24/issues/8c872639396a328ec2cd5c0d1865e8e3?timespan=CUSTOM-1778236905327-1778251305327"
     }
   ]
 }
