@@ -1,22 +1,16 @@
 {
-  "current_hp": 85,
+  "current_hp": 76,
   "max_hp": 100,
   "status": "healthy",
   "last_activity_timestamp": "2026-05-07T15:34:02.536Z",
-  "last_update_timestamp": "2026-05-11T14:29:13.634Z",
-  "last_update_message": "Lumigo [error]: ForbiddenAccessError (-15 HP)",
+  "last_update_timestamp": "2026-05-11T14:38:59.222Z",
+  "last_update_message": "Lumigo [warning]: EmailDeliverabilityError (-10 HP) | Passive regen (+1 HP)",
   "metrics": {
     "failed_runs": 0,
     "open_alerts": 0,
-    "lumigo_alert": "error: ForbiddenAccessError"
+    "lumigo_alert": "warning: EmailDeliverabilityError"
   },
   "event_log": [
-    {
-      "timestamp": "2026-05-08T13:34:29.547Z",
-      "message": "Passive regen (+8 HP)",
-      "hp_before": 70,
-      "hp_after": 78
-    },
     {
       "timestamp": "2026-05-08T14:02:17.687Z",
       "message": "Lumigo [warning]: InvalidDataError (-10 HP) | Passive regen (+4 HP)",
@@ -137,6 +131,13 @@
       "hp_before": 100,
       "hp_after": 85,
       "url": "https://platform.lumigo.io/project/c_c66f9a9348c24/issues/de0ba022bc15e08c9f35c909f21edd49?timespan=CUSTOM-1778502494599-1778516894599"
+    },
+    {
+      "timestamp": "2026-05-11T14:38:59.222Z",
+      "message": "Lumigo [warning]: EmailDeliverabilityError (-10 HP) | Passive regen (+1 HP)",
+      "hp_before": 85,
+      "hp_after": 76,
+      "url": "https://platform.lumigo.io/project/c_c66f9a9348c24/issues/5f786653aa948a0fffcaeb84bdf2199d?timespan=CUSTOM-1778503044391-1778517444391"
     }
   ]
 }
