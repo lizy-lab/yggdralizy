@@ -1,23 +1,16 @@
 {
-  "current_hp": 100,
+  "current_hp": 90,
   "max_hp": 100,
   "status": "healthy",
   "last_activity_timestamp": "2026-05-07T15:34:02.536Z",
-  "last_update_timestamp": "2026-05-11T23:20:40.715Z",
-  "last_update_message": "No changes detected",
+  "last_update_timestamp": "2026-05-12T00:26:59.151Z",
+  "last_update_message": "Lumigo [warning]: Exception (-10 HP)",
   "metrics": {
     "failed_runs": 0,
     "open_alerts": 0,
-    "lumigo_alert": null
+    "lumigo_alert": "warning: Exception"
   },
   "event_log": [
-    {
-      "timestamp": "2026-05-10T18:42:18.103Z",
-      "message": "Lumigo [warning]: SourcingError (-10 HP)",
-      "hp_before": 100,
-      "hp_after": 90,
-      "url": "https://platform.lumigo.io/project/c_c66f9a9348c24/issues/c0996e2009d655601ab025979cb18e41?timespan=CUSTOM-1778431260953-1778445660953"
-    },
     {
       "timestamp": "2026-05-10T18:53:33.410Z",
       "message": "Lumigo [warning]: SourcingError (-10 HP) | Passive regen (+1 HP)",
@@ -138,6 +131,13 @@
       "message": "Passive regen (+9 HP)",
       "hp_before": 91,
       "hp_after": 100
+    },
+    {
+      "timestamp": "2026-05-12T00:26:59.151Z",
+      "message": "Lumigo [warning]: Exception (-10 HP)",
+      "hp_before": 100,
+      "hp_after": 90,
+      "url": "https://platform.lumigo.io/project/c_c66f9a9348c24/issues/f074d8c687c6327c1516bef2797e5cd3?timespan=CUSTOM-1778538268200-1778552668200"
     }
   ]
 }
