@@ -1,22 +1,16 @@
 {
-  "current_hp": 65,
+  "current_hp": 52,
   "max_hp": 100,
   "status": "healthy",
   "last_activity_timestamp": "2026-05-07T15:34:02.536Z",
-  "last_update_timestamp": "2026-05-12T11:38:52.988Z",
-  "last_update_message": "Passive regen (+8 HP)",
+  "last_update_timestamp": "2026-05-12T11:51:34.127Z",
+  "last_update_message": "Lumigo [error]: Runtime.ImportModuleError (-15 HP) | Passive regen (+2 HP)",
   "metrics": {
     "failed_runs": 0,
     "open_alerts": 0,
-    "lumigo_alert": null
+    "lumigo_alert": "error: Runtime.ImportModuleError"
   },
   "event_log": [
-    {
-      "timestamp": "2026-05-11T19:33:40.867Z",
-      "message": "Passive regen (+1 HP)",
-      "hp_before": 80,
-      "hp_after": 81
-    },
     {
       "timestamp": "2026-05-11T20:35:25.964Z",
       "message": "Passive regen (+10 HP)",
@@ -140,6 +134,13 @@
       "message": "Passive regen (+8 HP)",
       "hp_before": 57,
       "hp_after": 65
+    },
+    {
+      "timestamp": "2026-05-12T11:51:34.127Z",
+      "message": "Lumigo [error]: Runtime.ImportModuleError (-15 HP) | Passive regen (+2 HP)",
+      "hp_before": 65,
+      "hp_after": 52,
+      "url": "https://platform.lumigo.io/project/c_c66f9a9348c24/issues/4deb746f9608c378e73f387184287d00?timespan=CUSTOM-1778579414792-1778593814792"
     }
   ]
 }
