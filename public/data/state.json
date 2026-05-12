@@ -1,9 +1,9 @@
 {
-  "current_hp": 90,
+  "current_hp": 80,
   "max_hp": 100,
   "status": "healthy",
   "last_activity_timestamp": "2026-05-07T15:34:02.536Z",
-  "last_update_timestamp": "2026-05-12T07:45:59.581Z",
+  "last_update_timestamp": "2026-05-12T07:51:57.001Z",
   "last_update_message": "Lumigo [warning]: ValidationError (-10 HP)",
   "metrics": {
     "failed_runs": 0,
@@ -11,13 +11,6 @@
     "lumigo_alert": "warning: ValidationError"
   },
   "event_log": [
-    {
-      "timestamp": "2026-05-11T14:29:13.634Z",
-      "message": "Lumigo [error]: ForbiddenAccessError (-15 HP)",
-      "hp_before": 100,
-      "hp_after": 85,
-      "url": "https://platform.lumigo.io/project/c_c66f9a9348c24/issues/de0ba022bc15e08c9f35c909f21edd49?timespan=CUSTOM-1778502494599-1778516894599"
-    },
     {
       "timestamp": "2026-05-11T14:38:59.222Z",
       "message": "Lumigo [warning]: EmailDeliverabilityError (-10 HP) | Passive regen (+1 HP)",
@@ -139,6 +132,13 @@
       "message": "Lumigo [warning]: ValidationError (-10 HP)",
       "hp_before": 100,
       "hp_after": 90,
+      "url": "https://platform.lumigo.io/project/c_c66f9a9348c24/issues/d912f0605640600f236fe94868c66321?timespan=CUSTOM-1778564656874-1778579056874"
+    },
+    {
+      "timestamp": "2026-05-12T07:51:57.001Z",
+      "message": "Lumigo [warning]: ValidationError (-10 HP)",
+      "hp_before": 90,
+      "hp_after": 80,
       "url": "https://platform.lumigo.io/project/c_c66f9a9348c24/issues/d912f0605640600f236fe94868c66321?timespan=CUSTOM-1778564656874-1778579056874"
     }
   ]
