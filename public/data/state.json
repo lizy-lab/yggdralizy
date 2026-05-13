@@ -3,10 +3,10 @@
   "max_hp": 100,
   "status": "dead",
   "last_activity_timestamp": "2026-05-13T16:01:04.947Z",
-  "last_update_timestamp": "2026-05-13T16:01:43.811Z",
+  "last_update_timestamp": "2026-05-13T16:02:24.878Z",
   "last_update_message": "No changes detected",
   "metrics": {
-    "failed_runs": 0,
+    "failed_runs": 1,
     "open_alerts": 0,
     "lumigo_alert": "error: ValidationError"
   },
