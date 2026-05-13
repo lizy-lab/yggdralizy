@@ -1,22 +1,16 @@
 {
-  "current_hp": 25,
+  "current_hp": 10,
   "max_hp": 100,
   "status": "healthy",
   "last_activity_timestamp": "2026-05-12T14:45:21.156Z",
-  "last_update_timestamp": "2026-05-13T08:29:34.032Z",
-  "last_update_message": "Lumigo [error]: Timed out (-15 HP)",
+  "last_update_timestamp": "2026-05-13T08:31:10.970Z",
+  "last_update_message": "Lumigo [error]: 404 Client error response (-15 HP)",
   "metrics": {
     "failed_runs": 0,
     "open_alerts": 0,
-    "lumigo_alert": "error: Timed out"
+    "lumigo_alert": "error: 404 Client error response"
   },
   "event_log": [
-    {
-      "timestamp": "2026-05-12T14:57:43.323Z",
-      "message": "RESURRECTION: Tree revived by natural regeneration (+2 HP)",
-      "hp_before": 0,
-      "hp_after": 2
-    },
     {
       "timestamp": "2026-05-12T15:54:29.529Z",
       "message": "Passive regen (+9 HP)",
@@ -137,6 +131,13 @@
       "hp_before": 40,
       "hp_after": 25,
       "url": "https://platform.lumigo.io/project/c_c66f9a9348c24/issues/f4d83a50c9ecd4b7d2364394f02afa48?timespan=CUSTOM-1778653692788-1778668092788"
+    },
+    {
+      "timestamp": "2026-05-13T08:31:10.970Z",
+      "message": "Lumigo [error]: 404 Client error response (-15 HP)",
+      "hp_before": 25,
+      "hp_after": 10,
+      "url": "https://platform.lumigo.io/project/c_c66f9a9348c24/issues/e85f5c35e45fa7f72dbdcadbf8dd9481?timespan=CUSTOM-1778653826197-1778668226197"
     }
   ]
 }
