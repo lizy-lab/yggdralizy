@@ -1,23 +1,16 @@
 {
-  "current_hp": 1,
+  "current_hp": 6,
   "max_hp": 100,
   "status": "healthy",
   "last_activity_timestamp": "2026-05-13T16:01:04.947Z",
-  "last_update_timestamp": "2026-05-13T16:13:43.827Z",
-  "last_update_message": "RESURRECTION: Tree revived by natural regeneration (+1 HP)",
+  "last_update_timestamp": "2026-05-13T16:47:20.629Z",
+  "last_update_message": "Passive regen (+5 HP)",
   "metrics": {
     "failed_runs": 0,
     "open_alerts": 0,
-    "lumigo_alert": "error: ValidationError"
+    "lumigo_alert": null
   },
   "event_log": [
-    {
-      "timestamp": "2026-05-13T08:25:10.789Z",
-      "message": "Lumigo [warning]: MissingHubspotIdError (-10 HP)",
-      "hp_before": 50,
-      "hp_after": 40,
-      "url": "https://platform.lumigo.io/project/c_c66f9a9348c24/issues/0364a635ddbf55fcdc2d401ea6697d3e?timespan=CUSTOM-1778653410681-1778667810681"
-    },
     {
       "timestamp": "2026-05-13T08:29:34.032Z",
       "message": "Lumigo [error]: Timed out (-15 HP)",
@@ -144,6 +137,12 @@
       "hp_before": 0,
       "hp_after": 1,
       "url": "https://platform.lumigo.io/project/c_c66f9a9348c24/issues/42b8bce65660f58af67da5bae8220118?timespan=CUSTOM-1778681514120-1778695914120"
+    },
+    {
+      "timestamp": "2026-05-13T16:47:20.629Z",
+      "message": "Passive regen (+5 HP)",
+      "hp_before": 1,
+      "hp_after": 6
     }
   ]
 }
