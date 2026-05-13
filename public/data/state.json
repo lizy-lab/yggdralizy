@@ -1,22 +1,16 @@
 {
-  "current_hp": 10,
+  "current_hp": 0,
   "max_hp": 100,
-  "status": "healthy",
-  "last_activity_timestamp": "2026-05-12T14:45:21.156Z",
-  "last_update_timestamp": "2026-05-13T08:31:10.970Z",
-  "last_update_message": "Lumigo [error]: 404 Client error response (-15 HP)",
+  "status": "dead",
+  "last_activity_timestamp": "2026-05-13T08:32:20.490Z",
+  "last_update_timestamp": "2026-05-13T08:32:20.490Z",
+  "last_update_message": "1 failed run(s) (-10 HP) | Lumigo [warning]: NotFoundError (-10 HP) | RAGNAROK: Tree has died!",
   "metrics": {
-    "failed_runs": 0,
+    "failed_runs": 1,
     "open_alerts": 0,
-    "lumigo_alert": "error: 404 Client error response"
+    "lumigo_alert": "warning: NotFoundError"
   },
   "event_log": [
-    {
-      "timestamp": "2026-05-12T15:54:29.529Z",
-      "message": "Passive regen (+9 HP)",
-      "hp_before": 2,
-      "hp_after": 11
-    },
     {
       "timestamp": "2026-05-12T16:45:27.641Z",
       "message": "Passive regen (+8 HP)",
@@ -138,6 +132,13 @@
       "hp_before": 25,
       "hp_after": 10,
       "url": "https://platform.lumigo.io/project/c_c66f9a9348c24/issues/e85f5c35e45fa7f72dbdcadbf8dd9481?timespan=CUSTOM-1778653826197-1778668226197"
+    },
+    {
+      "timestamp": "2026-05-13T08:32:20.490Z",
+      "message": "1 failed run(s) (-10 HP) | Lumigo [warning]: NotFoundError (-10 HP) | RAGNAROK: Tree has died!",
+      "hp_before": 10,
+      "hp_after": 0,
+      "url": "https://platform.lumigo.io/project/c_c66f9a9348c24/issues/6f7f420a3fe4580e2162af241c59c477?timespan=CUSTOM-1778653832853-1778668232853"
     }
   ]
 }
