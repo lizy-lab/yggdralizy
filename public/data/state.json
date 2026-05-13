@@ -3,12 +3,12 @@
   "max_hp": 100,
   "status": "dead",
   "last_activity_timestamp": "2026-05-13T08:32:20.490Z",
-  "last_update_timestamp": "2026-05-13T08:33:33.162Z",
+  "last_update_timestamp": "2026-05-13T08:34:21.403Z",
   "last_update_message": "No changes detected",
   "metrics": {
     "failed_runs": 0,
     "open_alerts": 0,
-    "lumigo_alert": "error: Timed out"
+    "lumigo_alert": "warning: NotFoundError"
   },
   "event_log": [
     {
