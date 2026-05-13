@@ -1,23 +1,16 @@
 {
-  "current_hp": 50,
+  "current_hp": 40,
   "max_hp": 100,
   "status": "healthy",
   "last_activity_timestamp": "2026-05-12T14:45:21.156Z",
-  "last_update_timestamp": "2026-05-13T08:23:33.697Z",
-  "last_update_message": "Lumigo [error]: Timed out (-15 HP) | Passive regen (+4 HP)",
+  "last_update_timestamp": "2026-05-13T08:25:10.789Z",
+  "last_update_message": "Lumigo [warning]: MissingHubspotIdError (-10 HP)",
   "metrics": {
     "failed_runs": 0,
     "open_alerts": 0,
-    "lumigo_alert": "error: Timed out"
+    "lumigo_alert": "warning: MissingHubspotIdError"
   },
   "event_log": [
-    {
-      "timestamp": "2026-05-12T14:42:48.910Z",
-      "message": "RESURRECTION: Tree revived by natural regeneration (+9 HP)",
-      "hp_before": 0,
-      "hp_after": 9,
-      "url": "https://platform.lumigo.io/project/c_c66f9a9348c24/issues/9fbc5830085e873afd87bf450bffd16e?timespan=CUSTOM-1778589711816-1778604111816"
-    },
     {
       "timestamp": "2026-05-12T14:45:21.156Z",
       "message": "Lumigo [error]: ValidationError (-15 HP) | RAGNAROK: Tree has died!",
@@ -137,6 +130,13 @@
       "hp_before": 61,
       "hp_after": 50,
       "url": "https://platform.lumigo.io/project/c_c66f9a9348c24/issues/f4d83a50c9ecd4b7d2364394f02afa48?timespan=CUSTOM-1778653331619-1778667731619"
+    },
+    {
+      "timestamp": "2026-05-13T08:25:10.789Z",
+      "message": "Lumigo [warning]: MissingHubspotIdError (-10 HP)",
+      "hp_before": 50,
+      "hp_after": 40,
+      "url": "https://platform.lumigo.io/project/c_c66f9a9348c24/issues/0364a635ddbf55fcdc2d401ea6697d3e?timespan=CUSTOM-1778653410681-1778667810681"
     }
   ]
 }
